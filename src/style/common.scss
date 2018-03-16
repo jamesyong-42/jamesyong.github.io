@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body, button, input, select, textarea {
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+a {
+  text-decoration: none
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+@font-face {
+  font-family: 'AXIS-ExtraBold';
+  src: url('../assets/fonts/AXIS-ExtraBold.eot');
+  src: url('../assets/fonts/AXIS-ExtraBold.woff2') format('woff2'),
+  url('../assets/fonts/AXIS-ExtraBold.woff') format('woff'),
+  url('../assets/fonts/AXIS-ExtraBold.ttf') format('truetype'),
+  url('../assets/fonts/AXIS-ExtraBold.svg#AXIS-ExtraBold') format('svg'),
+  url('../assets/fonts/AXIS-ExtraBold.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,5 @@
+export const SET_LANGUAGE = 'SET_LANGUAGE'
+
+export const SET_SCROLLBAR = 'SET_SCROLLBAR'
+
+export const SET_BLURNAV = 'SET_BLURNAV'
