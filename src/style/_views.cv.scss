@@ -1,0 +1,178 @@
+/*------------------------------------*\
+    #CV
+\*------------------------------------*/
+
+.space {
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/space-bg.svg");
+  background-size: 100% 100%;
+  text-align: center;
+}
+.space-bg {
+  height: 100%;
+}
+.space-path {
+  display: inline-block;
+  height: 100%;
+  margin: auto;
+  opacity: 0.1;
+}
+#avatar {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  margin-left: -125px;
+  margin-top: -125px;
+  background-image: url("../assets/avatar.png");
+  background-size: contain;
+  // transform-style: preserve-3d;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+  -moz-transform-origin: center;
+  -ms-transform-origin: center;
+  -o-transform-origin: center;
+  z-index: 999;
+}
+
+
+#rocket {
+  width: 800px;
+  height: 800px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -400px;
+  margin-top: -400px;
+
+  // transform-style: preserve-3d;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+  -moz-transform-origin: center;
+  -ms-transform-origin: center;
+  -o-transform-origin: center;
+  z-index: 999;
+}
+#top-intro-left {
+  position: absolute;
+  top:50vh;
+  left: 50vw;
+  width: 220px;
+  margin-left: -400px;
+  color: white;
+  font-family: $fontAXIS;
+
+  > h1 {
+    font-size: 60px;
+  }
+  > h2 {
+    font-size: 20px;
+  }
+}
+
+$fs-l: 30px;
+$fs-m: $fs-l * 0.79;
+$fs-s: $fs-l * 0.5;
+#top-intro-right {
+  position: absolute;
+  top:50vh;
+  left: 50vw;
+  margin-left: 180px;
+  width: 220px;
+  font-family: $fontAXIS;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  > .l {
+    font-size: $fs-l;
+    color: #ff6666;
+  }
+  > .m {
+    font-size: $fs-m;
+    color: white;
+    // line-height: 20px;
+  }
+  > .s {
+    font-size: $fs-s;
+    color: white;
+    margin: 2px;
+  }
+}
+
+
+
+
+$font-xl: 4.691vh;
+
+#CV-education {
+  position: absolute;
+  width: 100%;
+  top: 150vh;
+  text-align: center;
+  left: 300px;
+}
+#CV-education-content {
+  position: absolute;
+  width: 100%;
+  top: 170vh;
+  text-align: center;
+  left: 300px;
+}
+#CV-skills {
+  position: absolute;
+  width: 100%;
+  top: 250vh;
+  text-align: center;
+  left: -300px;
+}
+#CV-experience {
+  position: absolute;
+  width: 100%;
+  top: 350vh;
+  text-align: center;
+  left: 300px;
+}
+.CV-headline {
+  font-family: $fontAXIS;
+  font-weight: 400;
+  font-size: $font-xl;
+  color: #00e7eb;
+
+}
+
+#tiny-stars {
+  position: absolute;
+  top: 0;
+  left: -10vw;
+  width: 120vw;
+  height: 120vh;
+  opacity: 0.4;
+  background-image: url("../assets/stars-tiny.png");
+
+}
+#mid-stars {
+  position: absolute;
+  top: 0;
+  left: -70vw;
+  width: 240vw;
+  height: 240vh;
+  opacity: 0.5;
+  background-image: url("../assets/stars-mid.png");
+  background-repeat: space;
+
+}
+#big-stars {
+  position: absolute;
+  top: 0;
+  left: -200vw;
+  width: 500vw;
+  height: 500vh;
+  background-image: url("../assets/stars-big.png");
+  background-repeat: space;
+
+}

@@ -152,6 +152,7 @@
             if (startOffset < 0) {
               startOffset = 0
             }
+
             if (offset * vh <= -startOffset) {
               // originOffset是正常滚距离，要对冲掉
               const originOffset = -startOffset - offset * vh
@@ -203,13 +204,15 @@
           ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
         }
         this.scrollBar = ssr
+        ssr.addListener(this.scrollHandler)
         this.setScrollBar(ssr)
-        this.mediaQuery = window.matchMedia(this.breakpoint)
-        console.log(this.mediaQuery)
-        if (this.mediaQuery) {
-          this.mediaQuery.addListener(this.setupListener)
-          this.setupListener()
-        }
+
+//        this.mediaQuery = window.matchMedia(this.breakpoint)
+//        console.log(this.mediaQuery)
+//        if (this.mediaQuery) {
+//          this.mediaQuery.addListener(this.setupListener)
+//          this.setupListener()
+//        }
       }
     }
   }
