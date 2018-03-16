@@ -104,42 +104,42 @@
 //          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * -this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.bannerPercentX * this.rotCoe}deg)` : ''
 //        }
 //      }
-      starsTiny () {
-        let h = window.screen.availHeight
-        let w = window.screen.availWidth
-        return {
-          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transform': `translateX(${w * -this.offsetPercentX * this.starsTinyCoe}px) translateY(${h * -this.offsetPercentY * this.starsTinyCoe}px)`
-        }
-      },
-      starsMid () {
-        let h = window.screen.availHeight
-        let w = window.screen.availWidth
-        return {
-          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transform': `translateX(${w * -this.offsetPercentX * this.starsMidCoe}px) translateY(${h * -this.offsetPercentY * this.starsMidCoe}px)`
-        }
-      },
-      starsBig () {
-        let h = window.screen.availHeight
-        let w = window.screen.availWidth
-        return {
-          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-          'transform': `translateX(${w * -this.offsetPercentX * this.starsBigCoe}px) translateY(${h * -this.offsetPercentY * this.starsBigCoe}px)`
-        }
-      },
+//      starsTiny () {
+//        let h = window.screen.availHeight
+//        let w = window.screen.availWidth
+//        return {
+//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transform': `translateX(${w * -this.offsetPercentX * this.starsTinyCoe}px) translateY(${h * -this.offsetPercentY * this.starsTinyCoe}px)`
+//        }
+//      },
+//      starsMid () {
+//        let h = window.screen.availHeight
+//        let w = window.screen.availWidth
+//        return {
+//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transform': `translateX(${w * -this.offsetPercentX * this.starsMidCoe}px) translateY(${h * -this.offsetPercentY * this.starsMidCoe}px)`
+//        }
+//      },
+//      starsBig () {
+//        let h = window.screen.availHeight
+//        let w = window.screen.availWidth
+//        return {
+//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
+//          'transform': `translateX(${w * -this.offsetPercentX * this.starsBigCoe}px) translateY(${h * -this.offsetPercentY * this.starsBigCoe}px)`
+//        }
+//      },
       hoverContentStyle1 () {
         return {
           'transform': `rotateX(${this.bannerDeg * -this.offsetPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.offsetPercentX * this.rotCoe}deg)`

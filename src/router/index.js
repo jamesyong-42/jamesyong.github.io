@@ -9,7 +9,7 @@ const router = new Router({
   routes: [
     {
       name: 'Home',
-      path: '/home',
+      path: '/',
       component: require('../views/Home.vue')
     },
     {
@@ -21,6 +21,10 @@ const router = new Router({
       name: 'CV',
       path: '/cv',
       component: require('../views/CV.vue')
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

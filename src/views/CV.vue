@@ -81,7 +81,6 @@
   import Parallax from '../components/Parallax3.vue'
   import anime from 'animejs'
   import { mapGetters } from 'vuex'
-  const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`)
 
   export default {
     components: {
@@ -101,20 +100,6 @@
         rocket: null,
         topIntroLeft: null,
         topIntroRight: null,
-
-        starsTinyScale: 1.2,
-        starsMidScale: 2.4,
-        starsBigScale: 5,
-        starsTinyNum: 300,
-        starsMidNum: 150,
-        starsBigNum: 50,
-        // 100*100px
-        starsTinyDensity: 5,
-        starsMidDensity: 2,
-        starsBigDensity: 1,
-        starsTinyPos: [],
-        starsMidPos: [],
-        starsBigPos: [],
         lastSVGPoint: null,
         movingDirection: -90,
         midOffset: 0,
@@ -134,55 +119,10 @@
       ...mapGetters({
         scrollBar: 'scrollBar',
         blurNav: 'blurNav'
-      }),
-      trinitySpeedFactor () {
-        if (this.progress > 16.9) {
-          return 0
-        } else if (this.progress > 12.24) {
-          return 0.1
-        } else {
-          return 0
-        }
-      },
-      trinityAdminParalllaxFactor () {
-        if (this.progress > 21.11) {
-          return 0
-        } else if (this.progress > 16.67) {
-          return 0.1
-        } else {
-          return 0
-        }
-      },
-      parallaxEaseIn (progressMark, speedFactor) {
-        if (this.progress > progressMark) {
-        }
-      }
+      })
     },
     beforeMount () {
-      const h = window.screen.availHeight
-      const w = window.screen.availWidth
-      const ratio = h * w / 10000
-      const starsTinyNum = ratio * this.starsTinyDensity
-      const starsMidNum = ratio * this.starsMidDensity
-      const starsBigNum = ratio * this.starsBigDensity
-      for (let n = 0; n < starsTinyNum; n++) {
-        this.starsTinyPos.push({
-          'top': `${h * Math.random() * this.starsTinyScale - h * (this.starsTinyScale - 1)}px`,
-          'left': `${w * Math.random() * this.starsTinyScale - w * (this.starsTinyScale - 1)}px`
-        })
-      }
-      for (let n = 0; n < starsMidNum; n++) {
-        this.starsMidPos.push({
-          'top': `${h * Math.random() * this.starsMidScale - h * (this.starsMidScale - 1)}px`,
-          'left': `${w * Math.random() * this.starsMidScale - w * (this.starsMidScale - 1)}px`
-        })
-      }
-      for (let n = 0; n < starsBigNum; n++) {
-        this.starsBigPos.push({
-          'top': `${h * Math.random() * this.starsBigScale - h * (this.starsBigScale - 1)}px`,
-          'left': `${w * Math.random() * this.starsBigScale - w * (this.starsBigScale - 1)}px`
-        })
-      }
+
     },
     mounted () {
 //      const pageContent = document.getElementById('page-content')
@@ -200,12 +140,6 @@
       this.rocket = document.getElementById('rocket')
       this.topIntroLeft = document.getElementById('top-intro-left')
       this.topIntroRight = document.getElementById('top-intro-right')
-      this.rocketFlame1 = Snap('#rocket-flame-1')
-      this.rocketFlame2 = Snap('#rocket-flame-2')
-      this.rocketFlame3 = Snap('#rocket-flame-3')
-      this.rocketFlame4 = Snap('#rocket-flame-4')
-      this.rocketFlame5 = Snap('#rocket-flame-5')
-      this.rocketFlame6 = Snap('#rocket-flame-6')
 
       const ratio = this.space.getBoundingClientRect().width / this.space.viewBox.baseVal.width
       const curPoint = this.spacePath.getPointAtLength(0)

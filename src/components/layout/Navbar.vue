@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
       <div class="nav-left">
-        <router-link class="nav-item hero-brand" to="/home">
+        <router-link class="nav-item hero-brand" to="/">
           <div class="is-hidden-mobile">
             <span class="logo">
               <svg>
