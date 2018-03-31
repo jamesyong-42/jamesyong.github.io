@@ -1,0 +1,70 @@
+/*------------------------------------*\
+    #FONTS
+\*------------------------------------*/
+// @import "/fonts/font.css";
+@font-face {
+  font-family: 'AXIS-ExtraBold';
+  src: url('/fonts/AXIS-ExtraBold.eot');
+  src: url('/fonts/AXIS-ExtraBold.woff2') format('woff2'),
+  url('/fonts/AXIS-ExtraBold.woff') format('woff'),
+  url('/fonts/AXIS-ExtraBold.ttf') format('truetype'),
+  url('/fonts/AXIS-ExtraBold.svg#AXIS-ExtraBold') format('svg'),
+  url('/fonts/AXIS-ExtraBold.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Menlo-Regular';
+  src: url('/fonts/Menlo-Regular.eot');
+  src: url('/fonts/Menlo-Regular.woff2') format('woff2'),
+  url('/fonts/Menlo-Regular.woff') format('woff'),
+  url('/fonts/Menlo-Regular.ttf') format('truetype'),
+  url('/fonts/Menlo-Regular.svg#Menlo-Regular') format('svg'),
+  url('/fonts/Menlo-Regular.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Families
+$ft-fm--en: AXIS-ExtraBold;
+$ft-fm--cn: "Microsoft YaHei";
+$ft-fm--cn-quote: FangSong, SimSun, STSong;
+$ft-fm--local: sans-serif;
+
+$ft-fm-def: $ft-fm--en, $ft-fm--cn, $ft-fm--local;
+$ft-fm-quote: $ft-fm--en, $ft-fm--cn-quote, $ft-fm--local;
+
+$ft-fm-code: Menlo-Regular, Consolas, "Courier New", Courier;
+
+//简书
+$ft-fm: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+
+
+
+// Weight
+$ft-wt-def:   400;
+$ft-wt-light: 400;
+$ft-wt-bold:  900;
+
+$ft-wt-h1-6: $ft-wt-bold;
+
+
+
+
+
+// Size
+
+$ft-sz-def:  1.1rem;
+$ft-sz-sm:   1rem;
+$ft-sz-smer: 0.9rem;
+
+$ft-sz-page-title: 2.8rem;
+
+$ft-sz-h1: 2.2rem;
+$ft-sz-h2: 1.8rem;
+$ft-sz-h3: 1.6rem;
+$ft-sz-h4: 1.4rem;
+$ft-sz-h5: 1.2rem;
+$ft-sz-h6: 1.1rem;
+
+$ft-sz-qt: 1rem;
