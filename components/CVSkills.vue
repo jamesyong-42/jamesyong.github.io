@@ -115,16 +115,22 @@
             progress: 0.50
           },
           {
+            name: 'C4D',
+            color: '#00e7eb',
+            bgColor: '#000000',
+            progress: 0.30
+          },
+          {
             name: 'Ae',
             color: '#00e7eb',
             bgColor: '#000000',
-            progress: 0.38
+            progress: 0.20
           },
           {
             name: 'Pr',
             color: '#00e7eb',
             bgColor: '#000000',
-            progress: 0.25
+            progress: 0.10
           }
         ]
 

@@ -52,6 +52,9 @@ module.exports = {
       }
     }
   },
+  router: {
+    middleware: 'mobileNavHandeler'
+  },
   generate: {
   },
   plugins: [

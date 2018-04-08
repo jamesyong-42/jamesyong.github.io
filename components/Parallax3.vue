@@ -1,20 +1,19 @@
 <template>
-  <section :class="[sectionClass]" ref="block" :style="sectionStyle">
+  <section :class="['parallax-outer', scaleClass]" ref="block" :style="sectionStyle">
     <div
-      :class="['parallax-inner', containerClass]"
+      :class="['parallax-inner', scaleClass]"
       ref="parallax"
-      >
+    >
       <slot></slot>
     </div>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
-  import Scrollbar from 'smooth-scrollbar'
+
   import BezierEasing from 'bezier-easing'
-  import { mapGetters, mapActions } from 'vuex'
   // 获取元素顶部与窗口顶部的相对位移
-  function getElementViewTopOffset (scrollBar, element) {
+  function getElementViewTopOffset (scrollOffset, element) {
     let actualTop = element.offsetTop
     let current = element.offsetParent
     while (current !== null) {
@@ -22,7 +21,7 @@
       current = current.offsetParent
     }
     // return actualTop - window.pageYOffset
-    return actualTop - scrollBar.offset.y
+    return actualTop - scrollOffset
   }
 //  function addClass (obj, cls) {
 //    var objClass = obj.className
@@ -53,6 +52,10 @@
 //  }
   export default {
     props: {
+      scrollOffset: {
+        default: 0,
+        type: Number
+      },
       sectionStyle: {},
       speedFactor: {
         default: 0.15,
@@ -67,13 +70,9 @@
         type: Number,
         required: false
       },
-      sectionClass: {
+      scaleClass: {
         type: String,
-        default: 'parallax-outer'
-      },
-      containerClass: {
-        type: String,
-        default: 'parallax-outer__image'
+        default: 'scale-1x'
       }
     },
 
@@ -88,46 +87,10 @@
         easing: null
       }
     },
-    computed: {
-      ...mapGetters({
-        scrollBarOptions: 'scrollBarOptions'
-      })
-    },
-    mounted () {
-      this.el = this.$refs.parallax
-      this.init()
-      this.block = this.$refs.block
-      this.lastSpeedFactor = this.speedFactor
-      console.log('11111111', this.el.childNodes)
-      if (this.el.childNodes) {
-        this.el.childNodes.forEach(d => {
-          if (d.dataset) {
-            if (d.dataset.speed) {
-              if (!d.dataset.anchor) {
-                d.dataset.anchor = 50
-              }
-              if (!d.dataset.xoffset) {
-                d.dataset.xoffset = 0
-              }
-              this.parallaxChildren.push(d)
-              // console.log('22222222', this.parallaxChildren)
-            }
-            if (!d.dataset.stopclass) {
-              d.dataset.stopclass = ''
-              // console.log('22222222', this.parallaxChildren)
-            }
-          }
-        })
-      }
-    },
-
-    methods: {
-      ...mapActions({
-        setScrollBar: 'setScrollBar'
-      }),
-      animateElement () {
+    watch: {
+      scrollOffset (val) {
         const vh = window.innerHeight / 100
-        const offset = getElementViewTopOffset(this.scrollBar, this.block) / vh
+        const offset = getElementViewTopOffset(val, this.block) / vh
         if (this.lastSpeedFactor !== this.speedFactor) {
           this.accumulatedOffset = this.accumulatedOffset + offset * (this.lastSpeedFactor - this.speedFactor)
         }
@@ -176,23 +139,54 @@
           })
         }
         this.el.style.transform = `translate3d(0, ${totalOffset.toFixed(2)}vh ,0)`
-      },
+      }
+    },
+    computed: {
+    },
+    mounted () {
+      this.el = this.$refs.parallax
+      this.init()
+      this.block = this.$refs.block
+      this.lastSpeedFactor = this.speedFactor
+      console.log('11111111', this.el.childNodes)
+      if (this.el.childNodes) {
+        this.el.childNodes.forEach(d => {
+          if (d.dataset) {
+            if (d.dataset.speed) {
+              if (!d.dataset.anchor) {
+                d.dataset.anchor = 50
+              }
+              if (!d.dataset.xoffset) {
+                d.dataset.xoffset = 0
+              }
+              this.parallaxChildren.push(d)
+              // console.log('22222222', this.parallaxChildren)
+            }
+            if (!d.dataset.stopclass) {
+              d.dataset.stopclass = ''
+              // console.log('22222222', this.parallaxChildren)
+            }
+          }
+        })
+      }
+    },
+    beforeDestroy () {
 
-      scrollHandler () {
-        this.animateElement()
-      },
+    },
+    methods: {
 
-      setupListener () {
-        if (this.mediaQuery.matches) {
-          // window.addEventListener('scroll', this.scrollHandler, false)
-          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-          ssr.addListener(this.scrollHandler)
-        } else {
-          // window.removeEventListener('scroll', this.scrollHandler, false)
-          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-          ssr.removeListener(this.scrollHandler)
-        }
-      },
+
+//      setupListener () {
+//        if (this.mediaQuery.matches) {
+//          // window.addEventListener('scroll', this.scrollHandler, false)
+//          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//          ssr.addListener(this.scrollHandler)
+//        } else {
+//          // window.removeEventListener('scroll', this.scrollHandler, false)
+//          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//          ssr.removeListener(this.scrollHandler)
+//        }
+//      },
 
       init () {
 //        // nonstandard: Chrome, IE, Opera, Safari
@@ -200,13 +194,13 @@
 //        // nonstandard: Firefox
 //        window.addEventListener('DOMMouseScroll', this.MouseWheelHandler, false)
         this.easing = BezierEasing(0.40, 0.94, 0.59, 0.09)
-        let ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-        if (!ssr) {
-          ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
-        }
-        this.scrollBar = ssr
-        ssr.addListener(this.scrollHandler)
-        this.setScrollBar(ssr)
+//        let ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//        if (!ssr) {
+//          ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
+//        }
+//        this.scrollBar = ssr
+//        ssr.addListener(this.scrollHandler)
+//        this.setScrollBar(ssr)
 
 //        this.mediaQuery = window.matchMedia(this.breakpoint)
 //        console.log(this.mediaQuery)
@@ -220,93 +214,67 @@
 </script>
 
 <style lang="scss">
-@import "~@nextindex/next-scss/next-scss";
-
-.parallax-outer {
-  position: relative;
-  min-height: rem(350);
-  scroll-behavior: smooth;
-  overflow: hidden;
-  transform-style: preserve-3d;
-
-  @include media($sm-up) {
+  .parallax-outer {
+    position: relative;
     min-height: 100vh;
-  }
-
-  @include has(image) {
-    width: 100%;
     overflow: hidden;
-    height: 120%;
-
-    > img {
-      height: 100%;
-      max-width: none;
-      width: 100%;
-      @include object-fit(cover, bottom);
-    }
-
-    &.parallax-inner {
-      left: 0;
-      position: absolute;
-      will-change: transform;
-      right: 0;
-      top: 0;
-      -webkit-transition-property: all;
-      transition-property: all;
-      -webkit-transition-timing-function: ease;
-      transition-timing-function: ease;
-      > img {
-        height: 100%;
-        max-width: none;
-        width: 100%;
-        @include object-fit(cover, bottom);
-      }
-    }
+    transform-style: preserve-3d;
 
   }
-}
-.project-content {
-  height: 100vh;
-  max-width: none;
-  width: 100%;
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.project-content-2x {
-  height: 200vh;
-  max-width: none;
-  width: 100%;
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.project-content-5x {
-  height: 500vh;
-  max-width: none;
-  width: 100%;
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.project-content-10x {
-  height: 1000vh;
-  max-width: none;
-  width: 100%;
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
+
+  .parallax-inner {
+    left: 0;
+    position: absolute;
+    will-change: transform;
+    right: 0;
+    top: 0;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+  }
+  .scale-1x {
+    height: 100vh;
+    max-width: none;
+    width: 100%;
+    /*-webkit-box-align: center;*/
+    /*-ms-flex-align: center;*/
+    /*align-items: center;*/
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+  }
+  .scale-2x {
+    height: 200vh;
+    max-width: none;
+    width: 100%;
+    /*-webkit-box-align: center;*/
+    /*-ms-flex-align: center;*/
+    /*align-items: center;*/
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+  }
+  .scale-5x {
+    height: 500vh;
+    max-width: none;
+    width: 100%;
+    /*-webkit-box-align: center;*/
+    /*-ms-flex-align: center;*/
+    /*align-items: center;*/
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+  }
+  .scale-10x {
+    height: 1000vh;
+    max-width: none;
+    width: 100%;
+    /*-webkit-box-align: center;*/
+    /*-ms-flex-align: center;*/
+    /*align-items: center;*/
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+  }
 </style>

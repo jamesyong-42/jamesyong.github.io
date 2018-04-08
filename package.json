@@ -25,6 +25,7 @@
     "parallax-js": "^3.1.0",
     "raf": "^3.4.0",
     "smooth-scrollbar": "^8.2.6",
+    "three": "^0.91.0",
     "v-blur": "^1.0.0"
   },
   "devDependencies": {

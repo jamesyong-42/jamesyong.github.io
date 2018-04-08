@@ -1,7 +1,35 @@
 <template>
   <div class="Projects">
     <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
-
+      <!--<div class="Projects__Parallax__Content">-->
+        <!--<div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item&#45;&#45;headline"-->
+             <!--:class="[progress > 2 ? 'Projects__Parallax__Content__Item&#45;&#45;headline&#45;&#45;in' : 'Projects__Parallax__Content__Item&#45;&#45;headline&#45;&#45;out']">-->
+          <!--<svg class="animated trinity" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"-->
+            <!--viewBox="0 0 100 10"-->
+          <!--&gt;-->
+            <!--<path-->
+              <!--fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"-->
+              <!--d="M100,5 L0,5 Z"/>-->
+          <!--</svg>-->
+          <!--<h1 class="animated trinity">web</h1>-->
+          <!--<svg class="animated trinity" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"-->
+               <!--viewBox="0 0 100 10"-->
+          <!--&gt;-->
+            <!--<path-->
+              <!--fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"-->
+              <!--d="M0,5 L100,5 Z"/>-->
+          <!--</svg>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item&#45;&#45;logo">-->
+          <!--<div class="logo-3d" :class="'frame-' + frame1"></div>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item">-->
+          <!--<h1 :class="['trinity-title', 'animated', progress > 2.2 ? 'fadeInLand' : 'fadeOutLift']">vue trinity</h1>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item">-->
+          <!--<p :class="['project-subtitle', 'animated', progress > 2.4 ? 'fadeInLand' : 'fadeOutLift']">一个前后端分离的类商城项目</p>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
@@ -16,7 +44,37 @@
       </div>
     </section>
     <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
-
+      <!--<div class="Projects__Parallax__Content">-->
+        <!--<div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item&#45;&#45;headline">-->
+          <!--<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"-->
+               <!--viewBox="0 0 100 10"-->
+          <!--&gt;-->
+            <!--<path-->
+              <!--fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"-->
+              <!--d="M100,5 L0,5 Z"/>-->
+          <!--</svg>-->
+          <!--<h1 style="opacity: 0">web</h1>-->
+          <!--<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"-->
+               <!--viewBox="0 0 100 10"-->
+          <!--&gt;-->
+            <!--<path-->
+              <!--fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"-->
+              <!--d="M0,5 L100,5 Z"/>-->
+          <!--</svg>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item&#45;&#45;logo">-->
+          <!--<div class="logo-3d frame-7"></div>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item">-->
+          <!--<h1 :class="['trinity-title']" style="opacity: 0">vue trinity</h1>-->
+        <!--</div>-->
+        <!--<div class="Projects__Parallax__Content__Item">-->
+          <!--<p :class="['project-subtitle']" style="opacity: 0">一个前后端分离的类商城项目</p>-->
+        <!--</div>-->
+        <!--<div class="WormholeContainer">-->
+          <!--<wormhole :scrollOffset="scrollOffset" :cueIn="2500" :cueOut="9000"></wormhole>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
@@ -33,8 +91,159 @@
         </div>
       </div>
     </section>
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
+      <div class="Projects__Parallax__Content">
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--headline"
+             :class="[progress > 33.04 ? 'Projects__Parallax__Content__Item--headline--in' : 'Projects__Parallax__Content__Item--headline--out']">
+          <svg class="animated keypoint" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"
+              d="M100,5 L0,5 Z"/>
+          </svg>
+          <h1 class="animated keypoint">IOS</h1>
+          <svg class="animated keypoint" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"
+              d="M0,5 L100,5 Z"/>
+          </svg>
+        </div>
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+          <div class="logos keypoint-mask"></div>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <h1 :class="['keypoint-title', 'animated', progress > 28.6 ? 'fadeInLand' : 'fadeOutLift']">keypoint</h1>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <p :class="['project-subtitle', 'animated', progress > 29 ? 'fadeInLand' : 'fadeOutLift']">一个前后端分离的类商城项目</p>
 
-    <parallax class="Projects__Parallax" :speedFactor="0.1" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1">
+        </div>
+      </div>
+    </parallax>
+    <section class="hero is-medium is-dark is-bold" style="height: 5px">
+      <div class="hero-body">
+        <div class="container">
+        </div>
+      </div>
+    </section>
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
+      <div class="Projects__Parallax__Content">
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--headline">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"
+              d="M100,5 L0,5 Z"/>
+          </svg>
+          <h1 style="opacity: 0">IOS</h1>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"
+              d="M0,5 L100,5 Z"/>
+          </svg>
+        </div>
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+          <div class="logos keypoint"></div>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <h1 :class="['trinity-title']" style="opacity: 0">keypoint</h1>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <p :class="['project-subtitle']" style="opacity: 0">一个前后端分离的类商城项目</p>
+        </div>
+      </div>
+
+
+    </parallax>
+    <section class="hero is-medium is-dark is-bold" style="height: 5px">
+      <div class="hero-body">
+        <div class="container">
+        </div>
+      </div>
+    </section>
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
+      <div class="Projects__Parallax__Content">
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--headline"
+             :class="[progress > 54.52 ? 'Projects__Parallax__Content__Item--headline--in' : 'Projects__Parallax__Content__Item--headline--out']">
+          <svg class="animated matrix" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"
+              d="M100,5 L0,5 Z"/>
+          </svg>
+          <h1 class="animated matrix">PC</h1>
+          <svg class="animated matrix" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill="#ffffff" fill-opacity="0" stroke-width="1" stroke-miterlimit="10"
+              d="M0,5 L100,5 Z"/>
+          </svg>
+        </div>
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+          <div class="logos matrix-mask"></div>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <h1 :class="['matrix-title', 'animated', progress > 50.25 ? 'fadeInLand' : 'fadeOutLift']">matrix</h1>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <p :class="['project-subtitle', 'animated', progress > 50.7 ? 'fadeInLand' : 'fadeOutLift']">一个前后端分离的类商城项目</p>
+
+        </div>
+      </div>
+
+    </parallax>
+    <section class="hero is-medium is-dark is-bold" style="height: 5px">
+      <div class="hero-body">
+        <div class="container">
+        </div>
+      </div>
+    </section>
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
+      <div class="Projects__Parallax__Content">
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--headline">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"
+              d="M100,5 L0,5 Z"/>
+          </svg>
+          <h1 style="opacity: 0">PC</h1>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 100 10"
+          >
+            <path
+              fill-opacity="0" stroke="none" stroke-width="2" stroke-miterlimit="10"
+              d="M0,5 L100,5 Z"/>
+          </svg>
+        </div>
+        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+          <div class="logos matrix"></div>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <h1 :class="['matrix-title']" style="opacity: 0">matrix</h1>
+        </div>
+        <div class="Projects__Parallax__Content__Item">
+          <p :class="['project-subtitle']" style="opacity: 0">一个前后端分离的类商城项目</p>
+        </div>
+      </div>
+
+    </parallax>
+    <section class="hero is-medium is-dark is-bold" style="height: 5px">
+      <div class="hero-body">
+        <div class="container">
+        </div>
+      </div>
+    </section>
+    <parallax class="Projects__Parallax" :speedFactor="0.1" :scrollOffset="scrollOffset">
       <div id="project-intro-trinity-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
         <img class="galary-bg" data-depth="1.3" src="/parallaxGallery1.png"/>
         <img class="galary-bg" data-depth="0.8" src="/parallaxGallery2.png"/>

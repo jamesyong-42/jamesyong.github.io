@@ -1,8 +1,8 @@
 <template>
-    <nav class="nav">
-      <div class="nav-left">
-        <nuxt-link class="nav-item hero-brand" to="/">
-          <div class="is-hidden-mobile">
+    <nav class="nav Nav">
+      <div class="Nav__Left">
+        <nuxt-link class="Nav__Left__Logo" to="/">
+          <div >
             <span class="logo">
               <svg>
                 <rect x="0" y="0" fill="none" width="100%" height="100%"/>
@@ -11,40 +11,41 @@
             </span>
           </div>
         </nuxt-link>
-        <a class="nav-item is-hidden-tablet" @click="toggleSidebar(!sidebar.opened)">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-        </a>
+
       </div>
-      <div class="nav-right">
-        <div class="nav-item Nav-base allowExpand">
-            <span class="nav-item--btn">
+      <div class="Nav__Right">
+        <div class="Nav__Right__Items">
+            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
               <nuxt-link class="main-btn" to="/projects">
                 <template v-if="lan == 'ZH'">项目</template>
                 <template v-else-if="lan == 'EN'">Projects</template>
               </nuxt-link>
             </span>
-            <span class="nav-item--btn">
+            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
               <nuxt-link class="main-btn" to="/cv">
                 <template v-if="lan == 'ZH'">简历</template>
                 <template v-else-if="lan == 'EN'">CV</template>
               </nuxt-link>
             </span>
-            <span class="nav-item--btn">
+            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
               <a class="main-btn" href="https://blog.jamesyong42.com">
                 <template v-if="lan == 'ZH'">博客</template>
                 <template v-else-if="lan == 'EN'">Blog</template>
               </a>
             </span>
             <template v-if="lan == 'ZH'">
-              <span class="icon nav-item--btn">
+              <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
                 <i @click="changeLan('EN')">EN</i>
               </span>
             </template>
             <template v-else-if="lan == 'EN'">
-              <span class="icon nav-item--btn">
+              <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
                 <i @click="changeLan('ZH')">中文</i>
               </span>
             </template>
+            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--mobile" @click="toggleMobileNav(true)">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </span>
         </div>
       </div>
     </nav>
@@ -59,20 +60,6 @@ export default {
   },
   data () {
     return {
-
-      container: null,
-      root: null,
-      isCompact: null,
-      dropdownBackground: null,
-      dropdownBackgroundAlt: null,
-      dropdownContainer: null,
-      dropdownArrow: null,
-      dropdownSections: null,
-      dropdownRoots: null,
-      activeDropdown: null,
-      disableTransitionTimeout: null,
-      enableTransitionTimeout: null,
-      closeDropdownTimeout: null
     }
   },
   mounted () {
@@ -88,7 +75,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'changeLan'
+      'changeLan',
+      'toggleMobileNav'
     ])
   }
 }
@@ -98,46 +86,109 @@ export default {
 @import '~bulma/sass/utilities/variables';
 @import "~assets/scss/variables";
 
-.nav {
+.Nav {
   position: fixed;
   top:0;
   left: 0;
   width: 100%;
-  font-family:Helvetica,sans-serif;
+  font-family: 'Roboto', sans-serif;
   height: 6.6vh;
   min-height: 80px;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
-  background-color:transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
   perspective: 2000px;
   z-index: 500;
-  .nav-right {
-    align-items: stretch;
-    flex: 1;
-    justify-content: flex-end;
-    /*overflow: hidden;*/
-    /*overflow-x: hidden;*/
-    scroll: no;
-    white-space: nowrap;
+  font-size: 16px;
+  color: #fff;
+  a {
+    color: #fff;
   }
+  &__Left {
+    height: 100%;
+
+    &__Logo {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span {
+
+        -webkit-transition: all .6s ease;
+        -moz-transition: all .6s ease;
+        -ms-transition: all .6s ease;
+        -o-transition: all .6s ease;
+        transition: all .6s ease;
+
+        cursor: pointer;
+        display: block;
+
+
+        line-height: 45px;
+        margin: auto 30px;
+        max-width: 160px;
+        position: relative;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        vertical-align: middle;
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-weight: 100;
+        letter-spacing: 1px;
+
+      }
+
+    }
+  }
+
+  &__Right {
+
+    height: 100%;
+
+    &__Items {
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      overflow-x: hidden;
+      white-space: nowrap;
+
+      &__Item {
+        margin: 0 25px;
+        color: white;
+        cursor: pointer;
+        position: relative;
+        &--regular {
+          @media(max-width: 768px) {
+            display: none;
+          }
+        }
+        &--mobile {
+          @media(min-width: 768px) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
 }
-.nav-item a, a.nav-item{
-  color: white;
-}
-.nav-item a, a.nav-item:hover{
-  color: white;
-}
-.nav-item a.is-active, a.nav-item.is-active{
-  color: white;
-}
-.nav-item--btn {
-  margin: 0 25px;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  position: relative;
-}
+
+
+
+
+
+
+
+
+
 .main-btn:hover {
   color: black;
 }
@@ -169,65 +220,13 @@ export default {
 .icon a i:hover {
   color: #F44336;
 }
-#wishlist-anime{
-  position: relative;
-  top: 0;
-  left: -21px;
-  width: 21px;
-  height: 24px;
-}
-#wishlist-anime.animate {
-  color: #F44336;
-  opacity: 0.3;
-  width: 42px;
-  height: 44px;
-  top: -12px;
-  left: -10.5px;
-  -webkit-transition: all .2s ease-out 1s;
-  -moz-transition: all .2s ease-out 1s;
-  -ms-transition: all .2s ease-out 1s;
-  -o-transition: all .2s ease-out 1s;
-  transition: all .2s ease-out 1s;
-}
-
-header {
-  text-align: center;
-}
-header h1 {
-  text-transform: uppercase;
-}
 
 
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
 
 
 .logo {
-  box-sizing: inherit;
-  -webkit-transition: all .6s ease;
-  -moz-transition: all .6s ease;
-  -ms-transition: all .6s ease;
-  -o-transition: all .6s ease;
-  transition: all .6s ease;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  line-height: 45px;
-  margin: auto 30px;
-  max-width: 160px;
-  position: relative;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-align: center;
-  vertical-align: middle;
-  width: 100%;
-  border: none;
-  background: transparent;
-  font-weight: 100;
-  letter-spacing: 1px;
+
 }
 .logo svg {
   height: 45px;
@@ -263,274 +262,4 @@ header h1 {
 
 
 
-.nav .Dropdown-base {
-  position: absolute;
-  z-index: 1000;
-  top: 69px;
-  right: 0;
-  left: 0;
-  display: block;
-  transition-duration: 0.25s;
-  transition-property: transform, opacity;
-  transform: rotateX(-15deg);
-  transform-origin: 50% -50px;
-  pointer-events: none;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-.nav.dropdownActive .Dropdown-base {
-  transform: none;
-  pointer-events: auto;
-  opacity: 1;
-}
-
-.nav .Dropdown-bg {
-  overflow: hidden;
-  width: 520px;
-  height: 400px;
-  transform: translateX(0);
-  transform-origin: 0 0;
-  border-radius: 4px;
-  background: #fff;
-  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.nav .Dropdown-bg--alt,
-.nav .Dropdown-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition-duration: 0.25s;
-  transition-property: transform;
-  will-change: transform;
-}
-
-.nav .Dropdown-bg--alt {
-  right: 0;
-  height: 1000px;
-  background: #f6f9fc;
-}
-
-.nav .Dropdown-arrow {
-  top: -6px;
-  width: 12px;
-  height: 12px;
-  margin: 0 0 0 -10px;
-  transition-property: transform;
-  transform: rotate(45deg);
-  border-radius: 4px 0 0 0;
-  background: #fff;
-  box-shadow: -2px -2px 5px rgba(82, 95, 127, 0.08);
-  will-change: transform;
-}
-
-.nav .Dropdown-arrow,
-.nav .Dropdown-container {
-  position: absolute;
-  left: 0;
-  transition-duration: 0.25s;
-}
-
-.nav .Dropdown-container {
-  top: 0;
-  overflow: hidden;
-  transition-property: transform, width, height;
-  transform: translateX(0);
-  will-change: transform, width, height;
-}
-
-.nav .Dropdown-section {
-  transition-duration: 0.25s;
-  transition-property: transform, opacity;
-  pointer-events: none;
-  opacity: 0;
-  background: red;
-  will-change: transform, opacity;
-}
-
-.nav .Dropdown-section.active {
-  transform: translateX(0);
-  pointer-events: auto;
-  opacity: 1;
-}
-
-.nav .Dropdown-section.left {
-  transform: translateX(-150px);
-}
-
-.nav .Dropdown-section.right {
-  transform: translateX(150px);
-}
-
-.nav.noDropdownTransition .Dropdown-bg--alt,
-.nav.noDropdownTransition .Dropdown-arrow,
-.nav.noDropdownTransition .Dropdown-bg,
-.nav.noDropdownTransition .Dropdown-container,
-.nav.noDropdownTransition .Dropdown-section {
-  transition: none;
-}
-
-.nav .Dropdown-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.nav .Nav-linkGroup {
-  padding: 20px 35px;
-}
-
-.nav .Nav-link {
-  display: block;
-  padding: 9px 0;
-}
-
-.nav .linkTitle {
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
-  color: #6772e5;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 22px;
-}
-
-.nav .linkSub {
-  display: block;
-  margin-top: 5px;
-  color: #6b7c93;
-  font-size: 15px;
-  line-height: 22px;
-}
-
-.nav .linkSub,
-.nav .linkTitle {
-  transition: color 0.1s;
-}
-
-.nav .Nav-link:hover .linkTitle,
-.nav .linkTitle:hover {
-  color: #32325d;
-}
-
-.nav .Nav-link:hover .linkSub {
-  color: #424770;
-}
-
-.nav .hover-fillDark,
-.nav .hover-fillLight {
-  transition: fill 0.1s;
-}
-
-.nav .hover-strokeDark,
-.nav .hover-strokeLight {
-  transition: stroke 0.1s;
-}
-
-.nav .Nav-link:hover .hover-fillLight {
-  fill: #8898aa;
-}
-
-.nav .Nav-link:hover .hover-fillDark {
-  fill: #32325d;
-}
-
-.nav .Nav-link:hover .hover-strokeLight {
-  stroke: #8898aa;
-}
-
-.nav .Nav-link:hover .hover-strokeDark {
-  stroke: #32325d;
-}
-
-.nav .linkIcon {
-  white-space: nowrap;
-}
-
-.nav .linkIcon svg {
-  margin: 0 12px -3px -1px;
-}
-
-.nav .linkIcon i {
-  margin: 0 12px -3px -1px;
-}
-
-.nav .withIcon {
-  padding-left: 28px;
-}
-
-.nav .withIcon .linkTitle {
-  margin-left: -28px;
-}
-
-.nav .documentationGroup .linkSub {
-  max-width: 250px;
-}
-
-.nav .documentationArticles {
-  display: flex;
-  margin: 15px 20px 10px 28px;
-  white-space: nowrap;
-  font-size: 15px;
-  line-height: 26px;
-}
-
-.nav .documentationArticles > ul {
-  margin-right: 40px;
-}
-
-.nav .documentationArticles > ul:last-child {
-  margin-right: 0;
-}
-
-.nav .documentationArticles h4 {
-  margin: 0 0 3px;
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
-  color: #8898aa;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-}
-
-
-
-
-$main-color: #6394F8;
-$light-text: #ABB0BE;
-.shopping-cart-items {
-
-  padding-top: 20px;
-
-li {
-  margin-bottom: 18px;
-}
-
-img {
-  float: left;
-  margin-right: 12px;
-  max-height: 70px;
-}
-.media{
-  padding: 10px;
-}
-.media-content {
-  width: 100px;
-  margin: auto;
-  display: block;
-  color: $main-color;
-  font-size: 16px;
-}
-.media-right {
-  width: 50px;
-  margin: auto;
-}
-
-
-.item-quantity {
-  color: $light-text;
-}
-
-
-}
 </style>

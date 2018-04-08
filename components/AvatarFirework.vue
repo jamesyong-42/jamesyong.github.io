@@ -1,13 +1,22 @@
 <template>
-  <canvas width="400%" height="400%" id="firework">
+  <div class="AvatarSidekick">
+    <canvas width="400" height="400" id="firework">
 
-  </canvas>
+    </canvas>
+  </div>
+
 </template>
 
 <script type="text/ecmascript-6">
   import anime from 'animejs'
-  import Scrollbar from 'smooth-scrollbar'
+
   export default {
+    props: {
+      progress: {
+        default: 0,
+        type: Number
+      }
+    },
     data () {
       return {
         scrollBar: {},
@@ -33,42 +42,95 @@
         fireworkBottomAnimeSidekick: []
       }
     },
+    watch: {
+      progress (val) {
+
+        switch (val) {
+          case 0: {
+            if (!this.animated) {
+              this.animated = true
+              // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
+              this.render.play()
+              this.fireworkMainAnime.restart()
+              setTimeout(() => {
+                this.fireworkTopAnimeSidekick[1].restart()
+                this.$emit('introLeftDone')
+                setTimeout(() => {
+                  this.fireworkTopAnimeSidekick[0].restart()
+                  this.$emit('introRightDone')
+                }, 300)
+              }, 300)
+              // anime({duration: 200}).finished.then({})
+            }
+            break
+          }
+          case 1: {
+            if (!this.animated) {
+              this.animated = true
+              // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
+              this.render.play()
+              this.fireworkMainAnime.restart()
+              setTimeout(() => {
+                this.fireworkBottomAnimeSidekick[0].restart()
+                this.$emit('bottomIcon1Done')
+                setTimeout(() => {
+                  this.fireworkBottomAnimeSidekick[1].restart()
+                  this.$emit('bottomIcon2Done')
+                  setTimeout(() => {
+                    this.fireworkBottomAnimeSidekick[2].restart()
+                    this.$emit('bottomIcon3Done')
+                    setTimeout(() => {
+                      this.fireworkBottomAnimeSidekick[3].restart()
+                      this.$emit('bottomIcon4Done')
+                    }, 200)
+                  }, 200)
+                }, 200)
+              }, 300)
+              // anime({duration: 200}).finished.then({})
+            }
+            break
+          }
+          default: {
+            this.animated = false
+          }
+      }
+    }
+    },
     mounted () {
       this.init()
+    },
+    beforeDestroy () {
+      // console.log('avatarGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
+      // this.scrollBar.removeListener(this.animation)
     },
     methods: {
       init () {
         this.canvasEl = document.getElementById('firework')
         this.ctx = this.canvasEl.getContext('2d')
-        let ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-        if (!ssr) {
-          ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
-        }
-        this.scrollBar = ssr
+
         this.render = anime({
           duration: Infinity,
           update: () => {
             this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height)
           }
         })
-        ssr.addListener(this.animation)
-        // window.addEventListener('resize', resizeHandler)
+
         const x = this.canvasEl.width / 2
         const y = this.canvasEl.height / 2
+        console.log(this.canvasEl.width, this.canvasEl.height)
         this.circle = this.createCircle(x, y)
         for (let i = 0; i < this.numberOfParticules; i++) {
           this.particules.push(this.createParticule(x, y, 100, 5, 20))
         }
         for (let i = 0; i < 10; i++) {
-          this.particulesL.push(this.createParticule(x + 150, y, 80, 5, 15))
-          this.particulesR.push(this.createParticule(x - 150, y, 80, 5, 15))
+          this.particulesL.push(this.createParticule(x + 115, y, 80, 5, 15))
+          this.particulesR.push(this.createParticule(x - 115, y, 80, 5, 15))
         }
-        for (let i = 0; i < 5; i++) {
-          this.particules1.push(this.createParticule(x - 100, y + 50, 30, 2, 8))
-          this.particules2.push(this.createParticule(x - 50, y + 50, 30, 2, 8))
-          this.particules3.push(this.createParticule(x, y + 50, 30, 2, 8))
-          this.particules4.push(this.createParticule(x + 50, y + 50, 30, 2, 8))
-          this.particules5.push(this.createParticule(x + 100, y + 50, 30, 2, 8))
+        for (let i = 0; i < 4; i++) {
+          this.particules1.push(this.createParticule(x - 60, y + 70, 30, 2, 8))
+          this.particules2.push(this.createParticule(x - 25, y + 70, 30, 2, 8))
+          this.particules3.push(this.createParticule(x + 25, y + 70, 30, 2, 8))
+          this.particules4.push(this.createParticule(x + 60, y + 70, 30, 2, 8))
         }
         this.fireworkMainAnime = anime.timeline().add({
           targets: this.particules,
@@ -154,79 +216,8 @@
           easing: 'easeOutExpo',
           update: this.renderParticule
         }))
-        this.fireworkBottomAnimeSidekick.push(anime({
-          autoplay: false,
-          targets: this.particules5,
-          x: p => { return p.endPos.x },
-          y: p => { return p.endPos.y },
-          radius: 0.1,
-          duration: 500,
-          easing: 'easeOutExpo',
-          update: this.renderParticule
-        }))
       },
-//      resizeHandler () {
-//      },
-      animation () {
-        switch (this.scrollBar.offset.y) {
-          case 0: {
-            if (!this.animated) {
-              this.animated = true
-              // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
-              this.render.play()
-              this.fireworkMainAnime.restart()
-              setTimeout(() => {
-                this.fireworkTopAnimeSidekick[0].restart()
-                setTimeout(() => {
-                  this.fireworkTopAnimeSidekick[1].restart()
-                }, 100)
-              }, 100)
-              // anime({duration: 200}).finished.then({})
-            }
-            break
-          }
-          case (this.scrollBar.size.content.height - window.innerHeight): {
-            if (!this.animated) {
-              this.animated = true
-              // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
-              this.render.play()
-              this.fireworkMainAnime.restart()
-              setTimeout(() => {
-                this.fireworkBottomAnimeSidekick[0].restart()
-                setTimeout(() => {
-                  this.fireworkBottomAnimeSidekick[1].restart()
-                  setTimeout(() => {
-                    this.fireworkBottomAnimeSidekick[2].restart()
-                    setTimeout(() => {
-                      this.fireworkBottomAnimeSidekick[3].restart()
-                      setTimeout(() => {
-                        this.fireworkBottomAnimeSidekick[4].restart()
-                      }, 100)
-                    }, 100)
-                  }, 100)
-                }, 100)
-              }, 200)
-              // anime({duration: 200}).finished.then({})
-            }
-            break
-          }
-          default: {
-            this.animated = false
-          }
-        }
-//        if (this.scrollBar.offset.y === 0 || this.scrollBar.offset.y === ) {
-//          if (!this.animated) {
-//            this.animated = true
-//
-//            // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
-//            this.render.play()
-//            this.fireworkTopAnime.restart()
-//            // anime({duration: 200}).finished.then({})
-//          }
-//        } else {
-//          this.animated = false
-//        }
-      },
+
       setParticuleDirection (p, R) {
         const angle = anime.random(0, 360) * Math.PI / 180
         // const value = 100
@@ -240,13 +231,15 @@
         var p = {}
         p.x = x
         p.y = y
+
         // p.color = this.colors[anime.random(0, this.colors.length - 1)]
         p.color = '#FFF'
         p.radius = anime.random(rmin, rmax)
         p.endPos = this.setParticuleDirection(p, R)
         p.draw = () => {
           this.ctx.beginPath()
-          this.ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true)
+          this.ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
+
           this.ctx.fillStyle = p.color
           this.ctx.fill()
         }
@@ -263,7 +256,7 @@
         p.draw = () => {
           this.ctx.globalAlpha = p.alpha
           this.ctx.beginPath()
-          this.ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true)
+          this.ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
           this.ctx.lineWidth = p.lineWidth
           this.ctx.strokeStyle = p.color
           this.ctx.stroke()
@@ -281,8 +274,7 @@
 </script>
 
 <style lang="scss">
-
-  #firework {
+  .AvatarSidekick {
     position: absolute;
     top:50%;
     left: 50%;
@@ -290,6 +282,15 @@
     height: 400%;
     margin-top: -200%;
     margin-left: -200%;
+  }
+  #firework {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    margin-top: -50%;
+    margin-left: -50%;
   }
 
 </style>

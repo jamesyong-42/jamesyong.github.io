@@ -1,7 +1,6 @@
 <template>
-  <div id="page-content" class="projects-content">
-
-    <parallax :speedFactor="1" :containerClass="'project-content-5x'">
+  <div class="CV">
+    <parallax :scrollOffset="scrollOffset" :speedFactor="1" :scaleClass="'scale-5x'">
       <div class="space">
         <svg id="space" class="space-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 5400">
           <title>space</title>
@@ -13,7 +12,7 @@
           </g>
         </svg>
 
-        <rocket-flames id="rocket"></rocket-flames>
+        <rocket-flames :scrollOffset="scrollOffset" :progress="progress" id="rocket"></rocket-flames>
         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.21 438.51">
           <g>
             <g>
@@ -28,13 +27,20 @@
           </g>
         </svg>
         <div :class="['animated']" id="avatar">
-          <avatar-firework></avatar-firework>
+          <avatar-firework :progress="progress"
+                           v-on:introLeftDone="introLeftDone"
+                           v-on:introRightDone="introRightDone"
+                           v-on:bottomIcon1Done="bottomIcon1Done"
+                           v-on:bottomIcon2Done="bottomIcon2Done"
+                           v-on:bottomIcon3Done="bottomIcon3Done"
+                           v-on:bottomIcon4Done="bottomIcon4Done"
+          ></avatar-firework>
         </div>
-        <div id="top-intro-left">
+        <div id="top-intro-left" :class="{'shoutOut': introLeftHigh}">
           <h1>雍世康</h1>
           <h2>WEB前端工程师</h2>
         </div>
-        <div id="top-intro-right">
+        <div id="top-intro-right" :class="{'shoutOut': introRightHigh}">
           <span class="l">Be</span>
           <span class="s">the</span>
           <span class="l">change</span>
@@ -44,7 +50,28 @@
           <span class="s">in the</span>
           <span class="l">world</span>
         </div>
-        <div id="bottom-contact"></div>
+        <div id="bottom-contact">
+          <svg class="icon"
+               :class="{'shoutOut': bottomIcon1High}"
+               id="bottom-contact__email"
+          ><use xlink:href="#icon-envelope"></use></svg>
+          <svg class="icon"
+               :class="{'shoutOut': bottomIcon2High}"
+               id="bottom-contact__github"
+          ><use xlink:href="#icon-github"></use></svg>
+          <svg class="icon"
+               :class="{'shoutOut': bottomIcon3High}"
+               id="bottom-contact__behance"
+          ><use xlink:href="#icon-behance"></use></svg>
+          <svg class="icon"
+               :class="{'shoutOut': bottomIcon4High}"
+               id="bottom-contact__facebook"
+          ><use xlink:href="#icon-facebook"></use></svg>
+          <a id="bottom-contact__download" href="/Web Front-End Wenli Zhang.pdf" target="_blank" class="download">
+            <template v-if="lan == 'ZH'">下载简历</template>
+            <template v-else-if="lan == 'EN'">Download Resume</template>
+          </a>
+        </div>
       </div>
       <!--<div id="CV-education" class="CV-headline" data-speed="1">!!!!!!!!!!!!!!!!!!!!</div>-->
 
@@ -61,16 +88,7 @@
       <div id="tiny-stars" class="stars" data-speed="0.24" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
       <div id="mid-stars" class="stars" data-speed="0.64" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
       <div id="big-stars" class="stars" data-speed="1.16" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
-      <!--<div id="mid-stars" :class="['stars']">-->
-        <!--<template v-for="pos in starsMidPos">-->
-          <!--<img src="https://alquimiawrg.com/src/assets/background/star_mid.png" :style="pos">-->
-        <!--</template>-->
-      <!--</div>-->
-      <!--<div id="big-stars" :class="['stars']">-->
-        <!--<template v-for="pos in starsBigPos">-->
-          <!--<img src="https://alquimiawrg.com/src/assets/background/star_big.png" :style="pos">-->
-        <!--</template>-->
-      <!--</div>-->
+
     </parallax>
   </div>
 
@@ -81,7 +99,6 @@
   import AvatarFirework from '~/components/AvatarFirework.vue'
   import CvSkills from '~/components/CVSkills.vue'
   import Parallax from '~/components/Parallax3.vue'
-  import anime from 'animejs'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -107,6 +124,9 @@
         movingDirection: -90,
         midOffset: 0,
 
+        lastRocketW: 0,
+        lastRocketH: 0,
+
         rocketFlame1: {},
         rocketFlame2: {},
         rocketFlame3: {},
@@ -115,24 +135,48 @@
         rocketFlame6: {},
         rocketFlaming: true,
 
-        scrollOffset: 0,
+        // scrollOffset: 0,
         rocketCenterOffsetX: Number(0),
         rocketCenterOffsetY: Number(0),
         avatarCenterOffsetX: Number(0),
         avatarCenterOffsetY: Number(0),
 
         CVSkillsEl: {},
-        CVSkillsProgress: 0
+        CVSkillsProgress: 0,
+
+        introLeftHigh: false,
+        introRightHigh: false,
+        bottomIcon1High: false,
+        bottomIcon2High: false,
+        bottomIcon3High: false,
+        bottomIcon4High: false,
+
+        bottomContactEls: null
+      }
+    },
+    watch: {
+      scrollOffset (val) {
+        const scrollOffset = val
+        const contentHeight = this.$el.clientHeight
+        const progress = scrollOffset / (contentHeight - window.innerHeight)
+
+        // console.log('Scrolllllllllllll', val)
+        this.progress = progress
+        console.log('progress', progress, this.movingDirection)
+
+        this.updateView (progress)
+
       }
     },
     computed: {
       ...mapGetters({
+        lan: 'language',
         scrollBar: 'scrollBar',
+        scrollOffset: 'scrollOffset',
         blurNav: 'blurNav'
       })
     },
     beforeMount () {
-
     },
     mounted () {
 //      const pageContent = document.getElementById('page-content')
@@ -141,137 +185,222 @@
 //      console.log(this.scrollBar.contentEl)
 //      const pagecopy = pageContent.cloneNode(true)
 //      this.blurNav.appendChild(pagecopy)
-      this.scrollBar.addListener(this.scrollBlur)
-      this.scrollBar.addListener(this.progressChecker)
-      console.log(anime)
+      // console.log('FFFFFFFFFFFFFFFFFF', this.$el.clientHeight)
+
       this.space = document.getElementById('space')
       this.spacePath = document.getElementById('spacePath')
       this.avatar = document.getElementById('avatar')
       this.rocket = document.getElementById('rocket')
       this.topIntroLeft = document.getElementById('top-intro-left')
       this.topIntroRight = document.getElementById('top-intro-right')
+      this.bottomContactEls = {
+        email: document.getElementById('bottom-contact__email'),
+        github: document.getElementById('bottom-contact__github'),
+        behance: document.getElementById('bottom-contact__behance'),
+        facebook: document.getElementById('bottom-contact__facebook'),
+        download: document.getElementById('bottom-contact__download')
+      }
 
       this.CVSkillsEl = document.getElementById('CV-Skills')
 
       this.reactiveHandler()
       window.addEventListener('resize', this.reactiveHandler)
-//      // console.log('path', this.rocketFlame1)
-//      const str1 = 'M27.64,85.08c0-4.52-7.06-4.68-7.06,0,0,1.41,0,3.65,0,5.14A3.55,3.55,0,1,0,27.66,90C27.64,88.66,27.64,86.61,27.64,85.08Z'
-//      const str2 = 'M27.63,78.73c0-5.41-7.11-5.16-7.09,0,0,2.87,0,13.37,0,16.69,0,4.9,7.11,5.22,7.09.06C27.6,92.29,27.63,82.69,27.63,78.73Z'
-//      // const shapes = pasition.lerp(str1, str2, 0.5)
-//      const aa = pasition.animate({
-//        from: str1,
-//        to: str2,
-//        time: 0.5,
-//        easing: () => {},
-//        begin: () => {},
-//        progress: function (shapes, percent) { console.log(shapes, percent) },
-//        end: function (shapes) { }
-//      })
-//      const str3 = toSVGString(pasition.lerp(str2, str1, 0.5))
-//      const path1 = Snap.parsePathString(str1)
-//      const path2 = Snap.parsePathString(str2)
-//      const dif = Snap.path.intersection(str1, str2)
-//      console.log('path', str3, aa, path1, path2, dif)
-//      this.rocketFlameAni1A()
-//      this.rocketFlameAni2A()
-//      this.rocketFlameAni3A()
-//      this.rocketFlameAni4A()
-//      this.rocketFlameAni5A()
-//      this.rocketFlameAni6A()
-//      var path = anime.path('#space path')
-//      var motionPath = anime({
-//        targets: '#avatar',
-//        translateX: path,
-//        translateY: path,
-//        rotate: path,
-//        easing: 'linear',
-//        duration: 2000,
-//        loop: true
-//      })
-//
-//      console.log(motionPath)
+      this.updateView(0)
+
     },
+
+    beforeRouteLeave (to, from, next) {
+
+      window.removeEventListener('resize', this.reactiveHandler)
+      this.$store.dispatch('toggleMobileNav', false)
+      next()
+    },
+
     methods: {
       reactiveHandler () {
-        const rocketCenterOffsetX = (window.innerWidth - this.rocket.getBoundingClientRect().width) / 2
-        const rocketCenterOffsetY = -this.rocket.getBoundingClientRect().height / 2
-        const avatarCenterOffsetX = (window.innerWidth - this.avatar.getBoundingClientRect().width) / 2
-        const avatarCenterOffsetY = -this.avatar.getBoundingClientRect().height / 2
 
-        this.rocketCenterOffsetX = rocketCenterOffsetX
-        this.rocketCenterOffsetY = rocketCenterOffsetY
+        // getBoundingClientRect()考虑了旋转高度,需修正
+        // const rocketCenterOffsetX = (window.innerWidth - this.rocket.getBoundingClientRect().width) / 2
+        // const rocketCenterOffsetY = -this.rocket.getBoundingClientRect().height / 2
+        const dir = Math.abs(this.movingDirection / 180 * Math.PI)
+        const cosa = Math.abs(Math.cos(dir))
+        const sina = Math.sin(dir)
+        const cos2a = Math.cos(dir * 2)
+        if (cos2a === 0) {
+          // 此时getBoundingClientRect是正方形，彻底丢失子长方形特征信息，需要按比例复原
+          const W = this.rocket.getBoundingClientRect().width
+          const ratioW = this.lastRocketW / (this.lastRocketW + this.lastRocketH)
+          const ratioH = this.lastRocketH / (this.lastRocketW + this.lastRocketH)
+          const w = ratioW * W
+          const h = ratioH * W
+          const rocketCenterOffsetX = (window.innerWidth - w) / 2
+          const rocketCenterOffsetY = -h / 2
+
+          this.rocketCenterOffsetX = rocketCenterOffsetX
+          this.rocketCenterOffsetY = rocketCenterOffsetY
+
+        } else {
+
+          const W = this.rocket.getBoundingClientRect().width
+          const H = this.rocket.getBoundingClientRect().height
+          const w = (cosa * W - sina * H) / cos2a
+          const h = (cosa * H - sina * W) / cos2a
+          this.lastRocketW = w
+          this.lastRocketH = h
+
+          const rocketCenterOffsetX = (window.innerWidth - w) / 2
+          const rocketCenterOffsetY = -h / 2
+
+          this.rocketCenterOffsetX = rocketCenterOffsetX
+          this.rocketCenterOffsetY = rocketCenterOffsetY
+          // console.log('clueeeeeeeeeeee', cosa, sina, cos2a, this.movingDirection, dir, W, H, w, h)
+        }
+
+
+        const avatarCenterOffsetX = (window.innerWidth - this.avatar.offsetWidth) / 2
+        const avatarCenterOffsetY = -this.avatar.offsetHeight / 2
+
         this.avatarCenterOffsetX = avatarCenterOffsetX
         this.avatarCenterOffsetY = avatarCenterOffsetY
 
-        const spaceCenterOffset = (window.innerWidth - this.space.getBoundingClientRect().width) / 2
-        const ratio = this.space.getBoundingClientRect().width / this.space.viewBox.baseVal.width
-        const curPoint = this.spacePath.getPointAtLength(0)
-        const y = curPoint.y * ratio
-        // console.log('!!!!!!!!!!!!!!', typeof roffsX)
-        this.space.style.transform = `translate3d(${spaceCenterOffset.toFixed(1)}px, 0 ,0)`
-        this.avatar.style.transform = `translate3d(${avatarCenterOffsetX.toFixed(1)}px, ${(avatarCenterOffsetY + y).toFixed(1)}px, 0) scale(1, 1)`
-        this.rocket.style.transform = `translate3d(${rocketCenterOffsetX.toFixed(1)}px, ${(rocketCenterOffsetY + y).toFixed(1)}px, 0)`
+
+//        const spaceCenterOffset = (window.innerWidth - this.space.getBoundingClientRect().width) / 2
+//        const ratio = this.space.getBoundingClientRect().width / this.space.viewBox.baseVal.width
+//
+//        const totalL = this.spacePath.getTotalLength()
+//        const curL = totalL * this.progress
+//        const curPoint = this.spacePath.getPointAtLength(curL)
+//        const y = curPoint.y * ratio
+//
+//        // console.log('!!!!!!!!!!!!!!', typeof roffsX)
+//        this.space.style.transform = `translate3d(${spaceCenterOffset.toFixed(1)}px, 0 ,0)`
+//        this.avatar.style.transform = `translate3d(${avatarCenterOffsetX.toFixed(1)}px, ${(avatarCenterOffsetY + y).toFixed(1)}px, 0) scale(1, 1)`
+//        this.rocket.style.transform = `translate3d(${rocketCenterOffsetX.toFixed(1)}px, ${(rocketCenterOffsetY + y).toFixed(1)}px, 0)`
+//
+
+        const contentHeight = this.$el.clientHeight
+        const reMappedScrollOffset = this.progress * (contentHeight - window.innerHeight)
+        // console.log('reMappppppp', reMappedScrollOffset)
+
+        if (this.scrollBar.offset.y === reMappedScrollOffset) {
+          this.updateView(this.progress)
+        } else {
+          this.scrollBar.scrollTo(0, reMappedScrollOffset)
+          this.scrollBar.update()
+        }
+//        this.updateView(this.progress)
+//        this.scrollBar.scrollTo(0, reMappedScrollOffset)
+//        this.scrollBar.update()
+
       },
-      scrollBlur () {
-        this.blurNav.scrollTop = this.scrollBar.offset.y
-      },
-      progressChecker () {
-        this.scrollOffset = this.scrollBar.offset.y
-        this.progress = this.scrollBar.offset.y / (this.scrollBar.size.content.height - window.innerHeight)
-        const ratio = this.space.getBoundingClientRect().width / this.space.viewBox.baseVal.width
-        // const ratio = 1
+      updateView (progress) {
+
+
+        const ratioX = this.space.getBoundingClientRect().width / this.space.viewBox.baseVal.width
+        const ratioY = this.space.getBoundingClientRect().height / this.space.viewBox.baseVal.height
+
+
         const totalL = this.spacePath.getTotalLength()
-        const curL = totalL * this.progress
+        const curL = totalL * progress
         const curPoint = this.spacePath.getPointAtLength(curL)
         if (this.lastSVGPoint) {
           this.movingDirection = -Math.atan2(curPoint.y - this.lastSVGPoint.y, curPoint.x - this.lastSVGPoint.x) * 180 / Math.PI
         }
         this.lastSVGPoint = curPoint
-        // const x = curPoint.x * ratio + this.space.getBoundingClientRect().left
-        const y = curPoint.y * ratio
-        const avatarFlag = Math.abs(this.progress - 0.5)
+
+        const y = curPoint.y * ratioY
+        const avatarFlag = Math.abs(progress - 0.5)
 
         const spaceCenterOffset = (window.innerWidth - this.space.getBoundingClientRect().width) / 2
-        // const avatarCenterOffset = (window.innerWidth - this.avatar.getBoundingClientRect().width) / 2
+
 
         if (avatarFlag >= 0.45) {
-          let scale = (1 - (0.5 - avatarFlag) / 0.05).toFixed(3)
-          // this.avatar.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale}, ${scale})`
+          let scale = (1 - (0.5 - avatarFlag) / 0.05).toFixed(2)
+
           this.avatar.style.transform = `translate3d(${this.avatarCenterOffsetX.toFixed(1)}px, ${(this.avatarCenterOffsetY + y).toFixed(1)}px, 0) scale(${scale}, ${scale})`
-          // this.avatar.style.transform = `translate3d(${avatarCenterOffset}px, ${y}px, 0) scale(${scale}, ${scale})`
+
           this.topIntroLeft.style.transform = `scale(${scale}, ${scale})`
           this.topIntroRight.style.transform = `scale(${scale}, ${scale})`
+          this.bottomContactEls.email.style.transform = `scale(${scale}, ${scale})`
+          this.bottomContactEls.github.style.transform = `scale(${scale}, ${scale})`
+          this.bottomContactEls.behance.style.transform = `scale(${scale}, ${scale})`
+          this.bottomContactEls.facebook.style.transform = `scale(${scale}, ${scale})`
+          this.bottomContactEls.download.style.transform = `scale(${scale}, ${scale})`
+
         } else {
-          // this.avatar.style.transform = `translate3d(${avatarCenterOffset}px, ${y}px, 0) scale(0, 0)`
+
           this.avatar.style.transform = `translate3d(${this.avatarCenterOffsetX.toFixed(1)}px, ${(this.avatarCenterOffsetY + y).toFixed(1)}px, 0) scale(0, 0)`
-          // this.avatar.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0, 0)`
+
           this.topIntroLeft.style.transform = `scale(0, 0)`
           this.topIntroRight.style.transform = `scale(0, 0)`
+
+          this.bottomContactEls.email.style.transform = `scale(0, 0)`
+          this.bottomContactEls.github.style.transform = `scale(0, 0)`
+          this.bottomContactEls.behance.style.transform = `scale(0, 0)`
+          this.bottomContactEls.facebook.style.transform = `scale(0, 0)`
+          this.bottomContactEls.download.style.transform = `scale(0, 0)`
         }
-        // console.log('progress', this.progress, curPoint.x, this.space.width.baseVal.value, this.space.offsetWidth, this.space.getBoundingClientRect().width, this.space.viewBox.baseVal.width, ratio, this.space.getBoundingClientRect().left, `translate3d(${x}px, ${y}px, 0)`)
-        // this.avatar.style.transform = `translate3d(${x}px, ${y}px ,0)`
-        const midOffset = (this.space.viewBox.baseVal.width / 2 - curPoint.x) * ratio
+
+        const midOffset = (this.space.viewBox.baseVal.width / 2 - curPoint.x) * ratioX
         this.midOffset = midOffset
-        // console.log('SSSSSSSSS', this.rocketCenterOffsetX, this.rocketCenterOffsetY, y)
+
         this.space.style.transform = `translate3d(${(spaceCenterOffset + midOffset).toFixed(1)}px, 0 ,0)`
         this.rocket.style.transform = `translate3d(${this.rocketCenterOffsetX.toFixed(1)}px, ${(this.rocketCenterOffsetY + y).toFixed(1)}px, 0) rotate(${(-this.movingDirection - 90).toFixed(1)}deg)`
-        // this.space.style.transform = `translate3d(${midOffset}px, 0 ,0)`
-        // console.log(this.progress, this.space.getBoundingClientRect().left, this.space.getBoundingClientRect().width, ratio, x, y)
-        // this.rocket.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${-this.movingDirection - 90}deg)`
+
+        // const rocketCenterOffsetY = -this.rocket.getBoundingClientRect().height / 2
+        // console.log('clueeeeeeeeeeeeeeeee', totalL, curL, y, rocketCenterOffsetY, this.rocketCenterOffsetY, `translate3d(${this.rocketCenterOffsetX.toFixed(1)}px, ${(this.rocketCenterOffsetY + y).toFixed(1)}px, 0) rotate(${(-this.movingDirection - 90).toFixed(1)}deg)`)
 
         this.CVSkillsProgress = 1 - Math.abs((this.CVSkillsEl.dataset.progress - 0.5) / 0.5)
+      },
+      introLeftDone () {
+        console.log('WWWWWWWWWWWWWWWW')
+        this.introLeftHigh = true
+        setTimeout(() => {
+          this.introLeftHigh = false
+        }, 1200)
+      },
+      introRightDone () {
+        this.introRightHigh = true
+        setTimeout(() => {
+          this.introRightHigh = false
+        }, 1200)
+      },
+      bottomIcon1Done () {
+        this.bottomIcon1High = true
+        setTimeout(() => {
+          this.bottomIcon1High = false
+        }, 1200)
+      },
+      bottomIcon2Done () {
+        this.bottomIcon2High = true
+        setTimeout(() => {
+          this.bottomIcon2High = false
+        }, 1200)
+      },
+      bottomIcon3Done () {
+        this.bottomIcon3High = true
+        setTimeout(() => {
+          this.bottomIcon3High = false
+        }, 1200)
+      },
+      bottomIcon4Done () {
+        this.bottomIcon4High = true
+        setTimeout(() => {
+          this.bottomIcon4High = false
+        }, 1200)
       }
-//      scrollBlur () {
-//        this.blurNav.scrollTop = this.scrollBar.offset.y
-//        console.log('size', this.scrollBar.size)
-//      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
   @import "~assets/scss/variables";
+
+
+  .CV {
+    width: 100%;
+
+  }
 
   .space {
     width: 100%;
@@ -331,20 +460,58 @@
     -o-transform-origin: center;
     z-index: 999;
   }
+  .shoutOut {
+    animation-name: shoutOut;
+    animation-duration: 1s;
+    animation-delay: 0.1s;
+    animation-timing-function: ease;
+  }
+  @keyframes shoutOut {
+    /*0% {*/
+      /*filter: invert(0);*/
+    /*}*/
+    /*10% {*/
+      /*filter: drop-shadow(0 0 0.75rem crimson) invert(1);*/
+    /*}*/
+    /*100% {*/
+      /*filter: invert(0);*/
+    /*}*/
+    0% {
+      filter: blur(0);
+    }
+    10% {
+      filter: blur(10px);
+    }
+    100% {
+      filter: blur(0);
+    }
+  }
   #top-intro-left {
+    will-change: filter, transform;
     position: absolute;
     top:50vh;
     left: 50vw;
     width: 220px;
-    margin-left: -400px;
+    margin-left: calc(-300px - 5vw);
+    margin-top: -20px;
     color: white;
     font-family: $fontAXIS;
-
+    text-align: center;
     > h1 {
       font-size: 60px;
     }
     > h2 {
-      font-size: 20px;
+      font-size: 24px;
+    }
+    @media (max-width: 768px) {
+      margin-left: calc(-250px - 5vw);
+      margin-top: 0;
+      > h1 {
+        font-size: 30px;
+      }
+      > h2 {
+        font-size: 12px;
+      }
     }
   }
 
@@ -352,11 +519,13 @@
   $fs-m: $fs-l * 0.79;
   $fs-s: $fs-l * 0.5;
   #top-intro-right {
+    will-change: filter, transform;
     position: absolute;
     top:50vh;
     left: 50vw;
-    margin-left: 180px;
-    width: 220px;
+    margin-left: calc(90px + 5vw);
+    margin-top: -10px;
+    width: 240px;
     font-family: $fontAXIS;
     display: flex;
     flex-flow: row wrap;
@@ -375,10 +544,64 @@
     > .s {
       font-size: $fs-s;
       color: white;
-      margin: 2px;
+      margin: 10px;
+    }
+    @media (max-width: 768px) {
+      width: 150px;
+      margin-top: 0;
+      margin-left: calc(60px + 5vw);
+      > .l {
+        font-size: $fs-l / 2;
+        color: #ff6666;
+      }
+      > .m {
+        font-size: $fs-m / 2;
+        color: white;
+        // line-height: 20px;
+      }
+      > .s {
+        font-size: $fs-s / 2;
+        color: white;
+        margin: 2px;
+      }
     }
   }
+  #bottom-contact {
+    height: 60px;
+    width: 400px;
+    overflow: visible;
+    // background-color: #ff6666;
+    position: absolute;
+    bottom: calc(50vh - 230px);
+    left: calc(50vw - 200px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    .icon {
+      fill: white;
+      margin: 0 20px;
+      height: 60px;
+      width: 60px;
+      cursor: pointer;
+    }
+    #bottom-contact__email {
+      height: 55px;
+      width: 55px;
+    }
+    .download {
+      width: 100%;
+      height: 60px;
+      background-color: #ff6666;
+      color: #ffffff;
+      text-align: center;
+      font-size: 30px;
+      position: absolute;
+      top:100px;
+      left: 0;
+    }
 
+  }
 
 
 
@@ -393,7 +616,7 @@
       width: 38vw;
       top: -25vh;
       left: 5vw;
-      background-color: #ff6666;
+      // background-color: #ff6666;
     }
   }
   #CV-Skills {

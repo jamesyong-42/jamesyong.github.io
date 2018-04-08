@@ -71,6 +71,14 @@
   import BezierEasing from 'bezier-easing'
   export default {
     props: {
+      scrollOffset: {
+        default: 0,
+        type: Number
+      },
+      progress: {
+        default: 0,
+        type: Number
+      }
     },
 
     data () {
@@ -152,19 +160,55 @@
     },
     computed: {
     },
+    watch: {
+      scrollOffset (val) {
+        const scrollOffset = val
+        if (this.ease !== null) {
+          const p = 1 - this.ease(Math.abs((this.progress - 0.5) / 0.5))
+          this.flames.forEach((f, index) => {
+            const startX = f.startPoint.x
+            const startY = f.startPoint.y
+            const width = f.width
+            let d = `M${startX},${startY}`
+            const unitWidth = f.unitWidth
+            let dir = 1
+            f.flames.forEach((v, i) => {
+              const progress = (scrollOffset % this.animeLength) / this.animeLength
+              const y1 = startY - (v.max - (v.max - v.min) * Math.abs(progress - 0.5) / 0.5) * p
+              const x1 = startX + unitWidth * i
+              const cx1 = x1
+              const cy1 = y1 - unitWidth * dir
+              const x2 = x1 + unitWidth
+              const y2 = y1
+              const cx2 = x2
+              const cy2 = cy1
+              d += ` L${x1.toFixed(2)},${y1.toFixed(2)} C${cx1.toFixed(2)},${cy1.toFixed(2)} ${cx2.toFixed(2)},${cy2.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)}`
+              dir = -dir
+            })
+            d += ` L${(startX + width).toFixed(2)},${startY.toFixed(2)} C${(startX + width).toFixed(2)},${(startY + width).toFixed(2)} ${startX.toFixed(2)},${(startY + width).toFixed(2)} ${startX.toFixed(2)},${startY.toFixed(2)}Z`
+            // console.log(startX, width, unitWidth)
+            document.getElementById('flame-' + index).setAttribute('d', d)
+            document.getElementById('flame-' + index).style.opacity = p.toFixed(2)
+          })
+        }
+      }
+    },
     mounted () {
       this.init()
     },
-
+    beforeDestroy () {
+      // console.log('rocketflameGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
+      // this.scrollBar.removeListener(this.updatePath)
+    },
     methods: {
       init () {
-        let ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-        if (!ssr) {
-          ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
-        }
-        this.scrollBar = ssr
+//        let ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//        if (!ssr) {
+//          ssr = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
+//        }
+//        this.scrollBar = ssr
         this.ease = BezierEasing(0.16, 0.90, 0.86, 0.1)
-        ssr.addListener(this.updatePath)
+//        ssr.addListener(this.updatePath)
 
         this.drawingHeight = this.height / 2 - this.centerOffset
         this.drawingWidth = this.width
@@ -177,35 +221,6 @@
             v.max = v.max * (that.drawingHeight - that.drawingWidth / 2)
             v.min = v.min * (that.drawingHeight - that.drawingWidth / 2)
           })
-        })
-      },
-      updatePath () {
-        const scrollOffset = this.scrollBar.offset.y
-        const p = 1 - this.ease(Math.abs((scrollOffset / (this.scrollBar.size.content.height - window.innerHeight) - 0.5) / 0.5))
-        this.flames.forEach((f, index) => {
-          const startX = f.startPoint.x
-          const startY = f.startPoint.y
-          const width = f.width
-          let d = `M${startX},${startY}`
-          const unitWidth = f.unitWidth
-          let dir = 1
-          f.flames.forEach((v, i) => {
-            const progress = (scrollOffset % this.animeLength) / this.animeLength
-            const y1 = startY - (v.max - (v.max - v.min) * Math.abs(progress - 0.5) / 0.5) * p
-            const x1 = startX + unitWidth * i
-            const cx1 = x1
-            const cy1 = y1 - unitWidth * dir
-            const x2 = x1 + unitWidth
-            const y2 = y1
-            const cx2 = x2
-            const cy2 = cy1
-            d += ` L${x1.toFixed(2)},${y1.toFixed(2)} C${cx1.toFixed(2)},${cy1.toFixed(2)} ${cx2.toFixed(2)},${cy2.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)}`
-            dir = -dir
-          })
-          d += ` L${(startX + width).toFixed(2)},${startY.toFixed(2)} C${(startX + width).toFixed(2)},${(startY + width).toFixed(2)} ${startX.toFixed(2)},${(startY + width).toFixed(2)} ${startX.toFixed(2)},${startY.toFixed(2)}Z`
-          // console.log(startX, width, unitWidth)
-          document.getElementById('flame-' + index).setAttribute('d', d)
-          document.getElementById('flame-' + index).style.opacity = p.toFixed(2)
         })
       }
     }

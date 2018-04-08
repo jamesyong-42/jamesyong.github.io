@@ -1,29 +1,11 @@
 <template>
   <div class="Home">
-    <!--<div class="stars" id="stars">-->
-      <!--<div :class="['stars-tiny']" data-depth="0.25">-->
-        <!--<template v-for="pos in starsTinyPos">-->
-          <!--<img src="https://alquimiawrg.com/src/assets/background/star_tiny.png" :style="pos">-->
-        <!--</template>-->
-      <!--</div>-->
-      <!--<div :class="['stars-mid']" data-depth="0.85">-->
-        <!--<template v-for="pos in starsMidPos">-->
-          <!--<img src="https://alquimiawrg.com/src/assets/background/star_mid.png" :style="pos">-->
-        <!--</template>-->
-      <!--</div>-->
-      <!--<div :class="['stars-big']" data-depth="2.15">-->
-        <!--<template v-for="pos in starsBigPos">-->
-          <!--<img src="https://alquimiawrg.com/src/assets/background/star_big.png" :style="pos">-->
-        <!--</template>-->
-      <!--</div>-->
-    <!--</div>-->
     <div class="Home__StarBG">
       <div class="Home__StarBG__TinyStars" data-depth="0.25"></div>
       <div class="Home__StarBG__MidStars" data-depth="0.85"></div>
       <div class="Home__StarBG__BigStars" data-depth="2.15"></div>
     </div>
     <div class="Home__Logo hover-box" id="hover-box">
-      <!--<div id="home-logo" class="home-content-logo hover-box" id="hover-box" @mousemove="hoverBoxOver($event)" @mouseleave="hoverBoxLeave($event)">-->
       <img class="hover-content" id="logo-J" :style="hoverContentStyle1" src="/J.svg"/>
       <img class="hover-content" id="logo-ames" :style="hoverContentStyle2" src="/ames.svg"/>
       <img class="hover-content" id="logo-Y" :style="hoverContentStyle3" src="/Y.svg"/>
@@ -84,67 +66,6 @@
       }
     },
     computed: {
-//      hoverContentStyle1 () {
-//        return {
-//          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * -this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.bannerPercentX * this.rotCoe}deg)` : ''
-//        }
-//      },
-//      hoverContentStyle2 () {
-//        return {
-//          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * -this.bannerPercentX * this.rotCoe}deg)` : ''
-//        }
-//      },
-//      hoverContentStyle3 () {
-//        return {
-//          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * -this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * -this.bannerPercentX * this.rotCoe}deg)` : ''
-//        }
-//      },
-//      hoverContentStyle4 () {
-//        return {
-//          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.bannerPercentX * this.rotCoe}deg)` : ''
-//        }
-//      },
-//      hoverContentStyle5 () {
-//        return {
-//          'transform': this.isBannerOver ? `rotateX(${this.bannerDeg * -this.bannerPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.bannerPercentX * this.rotCoe}deg)` : ''
-//        }
-//      }
-//      starsTiny () {
-//        let h = window.screen.availHeight
-//        let w = window.screen.availWidth
-//        return {
-//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transform': `translateX(${w * -this.offsetPercentX * this.starsTinyCoe}px) translateY(${h * -this.offsetPercentY * this.starsTinyCoe}px)`
-//        }
-//      },
-//      starsMid () {
-//        let h = window.screen.availHeight
-//        let w = window.screen.availWidth
-//        return {
-//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transform': `translateX(${w * -this.offsetPercentX * this.starsMidCoe}px) translateY(${h * -this.offsetPercentY * this.starsMidCoe}px)`
-//        }
-//      },
-//      starsBig () {
-//        let h = window.screen.availHeight
-//        let w = window.screen.availWidth
-//        return {
-//          '-webkit-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-moz-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-ms-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          '-o-transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transition': `all ${1 / this.mouseSpeed}s ease-out`,
-//          'transform': `translateX(${w * -this.offsetPercentX * this.starsBigCoe}px) translateY(${h * -this.offsetPercentY * this.starsBigCoe}px)`
-//        }
-//      },
       hoverContentStyle1 () {
         return {
           'transform': `rotateX(${this.bannerDeg * -this.offsetPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.offsetPercentX * this.rotCoe}deg)`
@@ -171,28 +92,7 @@
         }
       }
     },
-//    beforeMount () {
-//      let h = window.screen.availHeight
-//      let w = window.screen.availWidth
-//      for (let n = 0; n < this.starsTinyNum; n++) {
-//        this.starsTinyPos.push({
-//          'top': `${h * Math.random() * this.starsTinyScale - h * (this.starsTinyScale - 1)}px`,
-//          'left': `${w * Math.random() * this.starsTinyScale - w * (this.starsTinyScale - 1)}px`
-//        })
-//      }
-//      for (let n = 0; n < this.starsMidNum; n++) {
-//        this.starsMidPos.push({
-//          'top': `${h * Math.random() * this.starsMidScale - h * (this.starsMidScale - 1)}px`,
-//          'left': `${w * Math.random() * this.starsMidScale - w * (this.starsMidScale - 1)}px`
-//        })
-//      }
-//      for (let n = 0; n < this.starsBigNum; n++) {
-//        this.starsBigPos.push({
-//          'top': `${h * Math.random() * this.starsBigScale - h * (this.starsBigScale - 1)}px`,
-//          'left': `${w * Math.random() * this.starsBigScale - w * (this.starsBigScale - 1)}px`
-//        })
-//      }
-//    },
+
     mounted () {
       this.elem = document.getElementById('hover-box')
       this.offsetTop = this.elem.getBoundingClientRect().top + window.pageYOffset || document.documentElement.scrollTop - document.documentElement.clientTop
@@ -203,24 +103,25 @@
       const parallaxBG = new Parallax(BG)
       console.log(parallaxBG)
     },
-    beforeRouterLeave () {
+
+    beforeRouteLeave (to, from, next) {
+      console.log('sdasdasd')
       document.removeEventListener('mousemove', this.mouseMoving)
+      this.$store.dispatch('toggleMobileNav', false)
+      if (!this.switching) {
+        this.switching = true
+        this.init()
+        var self = this
+        this.open(function () {
+          self.switching = false
+          self.destroy()
+          console.log('its on!')
+          next()
+        })
+      }
     },
     methods: {
-//      hoverBoxOver (e) {
-//        let x = e.pageX - this.offsetLeft
-//        let y = e.pageY - this.offsetTop
-//        let centerX = this.elem.offsetWidth / 2
-//        let centerY = this.elem.offsetHeight / 2
-//        let deltaX = x - centerX
-//        let deltaY = y - centerY
-//        this.bannerPercentX = deltaX / centerX
-//        this.bannerPercentY = deltaY / centerY
-//        this.isBannerOver = true
-//      },
-//      hoverBoxLeave (e) {
-//        this.isBannerOver = false
-//      },
+
       mouseMoving (e) {
         // console.log(e.pageX, e.pageY)
         let x = e.pageX
@@ -376,20 +277,6 @@
         var canvas = document.getElementById('pixel-overlay')
         canvas.parentNode.removeChild(canvas)
       }
-    },
-    beforeRouteLeave (to, from, next) {
-      console.log('sdasdasd')
-      if (!this.switching) {
-        this.switching = true
-        this.init()
-        var self = this
-        this.open(function () {
-          self.switching = false
-          self.destroy()
-          console.log('its on!')
-          next()
-        })
-      }
     }
   }
 </script>
@@ -397,7 +284,7 @@
 <style lang="scss" scoped>
   @import "~assets/scss/variables";
 
-  $logo-width: 500px;
+  $logo-width: 50vmin;
   $logo-height: 0.81 * $logo-width;
   $logo-J-width: 0.358 * $logo-width;
   $logo-J-top: 0;
@@ -467,41 +354,7 @@
     }
 
   }
-  /*.stars {*/
-    /*position: fixed;*/
-    /*top:0;*/
-    /*left:0;*/
-    /*width: 100vw;*/
-    /*height: 100vh;*/
-    /*overflow: hidden;*/
-  /*}*/
 
-  /*.stars-tiny {*/
-    /*position: absolute;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*> img {*/
-      /*position: absolute;*/
-    /*}*/
-  /*}*/
-  /*.stars-mid {*/
-    /*position: absolute;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-
-    /*> img {*/
-      /*position: absolute;*/
-    /*}*/
-  /*}*/
-  /*.stars-big {*/
-    /*position: absolute;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-
-    /*> img {*/
-      /*position: absolute;*/
-    /*}*/
-  /*}*/
 
 
   .hover-box{

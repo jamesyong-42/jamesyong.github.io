@@ -113,7 +113,10 @@
         })
       }
     },
-
+    beforeDestroy () {
+      console.log('parallaxGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
+      this.scrollBar.removeListener(this.scrollHandler)
+    },
     methods: {
       ...mapActions({
         setScrollBar: 'setScrollBar'
@@ -227,17 +230,17 @@
         this.animateElement()
       },
 
-      setupListener () {
-        if (this.mediaQuery.matches) {
-          // window.addEventListener('scroll', this.scrollHandler, false)
-          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-          ssr.addListener(this.scrollHandler)
-        } else {
-          // window.removeEventListener('scroll', this.scrollHandler, false)
-          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-          ssr.removeListener(this.scrollHandler)
-        }
-      },
+//      setupListener () {
+//        if (this.mediaQuery.matches) {
+//          // window.addEventListener('scroll', this.scrollHandler, false)
+//          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//          ssr.addListener(this.scrollHandler)
+//        } else {
+//          // window.removeEventListener('scroll', this.scrollHandler, false)
+//          const ssr = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
+//          ssr.removeListener(this.scrollHandler)
+//        }
+//      },
 
       init () {
 //        // nonstandard: Chrome, IE, Opera, Safari
@@ -250,12 +253,13 @@
         }
         this.scrollBar = ssr
         this.setScrollBar(ssr)
-        this.mediaQuery = window.matchMedia(this.breakpoint)
-        console.log(this.mediaQuery)
-        if (this.mediaQuery) {
-          this.mediaQuery.addListener(this.setupListener)
-          this.setupListener()
-        }
+        this.scrollBar.addListener(this.scrollHandler)
+//        this.mediaQuery = window.matchMedia(this.breakpoint)
+//        console.log(this.mediaQuery)
+//        if (this.mediaQuery) {
+//          this.mediaQuery.addListener(this.setupListener)
+//          this.setupListener()
+//        }
       }
     }
   }
