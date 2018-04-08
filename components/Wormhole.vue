@@ -347,7 +347,7 @@
           t.inheritTagLineA1Offset = tagOffset + 350
         })
 
-        // this.drawTagInheritLine(ctx, 15)
+        this.drawTagInheritLine(ctx, 15)
 
 //        ctx.fillText('111', this.canvasL.width * 0.2, 10)
 //        ctx.save()
@@ -406,7 +406,67 @@
         })
 
       },
-      drawTagInheritLine (ctx, gap, offset) {
+      drawTagInheritLine (ctx, gap) {
+        ctx.save()
+        ctx.strokeStyle = '#3effc8'
+        ctx.lineWidth = 1
+        this.timeLine.map((t, i) => {
+          if (t.inheritTagPos.length > 0) {
+            const endNode = this.timeLine[i + 1].inheritNodePos
+            t.inheritTagPos.map((p, j) => {
+              const index = t.inheritTag[j]
+              const R = gap * index
+              const r = gap
+              const a1x = t.inheritTagLineA1Offset
+              const a1y = p.y
+              const startLine = a1x - p.x
+              const midLine = (a1y - endNode.y) - R - r
+
+              // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title + '-' + j, midLine, a1x, a1y, startLine)
+
+              if (midLine < 0) {
+                const totalLength = endNode.x - p.x
+                t.inheritTagLineLength.push(totalLength)
+
+                ctx.beginPath()
+                ctx.moveTo(p.x, p.y)
+                ctx.lineTo(endNode.x, endNode.y)
+                ctx.stroke()
+
+              } else {
+                const a2x = a1x + R
+                const a2y = p.y - R
+                const a3x = a2x
+
+                const a3y = a2y - midLine
+                const a4x = a3x + r
+                const a4y = endNode.y
+                const a5x = endNode.x
+                const endLine = a5x - a4x
+                const a5y = a4y
+                const totalLength = startLine + midLine + endLine + Math.PI * (R + r) * 0.5
+                t.inheritTagLineLength.push(totalLength)
+
+
+                ctx.beginPath()
+                ctx.moveTo(p.x, p.y)
+                ctx.lineTo(a1x, a1y)
+                ctx.arcTo(a2x, a1y, a2x, a2y, R)
+                ctx.lineTo(a3x, a3y)
+                ctx.arcTo(a3x, a4y, a4x, a4y, r)
+                ctx.lineTo(a5x, a5y)
+                ctx.stroke()
+              }
+
+
+            })
+          }
+
+        })
+        ctx.restore()
+
+      },
+      drawTagInheritLineWithOffset (ctx, gap, offset) {
         ctx.save()
         ctx.strokeStyle = '#3effc8'
         ctx.lineWidth = 1
@@ -858,13 +918,13 @@
 
         })
 
-        const ofs = this.spline.getLength() * progress + 200
-        const ctx = this.canvasL.getContext('2d')
-
-
-        this.clearTagInheritLine (ctx, 15)
-        this.drawTagInheritLine (ctx, 15, ofs)
-        this.wormhole.material.map.needsUpdate = true
+//        const ofs = this.spline.getLength() * progress + 200
+//        const ctx = this.canvasL.getContext('2d')
+//
+//
+//        this.clearTagInheritLine (ctx, 15)
+//        this.drawTagInheritLine (ctx, 15, ofs)
+//        this.wormhole.material.map.needsUpdate = true
 
         // this.textPlane.translateX(this.textPlane.position.x - progress * this.textPlane.position.x)
         // this.textPlane.translateY(this.textPlane.position.y)
