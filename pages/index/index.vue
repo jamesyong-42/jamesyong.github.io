@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
   import Parallax from 'parallax-js'
   import requestAnimationFrame from 'raf'
   export default {

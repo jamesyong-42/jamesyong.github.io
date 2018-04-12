@@ -171,6 +171,14 @@ export default {
           }
         }
         &--mobile {
+          @media(max-width: 768px) {
+            height: 100%;
+            width: 64px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
           @media(min-width: 768px) {
             display: none;
           }

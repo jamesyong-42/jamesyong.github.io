@@ -1,8 +1,6 @@
 <template>
   <div class="Projects">
     <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
-
-
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d" :class="'frame-' + frame1"></div>
@@ -16,20 +14,45 @@
       </div>
     </section>
     <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
-
-
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d frame-7"></div>
         </div>
         <div class="WormholeContainer">
-          <wormhole :scrollOffset="scrollOffset" :cueIn="2500" :cueOut="13000"></wormhole>
+          <wormhole :progress="progress" :cueIn="0.178" :cueOut="0.751"></wormhole>
         </div>
       </div>
     </parallax>
     <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 5px">
       <div class="hero-body">
         <div class="container">
+        </div>
+      </div>
+    </section>
+
+    <parallax class="Projects__Parallax" :speedFactor="0.2" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
+      <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
+
+        <div v-for="(v, index) in videoDemos"
+             v-if="progress > v.cueIn"
+             :key="index"
+             class="Projects__Parallax__Content--demos__Video">
+          <d-player :video="v"></d-player>
+        </div>
+
+
+      </div>
+    </parallax>
+
+    <section class="hero is-medium is-dark is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Primary bold title
+          </h1>
+          <h2 class="subtitle">
+            Primary bold subtitle
+          </h2>
         </div>
       </div>
     </section>
@@ -48,34 +71,21 @@
         <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" src="https://c1.staticflickr.com/5/4788/40707159581_bdc2eb4dba_b.jpg">
       </div>
     </parallax>
-    <section class="hero is-medium is-dark is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Primary bold title
-          </h1>
-          <h2 class="subtitle">
-            Primary bold subtitle
-          </h2>
-        </div>
-      </div>
-    </section>
-    <parallax class="Projects__Parallax" :speedFactor="0.1" :scrollOffset="scrollOffset">
-      <img src="https://static1.squarespace.com/static/560d8ccfe4b095370aa9849c/t/563927e7e4b052ca34b006d9/1446586358152/HeaderImage_110315.png">
-    </parallax>
   </div>
 
 </template>
 
-<script>
+<script type="text/ecmascript-6">
   import Parallax from '~/components/Parallax4.vue'
-  import Wormhole from '~/components/Wormhole.vue'
+  import Wormhole from '~/components/Wormhole2.vue'
   import ParallaxJs from 'parallax-js'
+  import DPlayer from '~/components/DPlayer.vue'
   import { mapGetters } from 'vuex'
   export default {
     components: {
       Parallax,
-      Wormhole
+      Wormhole,
+      DPlayer
     },
     data () {
       return {
@@ -87,7 +97,21 @@
         galaB: false,
         galaC: false,
         galaD: false,
-        frame1: 1
+        frame1: 1,
+        videoDemos: [
+          {
+            url: '/keypoint-demo.mp4',
+            cueIn: 0.6,
+            pic: '/keypoint-thumb.png',
+            thumbnails: '/keypoint-demo-thumbnails.jpg'
+          },
+          {
+            url: '/matrix-demo.mp4',
+            cueIn: 0.6,
+            pic: '/matrix-thumb.jpg',
+            thumbnails: '/matrix-demo-thumbnails.jpg'
+          }
+        ]
       }
     },
     computed: {
@@ -117,16 +141,16 @@
         }
       },
       trinitySpeedFactor () {
-        if (this.progress > 4.5) {
+        if (this.progress > 0.045) {
           return 0.1
         } else {
           return 0
         }
       },
       trinityAdminParalllaxFactor () {
-        if (this.progress > 21.11) {
+        if (this.progress > 0.2111) {
           return 0
-        } else if (this.progress > 16.67) {
+        } else if (this.progress > 0.1667) {
           return 0.1
         } else {
           return 0
@@ -140,10 +164,10 @@
     watch: {
       scrollOffset (val) {
         const scrollOffset = val
-        const contentHeight = this.$el.clientHeight
+        const contentHeight = this.scrollBar.size.content.height - window.innerHeight
 
-        const factor = 2
-        const p = scrollOffset / contentHeight * 100
+        const factor = 0.02
+        const p = scrollOffset / contentHeight
         this.progress = p
         if (p < factor) {
           this.frame1 = Math.floor(p / factor * 100 / 16)
@@ -151,6 +175,7 @@
         if (this.blurNav) {
           this.blurNav.scrollTop = scrollOffset
         }
+        console.log(this.progress)
 
       }
     },
@@ -164,11 +189,12 @@
 //      this.scrollBar.update()
 //      this.scrollBar.addListener(this.scrollBlur)
 //      this.scrollBar.addListener(this.progressChecker)
-      var gallary = document.getElementById('project-intro-trinity-gallary')
-      var parallaxGallary = new ParallaxJs(gallary, {
+      const gallary = document.getElementById('project-intro-trinity-gallary')
+      const parallaxGallary = new ParallaxJs(gallary, {
         hoverOnly: true,
         pointerEvents: true
       })
+      window.addEventListener('resize', this.reactiveHandler)
       console.log(parallaxGallary)
     },
 
@@ -178,6 +204,8 @@
 //      this.scrollBar.removeListener(this.progressChecker)
 
       this.$store.dispatch('toggleMobileNav', false)
+      // console.log('NNNNNNNNNNNNNNNNNNNNNNNN')
+      window.removeEventListener('resize', this.reactiveHandler)
       next()
 
     },
@@ -221,23 +249,18 @@
           this.galaC = false
           this.galaD = false
         }
+      },
+      reactiveHandler () {
+
+        const contentHeight = this.scrollBar.size.content.height - window.innerHeight
+        const reMappedScrollOffset = this.progress * contentHeight
+        console.log('!!!!!!!!!!!!GGG', this.scrollBar.size.content.height)
+        console.log('!!!!!!!!!!!!', this.progress, reMappedScrollOffset, this.scrollOffset)
+        // this.scrollBar.scrollTo(0, reMappedScrollOffset)
+        // this.scrollBar.update()
+
+
       }
-//      scrollBlur () {
-//        this.blurNav.scrollTop = this.scrollBar.offset.y
-//        console.log('progress', this.progress)
-//      },
-//      progressChecker () {
-//        const factor = 2.2
-//        const p = this.scrollBar.offset.y / this.scrollBar.size.content.height * 100
-//        this.progress = p
-//        if (p < factor) {
-//          this.frame1 = Math.floor(p / factor * 100 / 16)
-//        }
-//      }
-//      scrollBlur () {
-//        this.blurNav.scrollTop = this.scrollBar.offset.y
-//        console.log('size', this.scrollBar.size)
-//      }
     }
   }
 </script>
@@ -479,6 +502,16 @@
             }
           }
         }
+
+        &--demos {
+
+          &__Video {
+
+            width: 88.89vmin;
+            margin: 50px auto;
+            height: 50vmin;
+          }
+        }
       }
     }
   }
@@ -535,10 +568,10 @@
 
   .WormholeContainer {
     position: absolute;
-    top: -95px;
+    top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh + 95px);
+    height: 100vh;
     // background-color: #1d1eff;
     z-index: 999;
   }

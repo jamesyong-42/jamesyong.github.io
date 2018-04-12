@@ -1,6 +1,11 @@
 <template>
     <div class="MobileNav">
       <div class="MobileNav__Items">
+        <span class="MobileNav__Items__Item--close">
+          <svg @click="close">
+            <use xlink:href="#icon-remove"></use>
+          </svg>
+        </span>
         <span v-if="$route.fullPath !== '/projects'" class="MobileNav__Items__Item">
           <nuxt-link  to="/projects">
             <template v-if="lan == 'ZH'">项目</template>
@@ -60,6 +65,9 @@ export default {
     lanClick (l) {
       this.changeLan(l)
       this.toggleMobileNav(false)
+    },
+    close () {
+      this.toggleMobileNav(false)
     }
   }
 }
@@ -86,13 +94,29 @@ export default {
     &__Item {
       display: block;
       width: 100%;
+      margin: 30px auto;
       font-size: 3rem;
       text-align: center;
+      color: #1cfaff;
       > a {
+        color: #1cfaff;
         cursor: pointer;
       }
       > i {
         cursor: pointer;
+      }
+
+      &--close {
+        display: block;
+        width: 100%;
+        text-align: right;
+        svg {
+          cursor: pointer;
+          fill: #1cfaff;
+          width: 3rem;
+          height: 3rem;
+          right: 0;
+        }
       }
     }
   }
