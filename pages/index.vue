@@ -28,9 +28,7 @@
     },
     mounted () {
       let scrollBar = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
-      // console.log('HHHHHHHHHHHHHHHHHHHHHHHH', scrollBar)
       if (!scrollBar) {
-        console.log('HHHHHHHHHHHHHHHHHHHHHHHH')
         scrollBar = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
       }
 

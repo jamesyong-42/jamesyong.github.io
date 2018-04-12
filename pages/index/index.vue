@@ -94,14 +94,18 @@
     },
 
     mounted () {
-      this.elem = document.getElementById('hover-box')
-      this.offsetTop = this.elem.getBoundingClientRect().top + window.pageYOffset || document.documentElement.scrollTop - document.documentElement.clientTop
-      this.offsetLeft = this.elem.getBoundingClientRect().left + window.pageXOffset || document.documentElement.scrollLeft - document.documentElement.clientLeft
-      document.addEventListener('mousemove', this.mouseMoving)
+      const isDesktop = !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|BB10|mobi|tablet|opera mini|nexus 7)/i)
+      if (isDesktop) {
+        this.elem = document.getElementById('hover-box')
+        this.offsetTop = this.elem.getBoundingClientRect().top + window.pageYOffset || document.documentElement.scrollTop - document.documentElement.clientTop
+        this.offsetLeft = this.elem.getBoundingClientRect().left + window.pageXOffset || document.documentElement.scrollLeft - document.documentElement.clientLeft
+        document.addEventListener('mousemove', this.mouseMoving)
 
-      const BG = document.querySelector('.Home__StarBG')
-      const parallaxBG = new Parallax(BG)
-      console.log(parallaxBG)
+        const BG = document.querySelector('.Home__StarBG')
+        const parallaxBG = new Parallax(BG)
+
+      }
+
     },
 
     beforeRouteLeave (to, from, next) {
