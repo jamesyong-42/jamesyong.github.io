@@ -7,6 +7,7 @@
 <script type="text/ecmascript-6">
   import * as THREE from 'three'
   THREE.Cache.enabled = true
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     props: {
@@ -20,19 +21,19 @@
         cameraTravelledStep: 1,
         cameraRotationStep: 0.0,
 
-        webGLRenderer: null,
-        camera: null,
+
         geom: null,
-        spline: null,
+
         splineLength: 0,
-        wormhole: null,
-
         textPlane: null,
-
         canvas: null,
-
         radius: 20,
 
+        scene:null,
+        webGLRenderer: null,
+        wormhole: null,
+        camera: null,
+        spline: null,
         timeLine: [
           {
             time: '2016.2-2016.10',
@@ -158,6 +159,11 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters({
+        wormholeCache: 'wormholeCache'
+      })
+    },
     mounted () {
       this.init()
     },
@@ -170,41 +176,68 @@
         }
       }
     },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.resizeHandler)
+    },
     methods: {
+      ...mapActions({
+        setWormholeCache: 'setWormholeCache'
+      }),
       init () {
 
-        this.webGLRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
-        console.log(this.$el.clientWidth, this.$el.clientHeight)
-        this.webGLRenderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
+        if (this.wormholeCache) {
+          this.webGLRenderer = this.wormholeCache.webGLRenderer
+          this.wormhole = this.wormholeCache.wormhole
+          this.camera = this.wormholeCache.camera
+          this.spline = this.wormholeCache.spline
+          this.timeLine = this.wormholeCache.timeLine
+          this.scene = this.wormholeCache.scene
+
+        } else {
+          this.webGLRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
+          // console.log(this.$el.clientWidth, this.$el.clientHeight)
+          this.webGLRenderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
+
+
+          // Creating the scene
+          this.scene = new THREE.Scene()
+          // Setting up the camera
+          this.camera = new THREE.PerspectiveCamera(60, this.$el.clientWidth / this.$el.clientHeight, 10, 1000)
+
+          this.geom = this.createWormholeGeo(100, this.radius, 70)
+
+          this.canvas = document.getElementById('timeLine')
+
+          this.canvas.width = this.spline.getLength()
+
+          this.canvas.height = this.radius * Math.PI * 15
+
+          const ctx = this.canvas.getContext('2d')
+
+          this.drawTimeLineTexL(ctx)
+
+          this.wormhole = this.createWormholeMesh(this.geom)
+
+          this.createTextPlane()
+
+          this.scene.add(this.wormhole)
+
+          this.setWormholeCache({
+            webGLRenderer: this.webGLRenderer,
+            wormhole: this.wormhole,
+            camera: this.camera,
+            spline: this.spline,
+            timeLine: this.timeLine,
+            scene: this.scene
+          })
+        }
+
         document.getElementById('Wormhole').append(this.webGLRenderer.domElement)
 
         window.addEventListener('resize', this.resizeHandler)
 
-
-        // Creating the scene
-        this.scene = new THREE.Scene()
-        // Setting up the camera
-        this.camera = new THREE.PerspectiveCamera(60, this.$el.clientWidth / this.$el.clientHeight, 10, 1000)
-
-        this.geom = this.createWormholeGeo(100, this.radius, 70)
-
-        this.canvas = document.getElementById('timeLine')
-
-        this.canvas.width = this.spline.getLength()
-
-        this.canvas.height = this.radius * Math.PI * 15
-
-        const ctx = this.canvas.getContext('2d')
-
-        this.drawTimeLineTexL(ctx)
-
-        this.wormhole = this.createWormholeMesh(this.geom)
-
-        this.createTextPlane()
-
-        this.scene.add(this.wormhole)
-
         this.render(0)
+        this.scroll(0)
 
       },
       drawTimeLineTexL (ctx) {

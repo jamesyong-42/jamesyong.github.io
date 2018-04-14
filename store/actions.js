@@ -16,6 +16,18 @@ export const setBlurNav = ({ commit }, blurNav) => {
   commit(types.SET_BLURNAV, blurNav)
 }
 
+export const setTransition = ({ commit }, transition) => {
+  commit(types.SET_TRANSITION, transition)
+}
+
 export const toggleMobileNav = ({ commit }, mobileNavShow) => {
   commit(types.TOGGLE_MOBILENAV, mobileNavShow)
+}
+
+export const setWormholeCache = ({ commit }, wormholeCache) => {
+  commit(types.SET_WORMHOLE_CACHE, wormholeCache)
+}
+
+export const setFireworkCache = ({ commit }, firework) => {
+  commit(types.SET_FIREWORK_CACHE, firework)
 }

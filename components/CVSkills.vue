@@ -1,7 +1,10 @@
 <template>
   <div class="CVSkills">
     <div class="CVSkills__Coding">
-      <h1>Coding</h1>
+      <h1>
+        <template v-if="lan == 'ZH'">代码</template>
+        <template v-else-if="lan == 'EN'">Coding</template>
+      </h1>
       <div class="CVSkills__Coding__Charts">
         <div v-for="(c, index) in coding" :key="index" class="CVSkills__Coding__Charts__Chart">
           <span>{{ c.name }}</span>
@@ -22,7 +25,10 @@
       </div>
     </div>
     <div class="CVSkills__Design">
-      <h1>Design</h1>
+      <h1>
+        <template v-if="lan == 'ZH'">设计</template>
+        <template v-else-if="lan == 'EN'">Design</template>
+      </h1>
       <div class="CVSkills__Design__Charts">
         <div v-for="(d, index) in design" :key="index" class="CVSkills__Design__Charts__Chart">
           <circle-progress-bar  :color="d.color"
@@ -45,6 +51,8 @@
   // import BezierEasing from 'bezier-easing'
   import CircleProgressBar from './CircleProgressBar.vue'
   import StraightProgressBar from './StraightProgressBar.vue'
+  import { mapGetters } from 'vuex'
+
   export default {
     components: {
       CircleProgressBar,
@@ -137,7 +145,9 @@
       }
     },
     computed: {
-
+      ...mapGetters({
+        lan: 'language'
+      })
     },
     mounted () {
 

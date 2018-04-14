@@ -4,14 +4,21 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'jamesyongs-blog',
+    title: 'jamesyong42',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'James Yong&apos;s blog' }
+      { name: 'msapplication-TileColor', content: '#5ff7c1' },
+      { name: 'theme-color', content: '#ffffff' },
+      { hid: 'description', name: 'description', content: 'James Yong&apos;s personal website' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicons/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicons/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicons/favicon-16x16.png' },
+      { rel: 'manifest', href: '/favicons/site.webmanifest' },
+      { rel: 'mask-icon', href: '/favicons/safari-pinned-tab.svg', color: '#5ff7c1' }
     ]
   },
   /*
@@ -54,7 +61,7 @@ module.exports = {
     }
   },
   router: {
-    middleware: 'mobileNavHandeler'
+    middleware: 'transitionHandler'
   },
   generate: {
   },

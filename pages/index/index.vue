@@ -6,11 +6,11 @@
       <div class="Home__StarBG__BigStars" data-depth="2.15"></div>
     </div>
     <div class="Home__Logo hover-box" id="hover-box">
-      <img class="hover-content" id="logo-J" :style="hoverContentStyle1" src="/J.svg"/>
-      <img class="hover-content" id="logo-ames" :style="hoverContentStyle2" src="/ames.svg"/>
-      <img class="hover-content" id="logo-Y" :style="hoverContentStyle3" src="/Y.svg"/>
-      <img class="hover-content" id="logo-ong" :style="hoverContentStyle4" src="/ong.svg"/>
-      <img class="hover-content" id="logo-42" :style="hoverContentStyle5" src="/42.svg"/>
+      <div class="hover-content logo-sprite" id="logo-J" :style="hoverContentStyle1"></div>
+      <div class="hover-content logo-sprite" id="logo-ames" :style="hoverContentStyle2"></div>
+      <div class="hover-content logo-sprite" id="logo-Y" :style="hoverContentStyle3"></div>
+      <div class="hover-content logo-sprite" id="logo-ong" :style="hoverContentStyle4"></div>
+      <div class="hover-content logo-sprite" id="logo-42" :style="hoverContentStyle5"></div>
     </div>
   </div>
 </template>
@@ -112,17 +112,43 @@
       console.log('sdasdasd')
       document.removeEventListener('mousemove', this.mouseMoving)
       this.$store.dispatch('toggleMobileNav', false)
-      if (!this.switching) {
-        this.switching = true
-        this.init()
-        var self = this
-        this.open(function () {
-          self.switching = false
-          self.destroy()
-          console.log('its on!')
+//      if (!this.switching) {
+//        this.switching = true
+//        this.init()
+//        var self = this
+//        this.open(function () {
+//          self.switching = false
+//          self.destroy()
+//          console.log('its on!')
+//          next()
+//        })
+//      }
+      switch (to.fullPath) {
+        case '/projects': {
+          this.$store.dispatch('setTransition', {
+            on: true,
+            color: '#fb7e6c',
+            callback: () => {
+              next()
+            }
+          })
+          break
+        }
+        case '/cv': {
+          this.$store.dispatch('setTransition', {
+            on: true,
+            color: '#2e234a',
+            callback: () => {
+              next()
+            }
+          })
+          break
+        }
+        default: {
           next()
-        })
+        }
       }
+
     },
     methods: {
 
@@ -374,36 +400,60 @@
     transition-timing-function: ease;
   }
 
+
+
+  $sprite-px: $logo-42-width / 423;
+
+  .logo-sprite {
+    background-image: url('/jamesyong42-sprite2.png');
+    background-repeat: no-repeat;
+    background-size: $sprite-px * 1054 $sprite-px * 1072;
+    display: block;
+  }
+
   #logo-J {
-    width: $logo-J-width;
+    width: 354 * $sprite-px;
+    height: 557 * $sprite-px;
+    background-position: -438 * $sprite-px -5 * $sprite-px;
     top: $logo-J-top;
     left: $logo-J-left;
     z-index: 9;
   }
   #logo-ames {
-    width: $logo-ames-width;
+    width: 557 * $sprite-px;
+    height: 326 * $sprite-px;
+    background-position: -5 * $sprite-px -572 * $sprite-px;
     top: $logo-ames-top;
     left: $logo-ames-left;
     z-index: 5;
   }
   #logo-Y {
-    width: $logo-Y-width;
+    width: 247 * $sprite-px;
+    height: 384 * $sprite-px;
+    background-position: -802 * $sprite-px -5 * $sprite-px;
     top: $logo-Y-top;
     left: $logo-Y-left;
     z-index: 4;
   }
   #logo-ong {
-    width: $logo-ong-width;
+    width: 415 * $sprite-px;
+    height: 495 * $sprite-px;
+    background-position: -572 * $sprite-px -572 * $sprite-px;
     top: $logo-ong-top;
     left: $logo-ong-left;
     z-index: 9;
   }
   #logo-42 {
     width: $logo-42-width;
+    height: $sprite-px * 459;
+    background-position: -5 * $sprite-px -5 * $sprite-px;
     top: $logo-42-top;
     left: $logo-42-left;
     z-index: 8;
   }
+
+
+
 
 
 

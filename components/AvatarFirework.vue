@@ -9,6 +9,7 @@
 
 <script type="text/ecmascript-6">
   import anime from 'animejs'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     props: {
@@ -29,18 +30,25 @@
         animated: false,
         render: null,
         circle: null,
-        particules: [],
-        particulesL: [],
-        particulesR: [],
-        particules1: [],
-        particules2: [],
-        particules3: [],
-        particules4: [],
-        particules5: [],
+        particles: {
+          main: [],
+          L: [],
+          R: [],
+          b1: [],
+          b2: [],
+          b3: [],
+          b4: [],
+          b5: []
+        },
         fireworkMainAnime: null,
         fireworkTopAnimeSidekick: [],
         fireworkBottomAnimeSidekick: []
       }
+    },
+    computed: {
+      ...mapGetters({
+        fireworkCache: 'fireworkCache'
+      })
     },
     watch: {
       progress (val) {
@@ -104,9 +112,76 @@
       // this.scrollBar.removeListener(this.animation)
     },
     methods: {
+      ...mapActions({
+        setFireworkCache: 'setFireworkCache'
+      }),
       init () {
         this.canvasEl = document.getElementById('firework')
         this.ctx = this.canvasEl.getContext('2d')
+
+
+//        if (this.fireworkCache) {
+////          this.render = this.fireworkCache.render
+////          this.fireworkMainAnime = this.fireworkCache.fireworkMainAnime
+////          this.fireworkTopAnimeSidekick = this.fireworkCache.fireworkTopAnimeSidekick
+////          this.fireworkBottomAnimeSidekick = this.fireworkCache.fireworkBottomAnimeSidekick
+//          this.particles = Object.assign({}, this.fireworkCache.particles)
+//          this.circle = Object.assign({}, this.fireworkCache.circle)
+//          console.log('YYYYYYYYYYYYY', this.particles)
+//        } else {
+//          const x = this.canvasEl.width / 2
+//          const y = this.canvasEl.height / 2
+//
+//          // console.log(this.canvasEl.width, this.canvasEl.height)
+//
+//          this.circle = this.createCircle(x, y)
+//
+//          for (let i = 0; i < this.numberOfParticules; i++) {
+//            this.particles.main.push(this.createParticule(x, y, 100, 5, 20))
+//          }
+//          for (let i = 0; i < 10; i++) {
+//            this.particles.L.push(this.createParticule(x + 115, y, 80, 5, 15))
+//            this.particles.R.push(this.createParticule(x - 115, y, 80, 5, 15))
+//          }
+//          for (let i = 0; i < 4; i++) {
+//            this.particles.b1.push(this.createParticule(x - 60, y + 70, 30, 2, 8))
+//            this.particles.b2.push(this.createParticule(x - 25, y + 70, 30, 2, 8))
+//            this.particles.b3.push(this.createParticule(x + 25, y + 70, 30, 2, 8))
+//            this.particles.b4.push(this.createParticule(x + 60, y + 70, 30, 2, 8))
+//          }
+//
+//          this.setFireworkCache({
+////            render: this.render,
+////            fireworkMainAnime: this.fireworkMainAnime,
+////            fireworkTopAnimeSidekick: this.fireworkTopAnimeSidekick,
+////            fireworkBottomAnimeSidekick: this.fireworkBottomAnimeSidekick,
+//            particles: Object.assign({}, this.particles),
+//            circle: Object.assign({}, this.circle)
+//
+//          })
+//
+//        }
+        const x = this.canvasEl.width / 2
+        const y = this.canvasEl.height / 2
+
+        // console.log(this.canvasEl.width, this.canvasEl.height)
+
+        this.circle = this.createCircle(x, y)
+
+        for (let i = 0; i < this.numberOfParticules; i++) {
+          this.particles.main.push(this.createParticule(x, y, 100, 5, 20))
+        }
+        for (let i = 0; i < 10; i++) {
+          this.particles.L.push(this.createParticule(x + 115, y, 80, 5, 15))
+          this.particles.R.push(this.createParticule(x - 115, y, 80, 5, 15))
+        }
+        for (let i = 0; i < 4; i++) {
+          this.particles.b1.push(this.createParticule(x - 60, y + 70, 30, 2, 8))
+          this.particles.b2.push(this.createParticule(x - 25, y + 70, 30, 2, 8))
+          this.particles.b3.push(this.createParticule(x + 25, y + 70, 30, 2, 8))
+          this.particles.b4.push(this.createParticule(x + 60, y + 70, 30, 2, 8))
+        }
+
 
         this.render = anime({
           duration: Infinity,
@@ -115,25 +190,9 @@
           }
         })
 
-        const x = this.canvasEl.width / 2
-        const y = this.canvasEl.height / 2
-        console.log(this.canvasEl.width, this.canvasEl.height)
-        this.circle = this.createCircle(x, y)
-        for (let i = 0; i < this.numberOfParticules; i++) {
-          this.particules.push(this.createParticule(x, y, 100, 5, 20))
-        }
-        for (let i = 0; i < 10; i++) {
-          this.particulesL.push(this.createParticule(x + 115, y, 80, 5, 15))
-          this.particulesR.push(this.createParticule(x - 115, y, 80, 5, 15))
-        }
-        for (let i = 0; i < 4; i++) {
-          this.particules1.push(this.createParticule(x - 60, y + 70, 30, 2, 8))
-          this.particules2.push(this.createParticule(x - 25, y + 70, 30, 2, 8))
-          this.particules3.push(this.createParticule(x + 25, y + 70, 30, 2, 8))
-          this.particules4.push(this.createParticule(x + 60, y + 70, 30, 2, 8))
-        }
+
         this.fireworkMainAnime = anime.timeline().add({
-          targets: this.particules,
+          targets: this.particles.main,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -157,7 +216,7 @@
 
         this.fireworkTopAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particulesL,
+          targets: this.particles.L,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -167,7 +226,7 @@
         }))
         this.fireworkTopAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particulesR,
+          targets: this.particles.R,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -178,7 +237,7 @@
 
         this.fireworkBottomAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particules1,
+          targets: this.particles.b1,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -188,7 +247,7 @@
         }))
         this.fireworkBottomAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particules2,
+          targets: this.particles.b2,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -198,7 +257,7 @@
         }))
         this.fireworkBottomAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particules3,
+          targets: this.particles.b3,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -208,7 +267,7 @@
         }))
         this.fireworkBottomAnimeSidekick.push(anime({
           autoplay: false,
-          targets: this.particules4,
+          targets: this.particles.b4,
           x: p => { return p.endPos.x },
           y: p => { return p.endPos.y },
           radius: 0.1,
@@ -216,6 +275,8 @@
           easing: 'easeOutExpo',
           update: this.renderParticule
         }))
+
+
       },
 
       setParticuleDirection (p, R) {
@@ -228,7 +289,7 @@
         }
       },
       createParticule (x, y, R, rmin, rmax) {
-        var p = {}
+        let p = {}
         p.x = x
         p.y = y
 
@@ -236,37 +297,38 @@
         p.color = '#FFF'
         p.radius = anime.random(rmin, rmax)
         p.endPos = this.setParticuleDirection(p, R)
-        p.draw = () => {
-          this.ctx.beginPath()
-          this.ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
+        p.draw = (ctx) => {
+          ctx.beginPath()
+          ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
 
-          this.ctx.fillStyle = p.color
-          this.ctx.fill()
+          ctx.fillStyle = p.color
+          ctx.fill()
         }
         return p
       },
       createCircle (x, y) {
-        var p = {}
+        let p = {}
         p.x = x
         p.y = y
         p.color = '#FFF'
         p.radius = 0.1
         p.alpha = 0.5
         p.lineWidth = 6
-        p.draw = () => {
-          this.ctx.globalAlpha = p.alpha
-          this.ctx.beginPath()
-          this.ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
-          this.ctx.lineWidth = p.lineWidth
-          this.ctx.strokeStyle = p.color
-          this.ctx.stroke()
-          this.ctx.globalAlpha = 1
+        p.draw = (ctx) => {
+          ctx.globalAlpha = p.alpha
+          ctx.beginPath()
+          ctx.arc(Math.floor(p.x), Math.floor(p.y), Math.floor(p.radius), 0, 2 * Math.PI, true)
+          ctx.lineWidth = p.lineWidth
+          ctx.strokeStyle = p.color
+          ctx.stroke()
+          ctx.globalAlpha = 1
+
         }
         return p
       },
       renderParticule (anim) {
         for (let i = 0; i < anim.animatables.length; i++) {
-          anim.animatables[i].target.draw()
+          anim.animatables[i].target.draw(this.ctx)
         }
       }
     }

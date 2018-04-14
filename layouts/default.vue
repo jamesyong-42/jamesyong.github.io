@@ -7,6 +7,9 @@
     <navbar :class="{'blur': mobileNavShow}"></navbar>
     <mobile-nav v-if="mobileNavShow"></mobile-nav>
     <!--<sidebar v-if="isShop" :show="sidebar.opened && !sidebar.hidden"></sidebar>-->
+    <transition name="fade">
+      <retro-transition v-if="transition.on" :bgColor="transition.color" :callback="transition.callback"></retro-transition>
+    </transition>
     <nuxt :class="{'blur': mobileNavShow}"></nuxt>
     <!--<footer-bar v-blur="blurConfig" :class="[blurConfig.isBlurred ? 'no-click' : 'click']"></footer-bar>-->
 
@@ -18,14 +21,17 @@
   import SvgIcons from '~/components/SVGIcons.vue'
   import Navbar from '~/components/Navbar.vue'
   import MobileNav from '~/components/MobileNav.vue'
+  import RetroTransition from '~/components/RetroTransition.vue'
   import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
       SvgIcons,
       Navbar,
       ProjectsDouble,
-      MobileNav
+      MobileNav,
+      RetroTransition
     },
+
     beforeMount () {
 //    const { body } = document
 //    const WIDTH = 768
@@ -49,7 +55,8 @@
     computed: {
       ...mapGetters({
         scrollBar: 'scrollBar',
-        mobileNavShow: 'mobileNavShow'
+        mobileNavShow: 'mobileNavShow',
+        transition: 'transition'
       }),
       isProjects () {
         return this.$route.name === 'Projects'
@@ -97,6 +104,13 @@
   .blur {
     filter: blur(10px);
     pointer-events: none;
+  }
+
+  .fade-leave-active {
+    transition: opacity .5s ease;
+  }
+  .fade-enter, .fade-leave-to{
+    opacity: 0;
   }
 
 </style>

@@ -7,6 +7,13 @@ const state = {
   scrollBar: {},
   scrollOffset: 0,
   blurNav: {},
+  transition: {
+    on: false,
+    color: '',
+    callback: () => {
+
+    }
+  },
   mobileNavShow: false,
   scrollBarOptions: {
     damping: 0.02,
@@ -17,7 +24,9 @@ const state = {
       effect: 'bounce',
       damping: 0.2,
       maxOverscroll: 150}}
-  }
+  },
+  wormholeCache: null,
+  fireworkCache: null
 }
 const mutations = {
 
@@ -33,8 +42,17 @@ const mutations = {
   [types.SET_BLURNAV] (state, blurNav) {
     state.blurNav = blurNav
   },
+  [types.SET_TRANSITION] (state, transition) {
+    state.transition = transition
+  },
   [types.TOGGLE_MOBILENAV] (state, mobileNavShow) {
     state.mobileNavShow = mobileNavShow
+  },
+  [types.SET_WORMHOLE_CACHE] (state, wormholeCache) {
+    state.wormholeCache = wormholeCache
+  },
+  [types.SET_FIREWORK_CACHE] (state, fireworkCache) {
+    state.fireworkCache = fireworkCache
   }
 }
 

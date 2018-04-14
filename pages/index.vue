@@ -14,8 +14,10 @@
 
 <script type="text/ecmascript-6">
   import Scrollbar from 'smooth-scrollbar'
+
   import { mapActions, mapGetters } from 'vuex'
   export default {
+
     data () {
       return {
       }
@@ -23,7 +25,8 @@
     computed: {
       ...mapGetters({
         scrollBar: 'scrollBar',
-        scrollBarOptions: 'scrollBarOptions'
+        scrollBarOptions: 'scrollBarOptions',
+        transition: 'transition'
       })
     },
     mounted () {

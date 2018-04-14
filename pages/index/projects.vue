@@ -80,7 +80,7 @@
   import Wormhole from '~/components/Wormhole2.vue'
   import ParallaxJs from 'parallax-js'
   import DPlayer from '~/components/DPlayer.vue'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
       Parallax,
@@ -196,6 +196,12 @@
       })
       window.addEventListener('resize', this.reactiveHandler)
       console.log(parallaxGallary)
+
+      this.setTransition({
+        on: false,
+        color: '',
+        callback: () => {}
+      })
     },
 
     beforeRouteLeave (to, from, next) {
@@ -206,10 +212,30 @@
       this.$store.dispatch('toggleMobileNav', false)
       // console.log('NNNNNNNNNNNNNNNNNNNNNNNN')
       window.removeEventListener('resize', this.reactiveHandler)
-      next()
+
+
+      switch (to.fullPath) {
+        case '/cv': {
+          this.$store.dispatch('setTransition', {
+            on: true,
+            color: '#2e234a',
+            callback: () => {
+              next()
+            }
+          })
+          break
+        }
+        default: {
+          next()
+        }
+      }
+
 
     },
     methods: {
+      ...mapActions({
+        setTransition: 'setTransition'
+      }),
       gallaryMouseHover (e) {
         let offsetTop = e.target.getBoundingClientRect().top
         let offsetLeft = e.target.getBoundingClientRect().left
