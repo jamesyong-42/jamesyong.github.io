@@ -9,7 +9,7 @@ const state = {
   blurNav: {},
   transition: {
     on: false,
-    color: '',
+    to: '',
     callback: () => {
 
     }

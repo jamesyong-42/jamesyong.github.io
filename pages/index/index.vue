@@ -18,6 +18,7 @@
 <script type="text/ecmascript-6">
   import Parallax from 'parallax-js'
   import requestAnimationFrame from 'raf'
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
     },
@@ -32,15 +33,7 @@
         offsetLeft: 0,
         rotCoe: 0.8,
 
-        // retro transition
-        width: 0,
-        height: 0,
-        rectWidth: 25,
-        rectHeight: 25,
-        speed: 25,
-        canvas: null,
-        ctx: null,
-        cords: null,
+
         // switchOn: false,
         switching: false,
         switchOnColor: '#1b195b',
@@ -66,6 +59,10 @@
       }
     },
     computed: {
+      ...mapGetters({
+        lan: 'language',
+        scrollBar: 'scrollBar'
+      }),
       hoverContentStyle1 () {
         return {
           'transform': `rotateX(${this.bannerDeg * -this.offsetPercentY * this.rotCoe}deg) rotateY(${this.bannerDeg * this.offsetPercentX * this.rotCoe}deg)`
@@ -112,42 +109,19 @@
       console.log('sdasdasd')
       document.removeEventListener('mousemove', this.mouseMoving)
       this.$store.dispatch('toggleMobileNav', false)
-//      if (!this.switching) {
-//        this.switching = true
-//        this.init()
-//        var self = this
-//        this.open(function () {
-//          self.switching = false
-//          self.destroy()
-//          console.log('its on!')
-//          next()
-//        })
-//      }
-      switch (to.fullPath) {
-        case '/projects': {
-          this.$store.dispatch('setTransition', {
-            on: true,
-            color: '#fb7e6c',
-            callback: () => {
-              next()
-            }
-          })
-          break
-        }
-        case '/cv': {
-          this.$store.dispatch('setTransition', {
-            on: true,
-            color: '#2e234a',
-            callback: () => {
-              next()
-            }
-          })
-          break
-        }
-        default: {
+
+      this.$nuxt.$loading.start()
+
+//      this.scrollBar.contentEl.style.filter = 'blur(10px)'
+      this.$store.dispatch('setTransition', {
+        on: true,
+        to: to.fullPath,
+        callback: () => {
+//          this.scrollBar.contentEl.style.filter = 'blur(0)'
           next()
         }
-      }
+      })
+
 
     },
     methods: {
@@ -166,146 +140,6 @@
         let deltaY = y - centerY
         this.offsetPercentX = deltaX / centerX
         this.offsetPercentY = deltaY / centerY
-      },
-      // retro transition
-      iconClick (e) {
-        e.preventDefault()
-        if (!this.switching) {
-          this.switching = true
-          this.init()
-          var self = this
-          if (!self.switchOn) {
-            this.open(e, function () {
-              self.switching = false
-              self.turnOnSwitch()
-              self.destroy()
-              console.log('its on!')
-            })
-          } else {
-            this.close(e, function () {
-              self.switching = false
-              self.turnOffSwitch()
-              self.destroy()
-              console.log('its off!')
-            })
-          }
-        }
-      },
-      open (callback) {
-        let elem = document.getElementById('hover-box')
-        var rect = elem.getBoundingClientRect()
-        var cords = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        }
-        var self = this
-
-        this.spawnCircle(cords.x, cords.y, 'random', self.switchOnColorArr)
-
-        setTimeout(function () {
-          self.spawnCircle(cords.x, cords.y, self.switchOnColor, self.switchOnColorArr, callback)
-        }, 100)
-      },
-      close (e, callback) {
-        var rect = e.target.getBoundingClientRect()
-        var cords = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        }
-        var self = this
-
-        this.spawnCircle(cords.x, cords.y, 'random', self.switchOffColorArr)
-
-        setTimeout(function () {
-          self.spawnCircle(cords.x, cords.y, self.switchOffColor, self.switchOffColorArr, callback)
-        }, 100)
-      },
-      init () {
-        this.width = window.innerWidth
-        this.height = window.innerHeight
-        var wid = Math.max(window.innerWidth * 0.02, 15)
-        this.rectWidth = wid
-        this.rectHeight = wid
-        this.speed = wid
-        this.canvas = document.createElement('canvas')
-        this.ctx = this.canvas.getContext('2d')
-
-        this.canvas.id = 'pixel-overlay'
-        this.canvas.style.zIndex = 8
-        this.canvas.style.top = 0
-        this.canvas.style.left = 0
-        this.canvas.style.position = 'fixed'
-
-        document.body.appendChild(this.canvas)
-
-        this.ctx.canvas.width = this.width
-        this.ctx.canvas.height = this.height
-      },
-      drawRect (x, y, fill) {
-        this.ctx.fillStyle = fill
-        this.ctx.fillRect(x, y, this.rectWidth, this.rectHeight)
-      },
-      distributeRects (spawnX, spawnY, radius, elemCount, fill) {
-        //    var width = this.width
-        //    var height = this.height
-        var angle = 0
-        var step = (2 * Math.PI) / elemCount
-
-        for (var i = 0; i < elemCount; i++) {
-          var x = spawnX + radius * Math.cos(angle) - this.rectWidth / 2
-          var y = spawnY + radius * Math.sin(angle) - this.rectHeight / 2
-          this.drawRect(x, y, fill)
-          angle += step
-        }
-      },
-      spawnCircle (x, y, fill, finishColor, callback) {
-        var count = 0
-        var colorCount = 0
-        var tempColor
-        var offset = 0.5
-        var self = this
-
-        function draw (timestamp, finishColor, callback) {
-          if (fill === 'random') {
-            if (colorCount === 9) {
-              colorCount = 0
-            }
-            // tempColor = randomColor({hue: 'purple'})
-            tempColor = self.neonColor[colorCount]
-            colorCount++
-          } else {
-            tempColor = fill
-          }
-
-          self.distributeRects(x, y, self.rectWidth * count * offset, 4 * count, tempColor)
-
-          if (self.checkDone(finishColor)) {
-            if (callback && typeof (callback) === 'function') callback()
-          } else {
-            count++
-            requestAnimationFrame(function (timestamp) {
-              draw(timestamp, finishColor, callback)
-            })
-          }
-        }
-        requestAnimationFrame(function (timestamp) {
-          draw(timestamp, finishColor, callback)
-        })
-      },
-      checkDone (finishColor) {
-        var topLeftSensor = this.ctx.getImageData(0, 0, 1, 1).data
-        var topRightSensor = this.ctx.getImageData(this.width - 1, 0, 1, 1).data
-        var bottomRightSensor = this.ctx.getImageData(this.width - 1, this.height - 1, 1, 1).data
-        var bottomLeftSensor = this.ctx.getImageData(0, this.height - 1, 1, 1).data
-        var diff = topLeftSensor[0] + topRightSensor[0] + bottomRightSensor[0] + bottomLeftSensor[0] - finishColor[0] * 4 + topLeftSensor[1] + topRightSensor[1] + bottomRightSensor[1] + bottomLeftSensor[1] - finishColor[1] * 4 + topLeftSensor[2] + topRightSensor[2] + bottomRightSensor[2] + bottomLeftSensor[2] - finishColor[2] * 4 + topLeftSensor[3] + topRightSensor[3] + bottomRightSensor[3] + bottomLeftSensor[3] - finishColor[3] * 4
-        diff = Math.abs(diff)
-        if (diff < 10) {
-          return true
-        }
-      },
-      destroy () {
-        var canvas = document.getElementById('pixel-overlay')
-        canvas.parentNode.removeChild(canvas)
       }
     }
   }

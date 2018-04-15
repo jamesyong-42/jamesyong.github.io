@@ -88,9 +88,14 @@
         <template v-if="lan == 'ZH'">项目</template>
         <template v-else-if="lan == 'EN'">Projects</template>
       </div>
-      <div id="CV-Education-title" class="CV-headline" data-speed="1" data-speedcurve="ease">
+      <div id="CV-Education-title" class="CV-headline" data-speed="1" data-speedcurve="ease" data-anchor="75">
         <template v-if="lan == 'ZH'">教育</template>
         <template v-else-if="lan == 'EN'">Education</template>
+      </div>
+      <div id="CV-Education" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease">
+        <div class="CV__Section__Education">
+          <cv-skills :progress="CVSkillsProgress"></cv-skills>
+        </div>
       </div>
       <div id="tiny-stars" class="stars" data-speed="0.24" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
       <div id="mid-stars" class="stars" data-speed="0.64" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
@@ -184,8 +189,10 @@
       })
     },
     beforeMount () {
+
     },
     mounted () {
+
 //      const pageContent = document.getElementById('page-content')
 //      console.log(pageContent)
 //      console.log(this.scrollBar.containerEl)
@@ -214,14 +221,15 @@
       this.avatar.style.opacity = 1
       this.rocket.style.opacity = 1
       window.addEventListener('resize', this.reactiveHandler)
-      this.updateView(0)
 
+      this.updateView(0)
 
       this.setTransition({
         on: false,
-        color: '',
+        to: '',
         callback: () => {}
       })
+
     },
 
     beforeRouteLeave (to, from, next) {
@@ -234,7 +242,7 @@
         case '/projects': {
           this.$store.dispatch('setTransition', {
             on: true,
-            color: '#fb7e6c',
+            to: '/projects',
             callback: () => {
               next()
             }
@@ -383,8 +391,9 @@
 
         // const rocketCenterOffsetY = -this.rocket.getBoundingClientRect().height / 2
         // console.log('clueeeeeeeeeeeeeeeee', totalL, curL, y, rocketCenterOffsetY, this.rocketCenterOffsetY, `translate3d(${this.rocketCenterOffsetX.toFixed(1)}px, ${(this.rocketCenterOffsetY + y).toFixed(1)}px, 0) rotate(${(-this.movingDirection - 90).toFixed(1)}deg)`)
+        const prog = Math.min(this.CVSkillsEl.dataset.progress, 1)
+        this.CVSkillsProgress = 1 - Math.abs((prog - 0.5) / 0.5)
 
-        this.CVSkillsProgress = 1 - Math.abs((this.CVSkillsEl.dataset.progress - 0.5) / 0.5)
       },
       introLeftDone () {
         console.log('WWWWWWWWWWWWWWWW')
@@ -653,9 +662,21 @@
       left: 5vw;
       // background-color: #ff6666;
     }
+    &__Education {
+      position: absolute;
+      height: 60vh;
+      width: 38vw;
+      top: -25vh;
+      left: 5vw;
+      // background-color: #ff6666;
+    }
   }
   #CV-Skills {
     top: 150vh;
+    left: 50%;
+  }
+  #CV-Education {
+    top: 350vh;
     left: 50%;
   }
 

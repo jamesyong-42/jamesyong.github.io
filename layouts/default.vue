@@ -8,7 +8,7 @@
     <mobile-nav v-if="mobileNavShow"></mobile-nav>
     <!--<sidebar v-if="isShop" :show="sidebar.opened && !sidebar.hidden"></sidebar>-->
     <transition name="fade">
-      <retro-transition v-if="transition.on" :bgColor="transition.color" :callback="transition.callback"></retro-transition>
+      <retro-transition v-if="transition.on" :routeTo="transition.to" :callback="transition.callback"></retro-transition>
     </transition>
     <nuxt :class="{'blur': mobileNavShow}"></nuxt>
     <!--<footer-bar v-blur="blurConfig" :class="[blurConfig.isBlurred ? 'no-click' : 'click']"></footer-bar>-->

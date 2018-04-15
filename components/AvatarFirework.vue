@@ -59,6 +59,7 @@
               this.animated = true
               // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
               this.render.play()
+              this.canvasEl.style.opacity = 1
               this.fireworkMainAnime.restart()
               setTimeout(() => {
                 this.fireworkTopAnimeSidekick[1].restart()
@@ -77,6 +78,7 @@
               this.animated = true
               // console.log('WWWWWWWWWWWWWWWWWWWWWW', x, y)
               this.render.play()
+              this.canvasEl.style.opacity = 1
               this.fireworkMainAnime.restart()
               setTimeout(() => {
                 this.fireworkBottomAnimeSidekick[0].restart()
@@ -100,6 +102,8 @@
           }
           default: {
             this.animated = false
+            this.render.pause()
+            this.canvasEl.style.opacity = 0
           }
       }
     }
@@ -186,6 +190,7 @@
         this.render = anime({
           duration: Infinity,
           update: () => {
+            // console.log('RRRRRRRRR')
             this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height)
           }
         })

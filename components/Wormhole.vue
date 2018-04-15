@@ -1,50 +1,17 @@
 <template>
   <div id="Wormhole">
-    <canvas id="timeLineL"></canvas>
-    <!--<canvas id="timeLineText"></canvas>-->
+    <canvas style="display: none" id="timeLine"></canvas>
 
   </div>
 </template>
 <script type="text/ecmascript-6">
   import * as THREE from 'three'
   THREE.Cache.enabled = true
-
-//  CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, lineHeight) {
-//    if (typeof text !== 'string' || typeof x !== 'number' || typeof y !== 'number') {
-//      return
-//    }
-//    const context = this
-//    const canvas = context.canvas
-//
-//    if (typeof maxWidth === 'undefined') {
-//      maxWidth = (canvas && canvas.width) || 300
-//    }
-//    if (typeof lineHeight === 'undefined') {
-//      lineHeight = (canvas && parseInt(window.getComputedStyle(canvas).lineHeight)) || parseInt(window.getComputedStyle(document.body).lineHeight)
-//    }
-//
-//    // 字符分隔为数组
-//    let arrText = text.split('')
-//    let line = ''
-//
-//    for (let n = 0; n < arrText.length; n++) {
-//      let testLine = line + arrText[n]
-//      let metrics = context.measureText(testLine)
-//      let testWidth = metrics.width
-//      if (testWidth > maxWidth && n > 0) {
-//        context.fillText(line, x, y)
-//        line = arrText[n]
-//        y += lineHeight
-//      } else {
-//        line = testLine
-//      }
-//    }
-//    context.fillText(line, x, y)
-//  }
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     props: {
-      scrollOffset: Number,
+      progress: Number,
       cueIn: Number,
       cueOut: Number
     },
@@ -54,22 +21,19 @@
         cameraTravelledStep: 1,
         cameraRotationStep: 0.0,
 
-        webGLRenderer: null,
-        camera: null,
+
         geom: null,
-        spline: null,
+
         splineLength: 0,
-        wormhole: null,
-
         textPlane: null,
-
-        cameraTravelIncrement: 0.0002,
-        cameraRotationIncrement: 0.0025,
-
-        canvasL: null,
-        canvasR: null,
+        canvas: null,
         radius: 20,
 
+        scene:null,
+        webGLRenderer: null,
+        wormhole: null,
+        camera: null,
+        spline: null,
         timeLine: [
           {
             time: '2016.2-2016.10',
@@ -195,70 +159,92 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters({
+        wormholeCache: 'wormholeCache'
+      })
+    },
     mounted () {
       this.init()
     },
     watch: {
-      scrollOffset (val) {
+      progress (val) {
         if (val > this.cueIn && val < this.cueOut) {
           const progress = (val - this.cueIn) / (this.cueOut - this.cueIn)
-          // console.log(progress)
+
           this.scroll(progress)
         }
       }
     },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.resizeHandler)
+    },
     methods: {
+      ...mapActions({
+        setWormholeCache: 'setWormholeCache'
+      }),
       init () {
-        this.cameraTravelledStep = 1
 
-        // Camera rotation around its z-axis (moving through the tunnel)
-        this.cameraRotationStep = 0.0
+        if (this.wormholeCache) {
+          this.webGLRenderer = this.wormholeCache.webGLRenderer
+          this.wormhole = this.wormholeCache.wormhole
+          this.camera = this.wormholeCache.camera
+          this.spline = this.wormholeCache.spline
+          this.timeLine = this.wormholeCache.timeLine
+          this.scene = this.wormholeCache.scene
 
-        // Creating the renderer
-        this.webGLRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
-        console.log(this.$el.clientWidth, this.$el.clientHeight)
-        this.webGLRenderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
+        } else {
+          this.webGLRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
+          // console.log(this.$el.clientWidth, this.$el.clientHeight)
+          this.webGLRenderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
+
+
+          // Creating the scene
+          this.scene = new THREE.Scene()
+          // Setting up the camera
+          this.camera = new THREE.PerspectiveCamera(60, this.$el.clientWidth / this.$el.clientHeight, 10, 1000)
+
+          this.geom = this.createWormholeGeo(100, this.radius, 70)
+
+          this.canvas = document.getElementById('timeLine')
+
+          this.canvas.width = this.spline.getLength()
+
+          this.canvas.height = this.radius * Math.PI * 15
+
+          const ctx = this.canvas.getContext('2d')
+
+          this.drawTimeLineTexL(ctx)
+
+          this.wormhole = this.createWormholeMesh(this.geom)
+
+          this.createTextPlane()
+
+          this.scene.add(this.wormhole)
+
+          this.setWormholeCache({
+            webGLRenderer: this.webGLRenderer,
+            wormhole: this.wormhole,
+            camera: this.camera,
+            spline: this.spline,
+            timeLine: this.timeLine,
+            scene: this.scene
+          })
+        }
+
         document.getElementById('Wormhole').append(this.webGLRenderer.domElement)
 
         window.addEventListener('resize', this.resizeHandler)
 
-
-        // Creating the scene
-        this.scene = new THREE.Scene()
-        // Setting up the camera
-        this.camera = new THREE.PerspectiveCamera(60, this.$el.clientWidth / this.$el.clientHeight, 10, 1000)
-        // this.camera.position.z = 0
-        // this.camera.rotation.y = 0
-        // this.camera.rotation.x = 0
-        // Creating the tunnel and adding it to the scene
-        this.geom = this.createWormholeGeo(this.timeLine.length, 100, this.radius, 70)
-
-        this.canvasL = document.getElementById('timeLineL')
-
-        this.canvasL.width = this.spline.getLength()
-
-        this.canvasL.height = this.radius * Math.PI * 15
-
-        const ctxL = this.canvasL.getContext('2d')
-
-        this.drawTimeLineTexL(ctxL)
-
-        this.wormhole = this.createWormholeMesh(this.geom)
-
-        this.createTextPlane()
-
-        this.scene.add(this.wormhole)
-
-
-        // this.webGLRenderer.render(this.scene, this.camera)
         this.render(0)
+        this.scroll(0)
 
       },
       drawTimeLineTexL (ctx) {
         ctx.font = `38px Arial`
         ctx.fillStyle = '#1c34ff'
 
-        let gradient = ctx.createLinearGradient(0, 0, this.canvasL.width, 0)
+        let gradient = ctx.createLinearGradient(0, 0, this.canvas.width, 0)
         gradient.addColorStop(0, 'rgba(255, 102, 102, 1)')
         gradient.addColorStop(0.2, '#ffc1a4')
         gradient.addColorStop(0.4, '#ff235f')
@@ -271,7 +257,7 @@
 
         const startOffset = 1100
 
-        ctx.fillRect(startOffset, 0 , this.canvasL.width - startOffset, this.canvasL.height)
+        ctx.fillRect(startOffset, 0 , this.canvas.width - startOffset, this.canvas.height)
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         ctx.fillStyle = '#000000'
@@ -280,37 +266,13 @@
 
         const triOffset = startOffset + 50
 
-        this.drawTri(ctx, triOffset, 160, this.canvasL.height, 3)
-
-//        const triOffset = startOffset + 50
-//        const triDiv = this.canvasL.height / 6
-//        const dist = 180
-//        const dotA = 3 * triDiv
-//        const dotB = triDiv
-//        const dotC = 5 * triDiv
-//        const dota1 = 0
-//        const dota2 = this.canvasL.height
-//        const dotb = 2 * triDiv
-//        const dotc = 4 * triDiv
-//        const hozBezCtrl = 0.5 * triDiv
-//        const verBezCtrl = hozBezCtrl * 0.1
-//        const frontX = triOffset
-//        const backX = triOffset + dist
-//        ctx.beginPath()
-//        ctx.moveTo(triOffset + dist, dota1)
-//        ctx.bezierCurveTo(backX, dota1 + hozBezCtrl, frontX + verBezCtrl, dotB, frontX, dotB)
-//        ctx.bezierCurveTo(frontX + verBezCtrl, dotB, backX, dotb - hozBezCtrl, backX, dotb)
-//        ctx.bezierCurveTo(backX, dotb + hozBezCtrl, frontX + verBezCtrl, dotA, frontX, dotA)
-//        ctx.bezierCurveTo(frontX + verBezCtrl, dotA, backX, dotc - hozBezCtrl, backX, dotc)
-//        ctx.bezierCurveTo(backX, dotc + hozBezCtrl, frontX + verBezCtrl, dotC, frontX, dotC)
-//        ctx.bezierCurveTo(frontX + verBezCtrl, dotC, backX, dota2 - hozBezCtrl, backX, dota2)
-//        ctx.stroke()
+        this.drawTri(ctx, triOffset, 160, this.canvas.height, 3)
 
 
-        const step = (this.canvasL.width - startOffset) / (this.timeLine.length + 1)
-        const leftPos = this.canvasL.height * 0.5
-        const bottomPos = this.canvasL.height * 0.75
-        const rightPos = this.canvasL.height * 0.01
+        const step = (this.canvas.width - startOffset) / (this.timeLine.length + 1)
+        const leftPos = this.canvas.height * 0.5
+        const bottomPos = this.canvas.height * 0.75
+        const rightPos = this.canvas.height * 0.01
         const self = this
         this.timeLine.map((t, i) => {
           const timeOffset = startOffset + step * (i + 1)
@@ -325,7 +287,7 @@
           gradient1.addColorStop(0, 'rgba(28, 250, 255, 1)')
           gradient1.addColorStop(1, 'rgba(28, 250, 255, 0)')
           ctx.fillStyle = gradient1
-          ctx.fillRect(gradOffset, 0, 100, self.canvasL.height)
+          ctx.fillRect(gradOffset, 0, 100, self.canvas.height)
           ctx.fillStyle = '#000000'
           ctx.textAlign = 'left'
           ctx.fillText(t.time, timeOffset, leftPos)
@@ -349,18 +311,7 @@
 
         this.drawTagInheritLine(ctx, 15)
 
-//        ctx.fillText('111', this.canvasL.width * 0.2, 10)
-//        ctx.save()
-//        ctx.translate(this.canvasL.width * 0.3, this.canvasL.height * 0.75)
-//        ctx.rotate(Math.PI / 2)
-//        ctx.fillText('keypoint', 0, 0)
-//        ctx.restore()
-//        ctx.fillText('333', this.canvasL.width * 0.4, this.canvasL.height * 0.8)
-//        ctx.fillText('444', this.canvasL.width * 0.5, this.canvasL.height * 0.8)
-//        ctx.fillText('555', this.canvasL.width * 0.6, this.canvasL.height * 0.8)
-//        ctx.fillText('666', this.canvasL.width * 0.7, this.canvasL.height * 0.8)
-//        ctx.fillText('777', this.canvasL.width * 0.8, this.canvasL.height * 0.8)
-//        console.log('JJJJJJJJJJJJJJJJJJJJJJJ')
+
       },
       drawTag (ctx, startX, startY, gap, height, timeLine) {
 
@@ -370,7 +321,6 @@
         let r = height / 2
         timeLine.tags.map((t, i) => {
 
-          // const width = ctx.measureText(t)
           const width = ctx.measureText(t).width
 
           if (timeLine.inheritTag.indexOf(i) !== -1) {
@@ -387,7 +337,7 @@
           ctx.fill()
 
           ctx.save()
-          let gradient = ctx.createLinearGradient(-(x0 + width / 2), 0, this.canvasL.width-(x0 + width / 2), 0)
+          let gradient = ctx.createLinearGradient(-(x0 + width / 2), 0, this.canvas.width-(x0 + width / 2), 0)
           gradient.addColorStop(0, 'rgba(255, 102, 102, 1)')
           gradient.addColorStop(0.2, '#ffc1a4')
           gradient.addColorStop(0.4, '#ff235f')
@@ -397,7 +347,6 @@
           ctx.translate(x0 + width / 2, y0 + height / 2)
           ctx.rotate(Math.PI)
           ctx.font = `24px Arial`
-          console.log('!!!!!!!!!!!!!!!!', ctx.measureText(t), width)
 
           ctx.fillStyle = gradient
           ctx.fillText(t, 0, 0)
@@ -421,8 +370,6 @@
               const a1y = p.y
               const startLine = a1x - p.x
               const midLine = (a1y - endNode.y) - R - r
-
-              // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title + '-' + j, midLine, a1x, a1y, startLine)
 
               if (midLine < 0) {
                 const totalLength = endNode.x - p.x
@@ -457,187 +404,10 @@
                 ctx.lineTo(a5x, a5y)
                 ctx.stroke()
               }
-
-
             })
           }
-
         })
         ctx.restore()
-
-      },
-      drawTagInheritLineWithOffset (ctx, gap, offset) {
-        ctx.save()
-        ctx.strokeStyle = '#3effc8'
-        ctx.lineWidth = 1
-        this.timeLine.map((t, i) => {
-          if (t.inheritTagPos.length > 0) {
-            const endNode = this.timeLine[i + 1].inheritNodePos
-            t.inheritTagPos.map((p, j) => {
-              if (offset > p.x && offset < endNode.x) {
-                const index = t.inheritTag[j]
-                const R = gap * index
-                const r = gap
-                const a1x = t.inheritTagLineA1Offset
-                const a1y = p.y
-                const startLine = a1x - p.x
-                const midLine = (a1y - endNode.y) - R - r
-
-                // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title + '-' + j, midLine, a1x, a1y, startLine)
-
-                if (midLine < 0) {
-                  const totalLength = endNode.x - p.x
-                  t.inheritTagLineLength.push(totalLength)
-
-                  ctx.setLineDash([totalLength, totalLength * 10])
-                  ctx.lineDashOffset = totalLength * (1 - Math.abs(offset - p.x) / (endNode.x - p.x))
-                  ctx.beginPath()
-                  ctx.moveTo(p.x, p.y)
-                  ctx.lineTo(endNode.x, endNode.y)
-                  ctx.stroke()
-
-                } else {
-                  const a2x = a1x + R
-                  const a2y = p.y - R
-                  const a3x = a2x
-
-                  const a3y = a2y - midLine
-                  const a4x = a3x + r
-                  const a4y = endNode.y
-                  const a5x = endNode.x
-                  const endLine = a5x - a4x
-                  const a5y = a4y
-                  const totalLength = startLine + midLine + endLine + Math.PI * (R + r) * 0.5
-                  t.inheritTagLineLength.push(totalLength)
-
-                  // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title, midLine, a1x, a1y, 'a2', a2x, a2y, R, 'a3', a3x, a3y, 'a4', a4x, a4y, r, a5x, a5y)
-                  ctx.setLineDash([totalLength, totalLength * 10])
-                  ctx.lineDashOffset = totalLength * (1 - Math.abs(offset - p.x) / (endNode.x - p.x))
-
-                  ctx.beginPath()
-                  ctx.moveTo(p.x, p.y)
-                  ctx.lineTo(a1x, a1y)
-                  ctx.arcTo(a2x, a1y, a2x, a2y, R)
-                  ctx.lineTo(a3x, a3y)
-                  ctx.arcTo(a3x, a4y, a4x, a4y, r)
-                  ctx.lineTo(a5x, a5y)
-                  ctx.stroke()
-                }
-              }
-
-            })
-          }
-
-        })
-        ctx.restore()
-
-      },
-      clearTagInheritLine (ctx, gap) {
-        let gradient = ctx.createLinearGradient(0, 0, this.canvasL.width, 0)
-        gradient.addColorStop(0, 'rgba(255, 102, 102, 1)')
-        gradient.addColorStop(0.2, '#ffc1a4')
-        gradient.addColorStop(0.4, '#ff235f')
-        gradient.addColorStop(0.6, '#ff37f7')
-        gradient.addColorStop(0.8, '#8657ff')
-        gradient.addColorStop(1, '#5af8ff')
-        ctx.save()
-
-        ctx.lineWidth = 1
-        this.timeLine.map((t, i) => {
-
-          if (t.inheritTagPos.length > 0) {
-            const endNode = this.timeLine[i + 1].inheritNodePos
-            const gradOffset = this.timeLine[i + 1].inheritTagLineA1Offset - 760
-            let gradient1 = ctx.createLinearGradient(gradOffset, 0, gradOffset + 100, 0)
-            gradient1.addColorStop(0, 'rgba(28, 250, 255, 1.0)')
-            gradient1.addColorStop(1, 'rgba(28, 250, 255, 0)')
-
-            t.inheritTagPos.map((p, j) => {
-
-              const index = t.inheritTag[j]
-              const R = gap * index
-              const r = gap
-              const a1x = t.inheritTagLineA1Offset
-              const a1y = p.y
-              const startLine = a1x - p.x
-              const midLine = (a1y - endNode.y) - R - r
-
-
-
-                // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title + '-' + j, midLine, a1x, a1y, startLine)
-
-                if (midLine < 0) {
-                  const totalLength = endNode.x - p.x
-                  t.inheritTagLineLength.push(totalLength)
-                  ctx.strokeStyle = gradient
-                  ctx.beginPath()
-                  ctx.moveTo(p.x, p.y)
-                  ctx.lineTo(endNode.x, endNode.y)
-                  ctx.stroke()
-
-                  ctx.strokeStyle = gradient1
-                  ctx.beginPath()
-                  ctx.moveTo(gradOffset, p.y)
-                  ctx.lineTo(gradOffset + 100, p.y)
-                  ctx.stroke()
-
-
-                } else {
-                  const a2x = a1x + R
-                  const a2y = p.y - R
-                  const a3x = a2x
-
-                  const a3y = a2y - midLine
-                  const a4x = a3x + r
-                  const a4y = endNode.y
-                  const a5x = endNode.x
-                  const endLine = a5x - a4x
-                  const a5y = a4y
-                  const totalLength = startLine + midLine + endLine + Math.PI * (R + r) * 0.5
-                  t.inheritTagLineLength.push(totalLength)
-
-                  // console.log('GGGGGGGGGGGGGGG-' + i + '-' + t.title, midLine, a1x, a1y, 'a2', a2x, a2y, R, 'a3', a3x, a3y, 'a4', a4x, a4y, r, a5x, a5y)
-                  ctx.strokeStyle = gradient
-                  ctx.beginPath()
-                  ctx.moveTo(p.x, p.y)
-                  ctx.lineTo(a1x, a1y)
-                  ctx.arcTo(a2x, a1y, a2x, a2y, R)
-                  ctx.lineTo(a3x, a3y)
-                  ctx.arcTo(a3x, a4y, a4x, a4y, r)
-                  ctx.lineTo(a5x, a5y)
-                  ctx.stroke()
-
-
-//                  ctx.strokeStyle = gradient
-//                  ctx.beginPath()
-//                  ctx.moveTo(gradOffset, p.y)
-//                  ctx.lineTo(gradOffset + 100, p.y)
-//                  ctx.stroke()
-//
-//                  ctx.strokeStyle = gradient1
-//                  ctx.beginPath()
-//                  ctx.moveTo(gradOffset, p.y)
-//                  ctx.lineTo(gradOffset + 100, p.y)
-//                  ctx.stroke()
-//
-//                  ctx.fillStyle = gradient
-//                  ctx.fillRect(gradOffset - 150, p.y, 400, 20)
-//                  ctx.fillStyle = gradient1
-//                  ctx.fillRect(gradOffset - 150, p.y, 400, 20)
-
-                }
-
-
-              ctx.fillStyle = gradient
-              ctx.fillRect(gradOffset, 0, 100, this.canvasL.height)
-              ctx.fillStyle = gradient1
-              ctx.fillRect(gradOffset, 0, 100, this.canvasL.height)
-            })
-          }
-
-        })
-        ctx.restore()
-
       },
       drawTri (ctx, start, gap, height, num) {
         ctx.strokeStyle = '#3effc8'
@@ -672,30 +442,26 @@
       },
       wrapText (ctx, text, x, y, maxWidth, lineHeight) {
 
-        const context = ctx
-        const canvas = context.canvas
-
         // 字符分隔为数组
         let arrText = text.split('')
         let line = ''
 
         for (let n = 0; n < arrText.length; n++) {
           let testLine = line + arrText[n]
-          let metrics = context.measureText(testLine)
+          let metrics = ctx.measureText(testLine)
           let testWidth = metrics.width
           if (testWidth > maxWidth && n > 0) {
-            context.fillText(line, x, y)
+            ctx.fillText(line, x, y)
             line = arrText[n]
             y += lineHeight
           } else {
             line = testLine
           }
         }
-        context.fillText(line, x, y)
+        ctx.fillText(line, x, y)
       },
       createTextPlane () {
         const self = this
-
         this.timeLine.map(t => {
           const textGeometry = new THREE.PlaneGeometry( t.width, t.height, 32, 15 )
           const textCanvas = document.createElement('canvas')
@@ -703,12 +469,8 @@
           textCanvas.height = t.height * 30
           const ctx = textCanvas.getContext('2d')
 
-          // ctx.textAlign = 'center'
-          // ctx.baseline = 'middle'
           ctx.font = `40px Arial`
 
-          // ctx.fillStyle = 'black'
-          // ctx.fillRect(0, 0, t.width * 10, t.height * 10)
           ctx.fillStyle = 'white'
           ctx.translate(textCanvas.width, textCanvas.height)
           ctx.rotate(Math.PI)
@@ -727,10 +489,6 @@
             map: textTex,
             side: THREE.DoubleSide,
             transparent: true,
-            // premultipliedAlpha: false,
-            // blending: THREE.CustomBlending,
-            // blendSrc: THREE.SrcAlphaFactor,
-            // blendDst: THREE.SrcColorFactor,
             opacity: 1,
             needsUpdate: true,
             alphaTest: 0.6  // !!! it shows background rather than the tunnel behind if this value is not set
@@ -746,153 +504,67 @@
           t.mesh = textMesh
 
           self.scene.add(textMesh)
-          textCanvas.style.position = 'absolute'
-          textCanvas.style.top = '200px'
-          textCanvas.style.left = '100px'
-          textCanvas.style.width = '200px'
-          textCanvas.style.height = '200px'
-          textCanvas.style.zIndex = '999'
-          document.getElementById('Wormhole').appendChild(textCanvas)
+//          textCanvas.style.position = 'absolute'
+//          textCanvas.style.top = '200px'
+//          textCanvas.style.left = '100px'
+//          textCanvas.style.width = '200px'
+//          textCanvas.style.height = '200px'
+//          textCanvas.style.zIndex = '999'
+//          document.getElementById('Wormhole').appendChild(textCanvas)
         })
 
-//        const options = {
-//          size: 50,
-//          height: 50
-//        }
-//
-//        const textGeometry = new THREE.TextGeometry('XXXXXXXXXXXX', options)
-//
-//        const textMaterial = new THREE.MeshBasicMaterial({
-//          color: 'white'
-//        })
       },
-      createWormholeGeo (nbPoints, segments, radius, radiusSegments) {
+      createWormholeGeo (segments, radius, radiusSegments) {
         // Creating an array of points that we'll use for the spline creation
         let points = []
-//        let preX = 0
-//        const xD = 200
-//        const yD = 50
-//         let dir = 1
+
         points.push(new THREE.Vector3(0, 0, 0))
         points.push(new THREE.Vector3(500, 0, 0))
         points.push(new THREE.Vector3(550, -200, 0))
         points.push(new THREE.Vector3(4500, -4500, 0))
 
-//
-//        for (let i = 0; i < nbPoints; i++)
-//        {
-//          const y0 = 0
-//          const y45 = yD * 0.707
-//          const y90 = yD
-//          const xstep = xD / 8
-//
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, y45, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, y90, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, y45, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, y0, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, -y45, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, -y90, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, -y45, 0))
-//          preX += xstep
-//          points.push(new THREE.Vector3(preX, y0, 0))
-//
-//        }
-
-        // var points = []
-
-        // Define points along Z axis to create a curve
-//        for (let i = 0; i < 5; i += 1) {
-//          points.push(new THREE.Vector3(0, 0, 2.5 * (i / 4)))
-//        }
-
-        // Set custom Y position for the last point
-        // points[4].y = -0.06
-        // points[4].x = 0.2
-        // points[1].x = 1
-
-        // Creating a smooth 3d spline curve from our serie of points
         this.spline = new THREE.CatmullRomCurve3(points)
-        // this.splineLength = this.spline.getLength() - this.cameraTravelIncrement
-        // console.log('LLLLLLLLLLLLL', this.splineLength)
-        // Generating geometry for the tube using our spline
         return new THREE.TubeGeometry(this.spline, segments, radius, radiusSegments, false)
       },
       createWormholeMesh (geom) {
 
-        const texL = new THREE.CanvasTexture(this.canvasL)
-        // const texL = new THREE.TextureLoader().load( '/avatar.png' )
-        console.log(texL)
+        const tex = new THREE.CanvasTexture(this.canvas)
 
-        // const texture = new THREE.TextureLoader().load( '/avatar.png' );
+        tex.minFilter = THREE.LinearFilter
+        tex.maxFilter = THREE.NearestMipMapLinearFilter
 
-        texL.minFilter = THREE.LinearFilter
-        texL.maxFilter = THREE.NearestMipMapLinearFilter
+        tex.wrapS = THREE.ClampToEdgeWrapping
+        tex.wrapT = THREE.ClampToEdgeWrapping
+        tex.repeat.set(1, 1)
+        tex.flipY = false
 
-        // texL.anisotropy = this.anisotropy
-        texL.wrapS = THREE.ClampToEdgeWrapping
-        texL.wrapT = THREE.ClampToEdgeWrapping
-        texL.repeat.set(1, 1)
-        texL.flipY = false
-
-
-        // const texR = new THREE.CanvasTexture(this.canvasR)
 
         var material = new THREE.MeshBasicMaterial({
-          map: texL,
-//          shading: THREE.FlatShading,
+          map: tex,
           side: THREE.BackSide,
           transparent: true,
           premultipliedAlpha: false,
-          // side:THREE.DoubleSide,
-          // wireframe: true,
+
           blending: THREE.CustomBlending,
           blendSrc: THREE.SrcAlphaFactor,
           blendDst: THREE.SrcColorFactor,
           needsUpdate: true
         })
 
-        // MULTICOLOR TUNNEL : decomment above and comment the upper comment
-        //var material = new THREE.MeshNormalMaterial({transparent: false, opacity: 1, side:THREE.DoubleSide, wireframe: true});
-
         return new THREE.Mesh(geom, material)
       },
       render (progress) {
-        // const curLen = progress * this.splineLength
         const pos1 = this.spline.getPointAt(progress)
-        const pos2 = this.spline.getPointAt(progress + this.cameraTravelIncrement)
+        const pos2 = this.spline.getPointAt(progress + 0.0002)
         this.camera.position.set(pos1.x, pos1.y, pos1.z)
         this.camera.lookAt(pos2)
-
-//         this.textPlane.position.set(pos1.x + 500, pos1.y, pos1.z)
-//         this.textPlane.lookAt(pos2)
-        // console.log(this.wormhole.material)
-        // this.wormhole.material.map.offset.x = -progress *  this.spline.getLength()
-        // this.camera.rotation.z = -Math.PI/2 + (Math.sin(progress) * Math.PI)
 
         this.webGLRenderer.render(this.scene, this.camera)
       },
       scroll (progress) {
 
-//        this.camera.position.set(pos1.x, pos1.y, pos1.z)
-//        this.camera.lookAt(pos2)
-        // console.log(this.wormhole.material.map.offset.y)
         this.wormhole.material.map.offset.x = progress
-        // this.camera.rotation.z = -Math.PI/2 + (Math.sin(progress) * Math.PI)
 
-//         if (progress <= 0.3) {
-//           const p = (0.3 - progress) / 0.3
-//           const pos1 = this.spline.getPointAt(p)
-//           console.log(this.textPlane.position, this.wormhole.position)
-//           this.textPlane.position.set(pos1.x, pos1.y, pos1.z)
-//           this.textPlane.lookAt(pos1.x - 1, pos1.y, pos1.z)
-//         }
         const self = this
         this.timeLine.map(t => {
 
@@ -918,18 +590,6 @@
 
         })
 
-//        const ofs = this.spline.getLength() * progress + 200
-//        const ctx = this.canvasL.getContext('2d')
-//
-//
-//        this.clearTagInheritLine (ctx, 15)
-//        this.drawTagInheritLine (ctx, 15, ofs)
-//        this.wormhole.material.map.needsUpdate = true
-
-        // this.textPlane.translateX(this.textPlane.position.x - progress * this.textPlane.position.x)
-        // this.textPlane.translateY(this.textPlane.position.y)
-        // this.textPlane.translateZ(this.textPlane.position.z)
-
         this.webGLRenderer.render(this.scene, this.camera)
       },
       resizeHandler () {
@@ -945,7 +605,7 @@
 <style lang="scss">
   #Wormhole {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh + 150px);
     position: fixed;
     top:0;
     left:-50%;
@@ -954,7 +614,7 @@
     }
     z-index: 999;
   }
-  #timeLineL {
+  #timeLine {
     position: absolute;
     top: 50px;
     width: 50%;

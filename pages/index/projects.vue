@@ -19,7 +19,7 @@
           <div class="logo-3d frame-7"></div>
         </div>
         <div class="WormholeContainer">
-          <wormhole :progress="progress" :cueIn="0.178" :cueOut="0.751"></wormhole>
+          <wormhole :progress="progress" :cueIn="0.118" :cueOut="0.631"></wormhole>
         </div>
       </div>
     </parallax>
@@ -77,7 +77,7 @@
 
 <script type="text/ecmascript-6">
   import Parallax from '~/components/Parallax4.vue'
-  import Wormhole from '~/components/Wormhole2.vue'
+  import Wormhole from '~/components/Wormhole.vue'
   import ParallaxJs from 'parallax-js'
   import DPlayer from '~/components/DPlayer.vue'
   import { mapGetters, mapActions } from 'vuex'
@@ -197,11 +197,13 @@
       window.addEventListener('resize', this.reactiveHandler)
       console.log(parallaxGallary)
 
+
       this.setTransition({
         on: false,
         color: '',
         callback: () => {}
       })
+      // this.$nuxt.$loading.finish()
     },
 
     beforeRouteLeave (to, from, next) {
@@ -218,7 +220,7 @@
         case '/cv': {
           this.$store.dispatch('setTransition', {
             on: true,
-            color: '#2e234a',
+            to: '/cv',
             callback: () => {
               next()
             }
