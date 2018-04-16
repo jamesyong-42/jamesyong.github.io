@@ -101,7 +101,7 @@
         const totalOffset = -offset + parallaxOffset
 
         this.parallaxChildrenEase.forEach((d) => {
-          
+
           const speed = d.dataset.speed
           const anchor = d.dataset.anchor
           const parentOffset = d.offsetTop
