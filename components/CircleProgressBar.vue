@@ -17,7 +17,7 @@
         stroke-width="20px"
         :stroke="color"
         stroke-dasharray="628"
-        :stroke-dashoffset="(-(1-progress) * 628).toFixed(1)"
+        :stroke-dashoffset="dashoffset"
         d="
                  M 110, 110
                  m -100, 0
