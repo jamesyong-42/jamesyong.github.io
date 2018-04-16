@@ -232,7 +232,7 @@
           })
         }
 
-        document.getElementById('Wormhole').append(this.webGLRenderer.domElement)
+        document.getElementById('Wormhole').appendChild(this.webGLRenderer.domElement)
 
         window.addEventListener('resize', this.resizeHandler)
 

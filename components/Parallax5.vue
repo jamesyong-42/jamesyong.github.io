@@ -194,7 +194,7 @@
         this.easingMaps = easingMaps
 
 
-
+        console.log('BBBBBBBBBBBBBBB', this.el.childNodes, this.el.children)
         if (this.el.childNodes) {
           this.el.childNodes.forEach(d => {
             if (d.dataset) {
