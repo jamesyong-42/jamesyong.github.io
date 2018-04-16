@@ -37,8 +37,8 @@
     },
     computed: {
       dashoffset () {
-        console.log('wwwwwwwwwwwwww', (-(1-this.progress) * 628))
-        return (-(1-this.progress) * 628).toFixed(1)
+        // safari don't support negative value
+        return ((1 - this.progress) * 628).toFixed(1)
       }
     }
   }
