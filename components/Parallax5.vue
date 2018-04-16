@@ -198,7 +198,9 @@
 
         console.log('BBBBBBBBBBBBBBB', this.el.childNodes, this.el.children)
         if (this.el.childNodes) {
+          console.log('BBBBBBBBBBBBBBB000000000000000000')
           this.el.childNodes.forEach(d => {
+            console.log('BBBBBBBBBBBBBBB', d.dataset)
             if (d.dataset) {
               console.log('BBBBBBBBBBBBBBB', d.dataset)
               if (d.dataset.speed) {
