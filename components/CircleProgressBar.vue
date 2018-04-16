@@ -34,6 +34,12 @@
       color: String,
       bgColor: String,
       progress: Number
+    },
+    computed: {
+      dashoffset () {
+        console.log('wwwwwwwwwwwwww', (-(1-this.progress) * 628))
+        return (-(1-this.progress) * 628).toFixed(1)
+      }
     }
   }
 </script>

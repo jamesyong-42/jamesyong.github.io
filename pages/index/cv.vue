@@ -398,7 +398,6 @@
         // console.log('clueeeeeeeeeeeeeeeee', totalL, curL, y, rocketCenterOffsetY, this.rocketCenterOffsetY, `translate3d(${this.rocketCenterOffsetX.toFixed(1)}px, ${(this.rocketCenterOffsetY + y).toFixed(1)}px, 0) rotate(${(-this.movingDirection - 90).toFixed(1)}deg)`)
         const prog = Math.min(this.CVSkillsEl.dataset.progress, 1)
         this.CVSkillsProgress = 1 - Math.abs((prog - 0.5) / 0.5)
-        console.log('WWWWWWWWWWWWWWWW', this.CVSkillsProgress)
       },
       introLeftDone () {
 
