@@ -14,14 +14,14 @@
           ></straight-progress-bar>
 
         </div>
-        <div class="CVSkills__Coding__Charts__Chart--stack">
-          <div>ES6 SCSS</div>
-          <div>Vue Nuxt Gulp webpack JQuary</div>
-          <div>Node.js Express electron</div>
-          <div>AJAX RESTfulAPI GraphQLAPI JSON</div>
-          <div>Mysql MongoDB</div>
-          <div>Redis websocket</div>
-        </div>
+        <!--<div class="CVSkills__Coding__Charts__Chart&#45;&#45;stack">-->
+          <!--<div>ES6 SCSS</div>-->
+          <!--<div>Vue Nuxt Gulp webpack JQuary</div>-->
+          <!--<div>Node.js Express electron</div>-->
+          <!--<div>AJAX RESTfulAPI GraphQLAPI JSON</div>-->
+          <!--<div>Mysql MongoDB</div>-->
+          <!--<div>Redis websocket</div>-->
+        <!--</div>-->
       </div>
     </div>
     <div class="CVSkills__Design">
