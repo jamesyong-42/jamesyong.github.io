@@ -1,5 +1,11 @@
 export default function (context) {
-  // console.log(context.route)
+  // context.store.dispatch('setTransition', {
+  //         on: true,
+  //         wave: false,
+  //         to: context.route.to.fullPath,
+  //         callback: context.store.state.transition.callback
+  //       })
+  // console.log(context)
   // switch (context.route.fullPath) {
   //   case '/projects': {
   //     context.store.dispatch('setTransition', {

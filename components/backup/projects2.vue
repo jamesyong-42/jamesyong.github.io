@@ -1,19 +1,19 @@
 <template>
   <div class="Projects">
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="0" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d" :class="'frame-' + frame1"></div>
         </div>
       </div>
     </parallax>
-    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 0.5vh">
+    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 5px">
       <div class="hero-body">
         <div class="container">
         </div>
       </div>
     </section>
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="200.5" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
+    <parallax class="Projects__Parallax" :speedFactor="0" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d frame-7"></div>
@@ -23,14 +23,14 @@
         </div>
       </div>
     </parallax>
-    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 0.5vh">
+    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 5px">
       <div class="hero-body">
         <div class="container">
         </div>
       </div>
     </section>
 
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
+    <parallax class="Projects__Parallax" :speedFactor="0.2" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
       <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
 
         <div v-for="(v, index) in videoDemos"
@@ -44,7 +44,7 @@
       </div>
     </parallax>
 
-    <section class="hero is-medium is-dark is-bold" style="height: 5vh">
+    <section class="hero is-medium is-dark is-bold">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -57,7 +57,7 @@
       </div>
     </section>
 
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="1706" :speedFactor="0.1" :sectionStyle="projectStyle1">
+    <parallax class="Projects__Parallax" :speedFactor="0.1" :scrollOffset="scrollOffset" :sectionStyle="projectStyle1">
       <div id="project-intro-trinity-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
         <img class="galary-bg" data-depth="1.3" src="/parallaxGallery1.png"/>
         <img class="galary-bg" data-depth="0.8" src="/parallaxGallery2.png"/>
@@ -76,7 +76,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Parallax from '~/components/Parallax6.vue'
+  import Parallax from '~/components/Parallax4.vue'
   import Wormhole from '~/components/Wormhole.vue'
   import ParallaxJs from 'parallax-js'
   import DPlayer from '~/components/DPlayer.vue'
@@ -87,99 +87,6 @@
       Wormhole,
       DPlayer
     },
-//    async asyncData({ app, route, store, error, payload }) {
-//
-//      let data = {
-//        parallax: []
-//      }
-//
-//      function preRenderParallax(actualTop, scrollOffset) {
-//        const offset = actualTop - scrollOffset
-//        const parallaxOffset = offset * this.speedFactor
-//        const totalOffset = -offset + parallaxOffset
-//
-//
-//
-//
-//        if (this.parallaxChildren.length > 0) {
-//          // console.log('11111111', this.parallaxChildren)
-//          this.parallaxChildren.forEach((d) => {
-//            let parallaxoffset = 0
-//            let leftoffset = 0
-//            if (d.dataset.leftoffset) {
-//              let os = offset - d.dataset.leftoffsetorigin
-//              if (os <= 0) {
-//                if (os >= d.dataset.leftoffset) {
-//                  leftoffset = os
-//                } else {
-//                  leftoffset = d.dataset.leftoffset
-//                }
-//              }
-//            }
-//            console.log('###############', offset)
-//            if (d.dataset.startsign <= offset) {
-//              console.log('beginning')
-//            } else if (d.dataset.stopsign <= offset) {
-//              parallaxoffset = (offset - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (hasClass(d, d.dataset.stopclass)) {
-//                removeClass(d, d.dataset.stopclass)
-//              }
-//            } else if (d.dataset.restartsign <= offset) {
-//              parallaxoffset = (parseInt(d.dataset.stopsign) - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (!hasClass(d, d.dataset.stopclass)) {
-//                addClass(d, d.dataset.stopclass)
-//              }
-//            } else {
-//              parallaxoffset = (offset - parseInt(d.dataset.restartsign) + parseInt(d.dataset.stopsign) - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (hasClass(d, d.dataset.stopclass)) {
-//                removeClass(d, d.dataset.stopclass)
-//              }
-//            }
-//
-//            d.style.transform = `translate3d(${leftoffset}vh, ${parallaxoffset + parseInt(d.dataset.originoffset)}vh ,0)`
-//
-//          })
-//        }
-//        this.el.style.transform = `translate3d(0, ${-offset + this.accumulatedOffset + parallaxOffset}vh ,0)`
-//      }
-//      const parallax1ActualTop = 0
-//      const parallax2ActualTop = parallax1ActualTop + 200 + 0.5
-//      const parallax3ActualTop = parallax2ActualTop + 1000 + 0.5
-//      const parallax4ActualTop = parallax3ActualTop + 500 + 5
-//      const totalHeight = parallax4ActualTop + 100
-//
-//      data.parallax.push({
-//        actualTop: parallax1ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax2ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax3ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax4ActualTop,
-//        speedFactor: 0
-//      })
-//
-//
-//      const offset = this.actualTop - svrollOffset
-//
-//      for (let i = 0; i < totalHeight; i++) {
-//
-//
-//
-//
-//      }
-//
-//
-//
-//      return data
-//
-//    },
     data () {
       return {
         blurContent: null,
@@ -272,14 +179,6 @@
 
       }
     },
-//    beforeMount () {
-//      this.setTransition({
-//        on: true,
-//        to: '/projects',
-//        wave: false,
-//        callback: () => {}
-//      })
-//    },
     mounted () {
 //      const pageContent = document.getElementById('page-content')
 //      console.log(pageContent)
@@ -301,7 +200,7 @@
 
       this.setTransition({
         on: false,
-        to: '',
+        color: '',
         callback: () => {}
       })
       // this.$nuxt.$loading.finish()
@@ -531,8 +430,10 @@
       width: 100%;
 
       &__Content {
-
-        width: 100%;
+        width: 50%;
+        @media (max-width: 768px) {
+          width: 100%;
+        }
         padding-top: 30vh;
         margin: auto;
         height: 100%;

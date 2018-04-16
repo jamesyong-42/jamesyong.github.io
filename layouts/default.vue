@@ -2,7 +2,7 @@
   <div>
     <svg-icons></svg-icons>
     <div v-show="isProjects" id="nav-blur">
-      <projects-double></projects-double>
+      <!--<projects-double></projects-double>-->
     </div>
     <navbar :class="{'blur': mobileNavShow}"></navbar>
     <mobile-nav v-if="mobileNavShow"></mobile-nav>
@@ -83,9 +83,6 @@
   }
 
   @import '~bulma';
-
-  $fa-font-path: '~font-awesome/fonts/';
-  @import '~font-awesome/scss/font-awesome';
 
 
   html {

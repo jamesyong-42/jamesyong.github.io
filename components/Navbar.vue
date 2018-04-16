@@ -44,7 +44,9 @@
               </span>
             </template>
             <span class="Nav__Right__Items__Item Nav__Right__Items__Item--mobile" @click="toggleMobileNav(true)">
-              <i class="fa fa-bars" aria-hidden="true"></i>
+              <svg>
+                <use xlink:href="#icon-menu"></use>
+              </svg>
             </span>
         </div>
       </div>
@@ -178,6 +180,11 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            svg {
+              fill: white;
+              width: 32px;
+              height: 32px;
+            }
           }
           @media(min-width: 768px) {
             display: none;

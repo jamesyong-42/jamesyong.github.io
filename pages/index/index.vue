@@ -103,6 +103,8 @@
 
       }
 
+
+
     },
 
     beforeRouteLeave (to, from, next) {
@@ -115,6 +117,7 @@
 //      this.scrollBar.contentEl.style.filter = 'blur(10px)'
       this.$store.dispatch('setTransition', {
         on: true,
+        wave: true,
         to: to.fullPath,
         callback: () => {
 //          this.scrollBar.contentEl.style.filter = 'blur(0)'

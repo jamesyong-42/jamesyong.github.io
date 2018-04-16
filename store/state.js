@@ -10,6 +10,7 @@ const state = {
   transition: {
     on: false,
     to: '',
+    wave: false,
     callback: () => {
 
     }

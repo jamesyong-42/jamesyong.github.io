@@ -85,6 +85,9 @@
         <template v-else-if="lan == 'EN'">Skills</template>
       </div>
       <div id="CV-Projects-title" class="CV-headline" data-speed="1" data-speedcurve="ease">
+        <svg>
+          <use xlink:href="#icon-projects"></use>
+        </svg>
         <template v-if="lan == 'ZH'">项目</template>
         <template v-else-if="lan == 'EN'">Projects</template>
       </div>
@@ -94,7 +97,7 @@
       </div>
       <div id="CV-Education" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease">
         <div class="CV__Section__Education">
-          <cv-skills :progress="CVSkillsProgress"></cv-skills>
+          <cv-education></cv-education>
         </div>
       </div>
       <div id="tiny-stars" class="stars" data-speed="0.24" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
@@ -110,7 +113,8 @@
   import RocketFlames from '~/components/RocketFlames.vue'
   import AvatarFirework from '~/components/AvatarFirework.vue'
   import CvSkills from '~/components/CVSkills.vue'
-  import Parallax from '~/components/Parallax3.vue'
+  import CvEducation from '~/components/CVEducation.vue'
+  import Parallax from '~/components/Parallax5.vue'
   import { mapGetters, mapActions } from 'vuex'
 
   export default {
@@ -118,7 +122,8 @@
       Parallax,
       RocketFlames,
       AvatarFirework,
-      CvSkills
+      CvSkills,
+      CvEducation
     },
     data () {
       return {
@@ -324,7 +329,7 @@
         const reMappedScrollOffset = this.progress * (contentHeight - window.innerHeight)
         // console.log('reMappppppp', reMappedScrollOffset)
 
-        if (this.scrollBar.offset.y === reMappedScrollOffset) {
+        if (this.scrollOffset === reMappedScrollOffset) {
           this.updateView(this.progress)
         } else {
           this.scrollBar.scrollTo(0, reMappedScrollOffset)
@@ -692,7 +697,14 @@
     width: 100%;
     top: 250vh;
     text-align: right;
+    margin-left: -5vw;
     left: -50%;
+    svg {
+      width: $font-xl;
+      height: $font-xl;
+      fill: #1cfaff;
+      stroke: #1cfaff;
+    }
   }
   #CV-Education-title {
     position: absolute;

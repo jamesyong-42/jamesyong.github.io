@@ -36,7 +36,9 @@
       }
 
       this.setScrollBar(scrollBar)
-      this.scrollBar.addListener(this.updateScrollOffset)
+      this.scrollBar.addListener((status) => {
+        this.setScrollOffset(status.offset.y)
+      })
     },
     beforeMount () {
 //      const handler2 = () => {
@@ -48,11 +50,7 @@
       ...mapActions({
         setScrollBar: 'setScrollBar',
         setScrollOffset: 'setScrollOffset'
-      }),
-      updateScrollOffset () {
-        this.setScrollOffset(this.scrollBar.offset.y)
-
-      }
+      })
     }
   }
 

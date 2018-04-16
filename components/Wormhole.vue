@@ -194,7 +194,7 @@
           this.scene = this.wormholeCache.scene
 
         } else {
-          this.webGLRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
+          this.webGLRenderer = new THREE.WebGLRenderer( { antialias: false, alpha: true })
           // console.log(this.$el.clientWidth, this.$el.clientHeight)
           this.webGLRenderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
 
@@ -605,13 +605,10 @@
 <style lang="scss">
   #Wormhole {
     width: 100vw;
-    height: calc(100vh + 150px);
+    height: 100vh;
     position: fixed;
     top:0;
-    left:-50%;
-    @media (max-width: 768px) {
-      left:0;
-    }
+    left:0;
     z-index: 999;
   }
   #timeLine {

@@ -83,10 +83,8 @@
     data () {
       return {
         el: null,
-        mediaQuery: null,
         block: null,
         accumulatedOffset: 0,
-        lastSpeedFactor: 0,
         parallaxChildrenLinear: [],
         parallaxChildrenEase: [],
         easing: null,
@@ -95,21 +93,12 @@
     },
     watch: {
       scrollOffset (val) {
-        const vh = window.innerHeight / 100
-        const offset = getElementViewTopOffset(val, this.block) / vh
-        if (this.lastSpeedFactor !== this.speedFactor) {
-          this.accumulatedOffset = this.accumulatedOffset + offset * (this.lastSpeedFactor - this.speedFactor)
-        }
-        // const parallaxOffset = (offset - this.oldOffset) * this.speedFactor
+
+        const offset = -val
+
         const parallaxOffset = offset * this.speedFactor
-        // console.log('parallaxViewTop', elementViewTopOffset, 'parallaxOffset', elementParallaxOffset)
-        this.lastSpeedFactor = this.speedFactor
-        // console.log(this.accumulatedOffset, parallaxOffset)
-        const totalOffset = -offset + this.accumulatedOffset + parallaxOffset
-//        if (this.parallaxChildren.length > 0) {
-//          // console.log('11111111', this.parallaxChildren)
-//
-//        }
+
+        const totalOffset = -offset + parallaxOffset
 
         this.parallaxChildrenEase.forEach((d) => {
           const speed = d.dataset.speed
@@ -121,14 +110,13 @@
           if (startOffset < 0) {
             startOffset = 0
           }
-          const offsetvh = offset * vh
-          if (offsetvh <= -startOffset) {
+          if (offset <= -startOffset) {
             // originOffset是正常滚距离，要对冲掉
-            const originOffset = -startOffset - offsetvh
+            const originOffset = -startOffset - offset
             const originMoveProgress = originOffset / windowHeight
             // console.log('VVVVVVVVVVVVVVVV', originOffset, originMoveProgress)
 
-            if (offsetvh > -startOffset - windowHeight * 1.2) {
+            if (offset > -startOffset - windowHeight * 1.2) {
 
               const easedProgress = this.easingMaps[Math.round(originMoveProgress * 1000)]
               const remappedOffset = easedProgress * length
@@ -150,10 +138,9 @@
           if (startOffset < 0) {
             startOffset = 0
           }
-          const offsetvh = offset * vh
-          if (offsetvh <= -startOffset) {
+          if (offset <= -startOffset) {
             // originOffset是正常滚距离，要对冲掉
-            const originOffset = -startOffset - offsetvh
+            const originOffset = -startOffset - offset
             const originMoveProgress = originOffset / windowHeight
             // console.log('VVVVVVVVVVVVVVVV', originOffset, originMoveProgress)
 
@@ -162,7 +149,7 @@
 
           }
         })
-        this.el.style.transform = `translate3d(0, ${totalOffset.toFixed(2)}vh ,0)`
+        this.el.style.transform = `translate3d(0, ${totalOffset.toFixed(1)}px ,0)`
       }
     },
     computed: {
@@ -188,74 +175,8 @@
 //        }
 //      },
       preRender () {
-        const vh = window.innerHeight / 100
-        const offset = getElementViewTopOffset(val, this.block) / vh
-        if (this.lastSpeedFactor !== this.speedFactor) {
-          this.accumulatedOffset = this.accumulatedOffset + offset * (this.lastSpeedFactor - this.speedFactor)
-        }
-        // const parallaxOffset = (offset - this.oldOffset) * this.speedFactor
-        const parallaxOffset = offset * this.speedFactor
-        // console.log('parallaxViewTop', elementViewTopOffset, 'parallaxOffset', elementParallaxOffset)
-        this.lastSpeedFactor = this.speedFactor
-        // console.log(this.accumulatedOffset, parallaxOffset)
-        const totalOffset = -offset + this.accumulatedOffset + parallaxOffset
-//        if (this.parallaxChildren.length > 0) {
-//          // console.log('11111111', this.parallaxChildren)
-//
-//        }
+        // const vh = window.innerHeight / 100
 
-        this.parallaxChildrenEase.forEach((d) => {
-          const speed = d.dataset.speed
-          const anchor = d.dataset.anchor
-          const parentOffset = d.offsetTop
-          const windowHeight = window.innerHeight
-          const length = windowHeight * speed
-          let startOffset = parentOffset - length + (anchor - 50) / 100 * windowHeight
-          if (startOffset < 0) {
-            startOffset = 0
-          }
-          const offsetvh = offset * vh
-          if (offsetvh <= -startOffset) {
-            // originOffset是正常滚距离，要对冲掉
-            const originOffset = -startOffset - offsetvh
-            const originMoveProgress = originOffset / windowHeight
-            // console.log('VVVVVVVVVVVVVVVV', originOffset, originMoveProgress)
-
-            if (offsetvh > -startOffset - windowHeight * 1.2) {
-
-              const easedProgress = this.easingMaps[Math.round(originMoveProgress * 1000)]
-              const remappedOffset = easedProgress * length
-              d.dataset.progress = easedProgress
-              // console.log('!!!!!!!!!!', originMoveProgress, this.easing(originMoveProgress), length)
-              d.style.transform = `translate3d(0, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`
-            }
-
-
-          }
-        })
-        this.parallaxChildrenLinear.forEach((d) => {
-          const speed = d.dataset.speed
-          const anchor = d.dataset.anchor
-          const parentOffset = d.offsetTop
-          const windowHeight = window.innerHeight
-          const length = windowHeight * speed
-          let startOffset = parentOffset - length + (anchor - 50) / 100 * windowHeight
-          if (startOffset < 0) {
-            startOffset = 0
-          }
-          const offsetvh = offset * vh
-          if (offsetvh <= -startOffset) {
-            // originOffset是正常滚距离，要对冲掉
-            const originOffset = -startOffset - offsetvh
-            const originMoveProgress = originOffset / windowHeight
-            // console.log('VVVVVVVVVVVVVVVV', originOffset, originMoveProgress)
-
-            const remappedOffset = originMoveProgress * length
-            d.style.transform = `translate3d(${(parseInt(d.dataset.xoffset) * speed).toFixed(1)}px, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`
-
-          }
-        })
-        this.el.style.transform = `translate3d(0, ${totalOffset.toFixed(2)}vh ,0)`
       },
       init () {
 //        // nonstandard: Chrome, IE, Opera, Safari
@@ -265,8 +186,6 @@
 
         this.el = this.$refs.parallax
         this.block = this.$refs.block
-        this.lastSpeedFactor = this.speedFactor
-        // console.log('11111111', this.el.childNodes)
         this.easing = BezierEasing(0.40, 0.94, 0.59, 0.09)
         let easingMaps = []
         for (let i = 0; i < 1201; i++) {
