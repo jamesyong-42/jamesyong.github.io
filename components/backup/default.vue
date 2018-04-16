@@ -9,6 +9,11 @@
       <retro-transition v-if="transition.on" :routeTo="transition.to" :callback="transition.callback"></retro-transition>
     </transition>
     <nuxt :class="{'blur': mobileNavShow}"></nuxt>
+    <!--<sidebar v-if="isShop" :show="sidebar.opened && !sidebar.hidden"></sidebar>-->
+    <!--<footer-bar v-blur="blurConfig" :class="[blurConfig.isBlurred ? 'no-click' : 'click']"></footer-bar>-->
+    <!--<div v-show="isProjects" id="nav-blur">-->
+    <!--<projects-double></projects-double>-->
+    <!--</div>-->
   </div>
 </template>
 
