@@ -101,6 +101,7 @@
         const totalOffset = -offset + parallaxOffset
 
         this.parallaxChildrenEase.forEach((d) => {
+          console.log('BBBBBBBBBBBBBBB', d)
           const speed = d.dataset.speed
           const anchor = d.dataset.anchor
           const parentOffset = d.offsetTop
@@ -123,6 +124,7 @@
               d.dataset.progress = easedProgress
               // console.log('!!!!!!!!!!', originMoveProgress, this.easing(originMoveProgress), length)
               d.style.transform = `translate3d(0, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`
+              console.log('BBBBBBBBBBBBBBB', `translate3d(0, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`)
             }
 
 
@@ -146,7 +148,7 @@
 
             const remappedOffset = originMoveProgress * length
             d.style.transform = `translate3d(${(parseInt(d.dataset.xoffset) * speed).toFixed(1)}px, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`
-
+            console.log('BBBBBBBBBBBBBBB', `translate3d(0, ${(originOffset - remappedOffset).toFixed(1)}px ,0)`)
           }
         })
         this.el.style.transform = `translate3d(0, ${totalOffset.toFixed(1)}px ,0)`
@@ -198,7 +200,9 @@
         if (this.el.childNodes) {
           this.el.childNodes.forEach(d => {
             if (d.dataset) {
+              console.log('BBBBBBBBBBBBBBB', d.dataset)
               if (d.dataset.speed) {
+                console.log('BBBBBBBBBBBBBBB', d.dataset.speedcurve)
                 if (!d.dataset.anchor) {
                   d.dataset.anchor = 50
                 }
