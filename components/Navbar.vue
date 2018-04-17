@@ -1,5 +1,5 @@
 <template>
-    <nav class="nav Nav">
+    <div class="Nav">
       <div class="Nav__Left">
         <nuxt-link class="Nav__Left__Logo" to="/">
           <div >
@@ -11,7 +11,6 @@
             </span>
           </div>
         </nuxt-link>
-
       </div>
       <div class="Nav__Right">
         <div class="Nav__Right__Items">
@@ -50,9 +49,7 @@
             </span>
         </div>
       </div>
-    </nav>
-
-
+    </div>
 </template>
 <script type="text/ecmascript-6">
 import { mapGetters, mapActions } from 'vuex'
