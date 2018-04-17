@@ -6,8 +6,12 @@
 </template>
 <script type="text/ecmascript-6">
   import * as THREE from 'three'
+  import Stats from 'stats.js'
+//  const ThreeBSP = require('three-js-csg')(THREE)
+
   THREE.Cache.enabled = true
   import { mapGetters, mapActions } from 'vuex'
+
 
   export default {
     props: {
@@ -34,6 +38,7 @@
         wormhole: null,
         camera: null,
         spline: null,
+        splineShort: null,
         timeLine: [
           {
             time: '2016.2-2016.10',
@@ -156,7 +161,8 @@
             inheritNodePos: {},
             mesh: null
           }
-        ]
+        ],
+        stats: null
       }
     },
     computed: {
@@ -166,13 +172,19 @@
     },
     mounted () {
       this.init()
+      this.stats = new Stats()
+      this.stats.showPanel( 2 ) // 0: fps, 1: ms, 2: mb, 3+: custom
+      document.body.appendChild( this.stats.dom )
+
     },
     watch: {
       progress (val) {
         if (val > this.cueIn && val < this.cueOut) {
+          this.stats.begin()
           const progress = (val - this.cueIn) / (this.cueOut - this.cueIn)
 
           this.scroll(progress)
+          this.stats.end()
         }
       }
     },
@@ -204,7 +216,7 @@
           // Setting up the camera
           this.camera = new THREE.PerspectiveCamera(60, this.$el.clientWidth / this.$el.clientHeight, 10, 1000)
 
-          this.geom = this.createWormholeGeo(100, this.radius, 70)
+          this.geom = this.createWormholeGeo(100, this.radius, 35)
 
           this.canvas = document.getElementById('timeLine')
 
@@ -491,6 +503,7 @@
             transparent: true,
             opacity: 1,
             needsUpdate: true,
+
             alphaTest: 0.6  // !!! it shows background rather than the tunnel behind if this value is not set
           })
 
@@ -516,14 +529,49 @@
       },
       createWormholeGeo (segments, radius, radiusSegments) {
         // Creating an array of points that we'll use for the spline creation
-        let points = []
+        let points3 = []
+        let points2 = []
+        let points4 = []
 
-        points.push(new THREE.Vector3(0, 0, 0))
-        points.push(new THREE.Vector3(500, 0, 0))
-        points.push(new THREE.Vector3(550, -200, 0))
-        points.push(new THREE.Vector3(4500, -4500, 0))
+//        points3.push(new THREE.Vector3(0, 0, 0))
+//        points3.push(new THREE.Vector3(500, 0, 0))
+//        points3.push(new THREE.Vector3(550, -200, 0))
+//
+//        const splineFront = new THREE.CatmullRomCurve3(points3)
+//
+//
+//        points2.push(new THREE.Vector3(550, -200, 0))
+//        points2.push(new THREE.Vector3(4500, -4500, 0))
+//
+//        const splineBack = new THREE.CatmullRomCurve3(points2)
+//
+        points4.push(new THREE.Vector3(0, 0, 0))
+        points4.push(new THREE.Vector3(500, 0, 0))
+        points4.push(new THREE.Vector3(550, -200, 0))
+        points4.push(new THREE.Vector3(4500, -4500, 0))
 
-        this.spline = new THREE.CatmullRomCurve3(points)
+        this.spline = new THREE.CatmullRomCurve3(points4)
+
+//        const tubeFront = new THREE.TubeGeometry(splineFront, segments, radius, radiusSegments, false)
+//        const tubeBack = new THREE.TubeGeometry(splineBack, segments, radius, radiusSegments, false)
+//        const material = new THREE.MeshStandardMaterial({ color: "#444" })
+//        const meshFront = new THREE.Mesh( tubeFront )
+//        meshFront.position.x = 0
+//        meshFront.position.y = 0
+//        meshFront.position.z = 0
+//        const meshBack = new THREE.Mesh( tubeBack )
+//        meshBack.position.x = 550
+//        meshBack.position.y = -200
+//        meshBack.position.z = 0
+//        meshBack.lookAt(500, 0, 0)
+//
+//        const fBSP = new ThreeBSP(meshFront)
+//        const bBSP = new ThreeBSP(meshBack)
+//
+//        const mergedBSP = fBSP.union(bBSP)
+//        this.mergedMesh = mergedBSP.toMesh()
+
+
         return new THREE.TubeGeometry(this.spline, segments, radius, radiusSegments, false)
       },
       createWormholeMesh (geom) {
@@ -539,19 +587,27 @@
         tex.flipY = false
 
 
-        var material = new THREE.MeshBasicMaterial({
+        const material = new THREE.MeshBasicMaterial({
           map: tex,
           side: THREE.BackSide,
           transparent: true,
           premultipliedAlpha: false,
-
+          // wireframe: true,
           blending: THREE.CustomBlending,
           blendSrc: THREE.SrcAlphaFactor,
           blendDst: THREE.SrcColorFactor,
           needsUpdate: true
         })
 
-        return new THREE.Mesh(geom, material)
+//        this.mergedMesh.material = material
+        const mesh = new THREE.Mesh(geom, material)
+
+        // const exporter = new THREE.OBJExporter()
+        // console.log(exporter.parse( mesh ))
+
+
+        return mesh
+
       },
       render (progress) {
         const pos1 = this.spline.getPointAt(progress)
