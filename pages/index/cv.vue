@@ -155,15 +155,18 @@
         bottomIcon3High: false,
         bottomIcon4High: false,
 
-        bottomContactEls: null
+        bottomContactEls: null,
+        isIOSSafari:false
       }
     },
     watch: {
       scrollOffset (val) {
         const scrollOffset = val
         const contentHeight = this.$el.clientHeight
-        const progress = scrollOffset / (contentHeight - window.innerHeight)
-
+        let progress = scrollOffset / (contentHeight - window.innerHeight)
+        if (this.isIOSSafari) {
+          progress = scrollOffset / (contentHeight - window.innerHeight - 69)
+        }
         console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
@@ -183,7 +186,7 @@
     },
     beforeMount () {
       console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
-      // this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
+      this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
     },
 
     mounted () {
