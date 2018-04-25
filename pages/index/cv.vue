@@ -176,8 +176,11 @@
       scrollOffset (val) {
         const scrollOffset = val
         const contentHeight = this.$el.clientHeight
-        const progress = scrollOffset / (contentHeight - window.innerHeight)
-        console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress)
+        let progress = scrollOffset / (contentHeight - window.innerHeight)
+        if (this.isIOSSafari) {
+          progress = scrollOffset / (contentHeight - window.outerHeight)
+        }
+        console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
         // console.log('progress', progress, this.movingDirection)
