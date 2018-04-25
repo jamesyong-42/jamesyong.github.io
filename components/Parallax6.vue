@@ -1,7 +1,7 @@
 <template>
-  <section :class="['parallax-outer', scaleClass]" ref="block" :style="sectionStyle">
+  <section :class="['parallax-outer', scaleClass, isIOSSafari ? 'i-safari' : '']" ref="block" :style="sectionStyle">
     <div
-      :class="['parallax-inner', scaleClass]"
+      :class="['parallax-inner', scaleClass, isIOSSafari ? 'i-safari' : '']"
       ref="parallax"
       >
       <slot></slot>
@@ -14,6 +14,7 @@
 
   export default {
     props: {
+      isIOSSafari: false,
       actualTop: {
         default: 0,
         type: Number
@@ -86,7 +87,10 @@
 
       },
       scrollHandler (status) {
-        const vh = window.innerHeight / 100
+        let vh = window.innerHeight / 100
+        if (this.isIOSSafari) {
+          vh = vh * 0.9
+        }
         const offset = this.actualTop * vh - status.offset.y
         const parallaxOffset = offset * this.speedFactor
         this.el.style.transform = `translate3d(0, ${-offset + parallaxOffset}px ,0)`
@@ -102,7 +106,9 @@
   min-height: 100vh;
   overflow: hidden;
   transform-style: preserve-3d;
-
+  &.i-safari {
+    min-height: 90vh;
+  }
 }
 
 .parallax-inner {
@@ -120,6 +126,9 @@
   height: 100vh;
   max-width: none;
   width: 100%;
+  &.i-safari {
+    height: 90vh;
+  }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
   /*align-items: center;*/
@@ -131,6 +140,9 @@
   height: 200vh;
   max-width: none;
   width: 100%;
+  &.i-safari {
+    height: 180vh;
+  }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
   /*align-items: center;*/
@@ -142,6 +154,9 @@
   height: 500vh;
   max-width: none;
   width: 100%;
+  &.i-safari {
+    height: 450vh;
+  }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
   /*align-items: center;*/
@@ -153,6 +168,9 @@
   height: 1000vh;
   max-width: none;
   width: 100%;
+  &.i-safari {
+    height: 900vh;
+  }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
   /*align-items: center;*/

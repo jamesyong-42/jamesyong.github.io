@@ -1,6 +1,6 @@
 <template>
   <div class="CV">
-    <parallax :scrollOffset="scrollOffset" :speedFactor="1" :scaleClass="'scale-5x'">
+    <parallax :scrollOffset="scrollOffset" :isIOSSafari="isIOSSafari" :speedFactor="1" :scaleClass="'scale-5x'">
       <div class="space">
         <svg id="space" class="space-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 5400">
           <title>space</title>
@@ -168,7 +168,8 @@
         bottomIcon3High: false,
         bottomIcon4High: false,
 
-        bottomContactEls: null
+        bottomContactEls: null,
+        isIOSSafari: false
       }
     },
     watch: {
@@ -194,8 +195,10 @@
       })
     },
     beforeMount () {
-
+      // console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
+      this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
     },
+   
     mounted () {
 
 //      const pageContent = document.getElementById('page-content')
@@ -620,7 +623,7 @@
     overflow: visible;
     // background-color: #ff6666;
     position: absolute;
-    bottom: calc(50vh - 230px);
+    bottom: 25vh;
     left: calc(50vw - 200px);
     display: flex;
     justify-content: center;

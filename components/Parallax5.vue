@@ -1,7 +1,7 @@
 <template>
-  <section :class="['parallax-outer', scaleClass]" ref="block" :style="sectionStyle">
+  <section :class="['parallax-outer', scaleClass, isIOSSafari ? 'i-safari' : '']" ref="block" :style="sectionStyle">
     <div
-      :class="['parallax-inner', scaleClass]"
+      :class="['parallax-inner', scaleClass, isIOSSafari ? 'i-safari' : '']"
       ref="parallax"
     >
       <slot></slot>
@@ -52,6 +52,7 @@
 //  }
   export default {
     props: {
+      isIOSSafari: false,
       actualTop: {
         default: 0,
         type: Number
@@ -241,7 +242,9 @@
     min-height: 100vh;
     overflow: hidden;
     transform-style: preserve-3d;
-
+    &.i-safari {
+      min-height: 90vh;
+    }
   }
 
   .parallax-inner {
@@ -281,6 +284,9 @@
     height: 500vh;
     max-width: none;
     width: 100%;
+    &.i-safari {
+      height: 450vh;
+    }
     /*-webkit-box-align: center;*/
     /*-ms-flex-align: center;*/
     /*align-items: center;*/

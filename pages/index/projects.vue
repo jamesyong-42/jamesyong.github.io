@@ -1,6 +1,6 @@
 <template>
   <div class="Projects">
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="0" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
+    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="0" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d" :class="'frame-' + frame1"></div>
@@ -13,7 +13,7 @@
         </div>
       </div>
     </section>
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="200.5" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
+    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="200.5" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
       <div class="Projects__Parallax__Content">
         <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
           <div class="logo-3d frame-7"></div>
@@ -30,7 +30,7 @@
       </div>
     </section>
 
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
+    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
       <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
 
         <div v-for="(v, index) in videoDemos"
@@ -57,7 +57,7 @@
       </div>
     </section>
 
-    <parallax class="Projects__Parallax" :scrollBar="scrollBar" :actualTop="1706" :speedFactor="0.1" :sectionStyle="projectStyle1">
+    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1706" :speedFactor="0.1" :sectionStyle="projectStyle1">
       <div id="project-intro-trinity-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
         <img class="galary-bg" data-depth="1.3" src="/parallaxGallery1.png"/>
         <img class="galary-bg" data-depth="0.8" src="/parallaxGallery2.png"/>
@@ -204,7 +204,8 @@
             pic: '/matrix-thumb.jpg',
             thumbnails: '/matrix-demo-thumbnails.jpg'
           }
-        ]
+        ],
+        isIOSSafari: false
       }
     },
     computed: {
@@ -280,6 +281,10 @@
 //        callback: () => {}
 //      })
 //    },
+    beforeMount () {
+      // console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
+      this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
+    },
     mounted () {
 //      const pageContent = document.getElementById('page-content')
 //      console.log(pageContent)
