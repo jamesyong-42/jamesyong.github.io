@@ -30,6 +30,8 @@
       })
     },
     mounted () {
+      this.scrollEl = document.getElementById('smooth-scrollbar')
+      this.scrollEl.style.height = `${window.innerHeight}px`
       let scrollBar = Scrollbar.get(document.querySelector('#smooth-scrollbar'))
       if (!scrollBar) {
         scrollBar = Scrollbar.init(document.querySelector('#smooth-scrollbar'), this.scrollBarOptions)
@@ -39,6 +41,10 @@
       this.scrollBar.addListener((status) => {
         this.setScrollOffset(status.offset.y)
       })
+      window.addEventListener('resize', this.resizeHandler)
+    },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.resizeHandler)
     },
     beforeMount () {
 //      const handler2 = () => {
@@ -50,7 +56,10 @@
       ...mapActions({
         setScrollBar: 'setScrollBar',
         setScrollOffset: 'setScrollOffset'
-      })
+      }),
+      resizeHandler () {
+        this.scrollEl.style.height = `${window.innerHeight}px`
+      },
     }
   }
 
@@ -70,7 +79,7 @@
 
   }
   #smooth-scrollbar {
-    height: 100vh;
+
     overflow: auto;
   }
   .app-content {

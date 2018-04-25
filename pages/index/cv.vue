@@ -155,18 +155,15 @@
         bottomIcon3High: false,
         bottomIcon4High: false,
 
-        bottomContactEls: null,
-        isIOSSafari:false
+        bottomContactEls: null
       }
     },
     watch: {
       scrollOffset (val) {
         const scrollOffset = val
         const contentHeight = this.$el.clientHeight
-        let progress = scrollOffset / (contentHeight - window.innerHeight)
-        if (this.isIOSSafari) {
-          progress = scrollOffset / (contentHeight - window.innerHeight - 69)
-        }
+        const progress = scrollOffset / (contentHeight - window.innerHeight)
+
         console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
