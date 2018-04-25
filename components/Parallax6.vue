@@ -88,9 +88,7 @@
       },
       scrollHandler (status) {
         let vh = window.innerHeight / 100
-        if (this.isIOSSafari) {
-          vh = vh * 0.9
-        }
+
         console.log('VBVBDFSDVSDSDF', status.offset.y, window.innerHeight, offset, this.scrollBar.size)
         const offset = this.actualTop * vh - status.offset.y
         const parallaxOffset = offset * this.speedFactor
@@ -101,15 +99,13 @@
 </script>
 
 <style lang="scss">
-
+  $ios-ratio: 559/628;
 .parallax-outer {
   position: relative;
-  min-height: 100vh;
+
   overflow: hidden;
   transform-style: preserve-3d;
-  &.i-safari {
-    min-height: 90vh;
-  }
+
 }
 
 .parallax-inner {
@@ -128,7 +124,7 @@
   max-width: none;
   width: 100%;
   &.i-safari {
-    height: 90vh;
+    height: 100vh*$ios-ratio;
   }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
@@ -142,7 +138,7 @@
   max-width: none;
   width: 100%;
   &.i-safari {
-    height: 180vh;
+    height: 200vh*$ios-ratio;
   }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
@@ -156,7 +152,7 @@
   max-width: none;
   width: 100%;
   &.i-safari {
-    height: 450vh;
+    height: 500vh*$ios-ratio;
   }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
@@ -170,7 +166,7 @@
   max-width: none;
   width: 100%;
   &.i-safari {
-    height: 900vh;
+    height: 1000vh*$ios-ratio;
   }
   /*-webkit-box-align: center;*/
   /*-ms-flex-align: center;*/
