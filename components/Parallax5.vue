@@ -239,13 +239,15 @@
 </script>
 
 <style lang="scss">
+
+  $ios-ratio: 559 / 628;
   .parallax-outer {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
     transform-style: preserve-3d;
     &.i-safari {
-      min-height: 90vh;
+      min-height: 100vh * $ios-ratio;
     }
   }
 
@@ -287,7 +289,7 @@
     max-width: none;
     width: 100%;
     &.i-safari {
-      height: 450vh;
+      height: 500vh * $ios-ratio;
     }
     /*-webkit-box-align: center;*/
     /*-ms-flex-align: center;*/
