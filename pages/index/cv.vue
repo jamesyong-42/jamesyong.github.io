@@ -177,10 +177,10 @@
         const scrollOffset = val
         const contentHeight = this.$el.clientHeight
         const progress = scrollOffset / (contentHeight - window.innerHeight)
-
+        console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
-        console.log('progress', progress, this.movingDirection)
+        // console.log('progress', progress, this.movingDirection)
 
         this.updateView (progress)
 

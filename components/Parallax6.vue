@@ -91,6 +91,7 @@
         if (this.isIOSSafari) {
           vh = vh * 0.9
         }
+        console.log('VBVBDFSDVSDSDF', status.offset.y, window.innerHeight, offset, this.scrollBar.size)
         const offset = this.actualTop * vh - status.offset.y
         const parallaxOffset = offset * this.speedFactor
         this.el.style.transform = `translate3d(0, ${-offset + parallaxOffset}px ,0)`
