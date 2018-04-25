@@ -1,7 +1,7 @@
 <template>
-  <section :class="['parallax-outer', scaleClass, isIOSSafari ? 'i-safari' : '']" ref="block" :style="sectionStyle">
+  <section :class="['parallax-outer']" ref="block" :style="sectionStyle">
     <div
-      :class="['parallax-inner', scaleClass, isIOSSafari ? 'i-safari' : '']"
+      :class="['parallax-inner']"
       ref="parallax"
     >
       <slot></slot>
@@ -12,17 +12,7 @@
 <script type="text/ecmascript-6">
 
   import BezierEasing from 'bezier-easing'
-  // 获取元素顶部与窗口顶部的相对位移
-  function getElementViewTopOffset (scrollOffset, element) {
-    let actualTop = element.offsetTop
-    let current = element.offsetParent
-    while (current !== null) {
-      actualTop += current.offsetTop
-      current = current.offsetParent
-    }
-    // return actualTop - window.pageYOffset
-    return actualTop - scrollOffset
-  }
+
 //  function addClass (obj, cls) {
 //    var objClass = obj.className
 //    // 获取 class 内容.
@@ -52,8 +42,7 @@
 //  }
   export default {
     props: {
-      scale: 1,
-      isIOSSafari: false,
+
       actualTop: {
         default: 0,
         type: Number
@@ -75,10 +64,6 @@
         default: 70,
         type: Number,
         required: false
-      },
-      scaleClass: {
-        type: String,
-        default: 'scale-1x'
       }
     },
 
@@ -90,7 +75,8 @@
         parallaxChildrenLinear: [],
         parallaxChildrenEase: [],
         easing: null,
-        easingMaps: []
+        easingMaps: [],
+        scale: 5
       }
     },
     watch: {
@@ -161,12 +147,13 @@
     computed: {
     },
     beforeMount () {
-      this.el = this.$refs.parallax
-      this.block = this.$refs.block
-      this.el.style.height = this.scale * window.innerHeight
-      this.block.style.height = this.scale * window.innerHeight
+
     },
     mounted () {
+      this.el = this.$refs.parallax
+      this.block = this.$refs.block
+      this.el.style.height = `${this.scale * window.innerHeight}px`
+      this.block.style.height = `${this.scale * window.innerHeight}px`
       this.init()
       window.addEventListener('resize', this.resizeHandler)
     },
@@ -192,8 +179,8 @@
 
       },
       resizeHandler () {
-        this.el.style.height = this.scale * window.innerHeight
-        this.block.style.height = this.scale * window.innerHeight
+        this.el.style.height = `${this.scale * window.innerHeight}px`
+        this.block.style.height = `${this.scale * window.innerHeight}px`
       },
       init () {
 //        // nonstandard: Chrome, IE, Opera, Safari
@@ -251,16 +238,18 @@
 
 <style lang="scss">
 
-  $ios-ratio: 559 / 628;
   .parallax-outer {
     position: relative;
     // min-height: 100vh;
     overflow: hidden;
     transform-style: preserve-3d;
-
+    max-width: none;
+    width: 100%;
   }
 
   .parallax-inner {
+    max-width: none;
+    width: 100%;
     left: 0;
     position: absolute;
     will-change: transform;
@@ -271,51 +260,5 @@
     -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
   }
-  .scale-1x {
-    height: 100vh;
-    max-width: none;
-    width: 100%;
-    /*-webkit-box-align: center;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*display: -webkit-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-  }
-  .scale-2x {
-    height: 200vh;
-    max-width: none;
-    width: 100%;
-    /*-webkit-box-align: center;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*display: -webkit-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-  }
-  .scale-5x {
-    height: 500vh;
-    max-width: none;
-    width: 100%;
-    &.i-safari {
-      height: 500vh * $ios-ratio;
-    }
-    /*-webkit-box-align: center;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*display: -webkit-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-  }
-  .scale-10x {
-    height: 1000vh;
-    max-width: none;
-    width: 100%;
-    /*-webkit-box-align: center;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*display: -webkit-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-  }
+
 </style>

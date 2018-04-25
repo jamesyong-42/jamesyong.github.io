@@ -178,8 +178,8 @@
       &__Charts {
         width: 60%;
         min-width: 300px;
-        font-family: $ft-fm-code;
-        font-weight: $ft-wt-bold;
+        // font-family: $ft-fm-code;
+        // font-weight: $ft-wt-bold;
         &__Chart {
           margin: 10px;
 
@@ -189,24 +189,13 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+
           > div {
             width: 60%;
             height: 80%;
           }
-          &--stack {
-            height: auto;
-            text-align: center;
-            border-radius: 10px;
-            border-color: #00e7eb;
-            border-width: 2px;
-            border-style: dashed;
-            > div {
-              display: block;
-              font-size: 1rem;
-              width: 100%;
-              height: 1rem;
-              margin-bottom: 5px;
-            }
+          > span {
+            width: 40%;
           }
         }
       }
@@ -233,18 +222,18 @@
 
           padding: 5px;
           position: relative;
-          font-family: $ft-fm-code;
-          font-weight: $ft-wt-bold;
+          // font-family: $ft-fm-code;
+          // font-weight: $ft-wt-bold;
           > h1 {
             position: absolute;
             width: 100%;
             top: 50%;
-            left: -2.5px;
-            font-size: 2rem;
+            left: -1px;
+            font-size: 1.5rem;
             text-align: center;
-            margin-top: -2rem;
+            margin-top: -1.5rem;
             > span {
-              font-size: 1rem;
+              font-size: 0.6rem;
             }
           }
         }

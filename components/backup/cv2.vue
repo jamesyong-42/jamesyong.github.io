@@ -1,6 +1,6 @@
 <template>
   <div class="CV">
-    <parallax :scrollOffset="scrollOffset" :speedFactor="1">
+    <parallax :scrollOffset="scrollOffset" :isIOSSafari="isIOSSafari" :speedFactor="1" :scaleClass="'scale-5x'">
       <div class="space">
         <svg id="space" class="space-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 5400">
           <title>space</title>
@@ -13,6 +13,19 @@
         </svg>
 
         <rocket-flames :scrollOffset="scrollOffset" :progress="progress" id="rocket"></rocket-flames>
+        <!--<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.21 438.51">-->
+          <!--<g>-->
+            <!--<g>-->
+              <!--<path id="rocket-flame-1" style="fill:#008ba2;" d="M60.14,46c0,2.14-.22,119.54-.39,140.62C59.61,204.87,48,219,30.46,219S0,206.43,0,186.3C.07,157.91.15,64.1.16,57.59c0-7,8.8-6.82,8.87.14.1,9.44.22,16.9,0,25.52-.15,6.56,8.25,6.57,8.37.51.22-10.56.27-64.12.29-79.06,0-6.31,9-6.24,9.12.07C27,13,27,57.33,26.92,68.21c-.05,5.25,8.08,5.08,8-.92,0-6.38-.1-18.31,0-27.69.06-4.26,7.9-6.43,8,.45s.13,24.13.21,33.75c0,5,8.09,4.72,8.21,0,.31-12.44.46-36.19.4-49.7,0-7.19,8.47-6.82,8.39-.36C60.1,31.75,60.17,41.17,60.14,46Z"/>-->
+              <!--<path id="rocket-flame-2" style="fill:#0bc6d0;" d="M54.07,111.35c0,1.71-.14,63.12-.27,80-.12,14.59-9.43,25.88-23.42,25.86S6,207.17,6,191.07c.06-22.7.06-82.46.11-87.66.08-6.86,8.56-6.7,8.68,0,.14,7.55.12,27.37-.07,34.17-.15,5.25,5.94,5.15,6,.31.17-8.45-.06-15.44,0-27.38,0-5,6.55-4.94,6.65.11.12,6.55.21,9.79.12,18.49,0,4.2,6.46,4.06,6.43-.74,0-5.1,0-38.76.06-46.26,0-3.41,6.32-5.14,6.4.36s.1,17.71.17,25.4c0,4,6.47,3.77,6.57,0,.25-10,.34-3.24.29-14,0-5.75,6.78-5.46,6.71-.29C54,100,54.09,107.49,54.07,111.35Z"/>-->
+              <!--<path id="rocket-flame-3" style="fill:#1ae6de;" d="M49.57,167c0,1.39-.06,13.8-.17,27.55-.1,11.9-7.69,21.1-19.1,21.09s-19.9-8.18-19.86-21.3c0-18.51,0-41.32,0-45.56.06-5.6,9.09-5.3,9.2.17.12,6.16,0,.3.1,5.84.09,4.83,6.52,4.84,6.51.34,0-4.16.09-9.26.19-15.38.09-5.29,8.11-5,8.18-.53s-.12,13.48,0,19.75c.06,5.12,6.42,5.09,6.34,0-.12-8.12,0-5,.1-11.33.05-5.33,8.51-5.82,8.54.44C49.63,153.34,49.59,163.84,49.57,167Z"/>-->
+              <!--<path id="rocket-flame-4" style="fill:#e9f8f3;" d="M39.39,181.42c0,.95-.14,9.38-.09,18.72.05,10-3.7,14.34-9.18,14.33s-9.58-3.14-9.54-14.46c0-12.57,0-32.61,0-35.49,0-4.56,6.68-4.74,6.74.32,0,4.18.06,8.23,0,12,0,4.31,5.33,3.82,5.41,0,.11-5.51,0-4.44.06-8.74,0-3.62,6.58-3.8,6.56.13C39.37,171.79,39.4,179.28,39.39,181.42Z"/>-->
+              <!--<path id="rocket-flame-5" style="fill:#0bc6d0;" d="M27.63,80.27c0-7.83-7.12-7.8-7.09-.25,0,6.43,0,11.08,0,15.37,0,5.83,7.08,5.43,7.09.06Z"/>-->
+              <!--<path id="rocket-flame-6" style="fill:#1ae6de;" d="M47.66,120.42c0-7.83-7.12-7.8-7.09-.25,0,6.43,0,11.08,0,15.37,0,5.83,7.08,5.43,7.09.06Z"/>-->
+              <!--<rect style="fill:none;" x="0.1" y="219.51" width="59.5" height="219"/>-->
+            <!--</g>-->
+          <!--</g>-->
+        <!--</svg>-->
         <div :class="['animated']" id="avatar">
           <avatar-firework :progress="progress"
                            v-on:introLeftDone="introLeftDone"
@@ -101,7 +114,7 @@
   import AvatarFirework from '~/components/AvatarFirework.vue'
   import CvSkills from '~/components/CVSkills.vue'
   import CvEducation from '~/components/CVEducation.vue'
-  import Parallax from '~/components/Parallax7.vue'
+  import Parallax from '~/components/Parallax5.vue'
   import { mapGetters, mapActions } from 'vuex'
 
   export default {
@@ -155,15 +168,18 @@
         bottomIcon3High: false,
         bottomIcon4High: false,
 
-        bottomContactEls: null
+        bottomContactEls: null,
+        isIOSSafari: false
       }
     },
     watch: {
       scrollOffset (val) {
         const scrollOffset = val
         const contentHeight = this.$el.clientHeight
-        const progress = scrollOffset / (contentHeight - window.innerHeight)
-
+        let progress = scrollOffset / (contentHeight - window.innerHeight)
+        if (this.isIOSSafari) {
+          progress = scrollOffset / (contentHeight - window.outerHeight)
+        }
         console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
@@ -183,7 +199,7 @@
     },
     beforeMount () {
       console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
-      // this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
+      this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
     },
 
     mounted () {
