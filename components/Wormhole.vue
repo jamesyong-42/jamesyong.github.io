@@ -148,7 +148,7 @@
           {
             time: '2018.3-',
             title: '主页与博客',
-            content: '曾受大神WenliZhang的启发，用jekyll开发了个人博客并用github托管，后来为了开发更复杂的页面放弃jekyll，转用Nuxt.js结合github GraphQL API搭建新博客，详情见github' +
+            content: '受zhangwenli的启发，用jekyll开发了个人博客并用github托管，后来为了开发更复杂的页面放弃jekyll，转用Nuxt.js结合github GraphQL API搭建新博客，详情见github。  ' +
             '个人网站项目，侧重设计，实现了不同类型的视差滚动效果，并用贝塞尔函数重新映射速度曲线使视觉效果更加自然。实现了SVG路径填充、跟随、形变动效。用Three.js建模结合Canvas 2D绘制材质实现3D展示效果。',
             contentPos: null,
             width: 30,
