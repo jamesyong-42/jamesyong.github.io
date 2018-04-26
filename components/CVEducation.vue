@@ -83,13 +83,13 @@
       &__T {
         width: 100%;
         text-align: left;
-        color: #3effc8;
+        color: #ffffff;
         font-size:50%;
       }
       &__U {
         width: 100%;
         text-align: left;
-        color: #1cfaff;
+        color: #ffffff;
         font-size:80%;
       }
       &__M {

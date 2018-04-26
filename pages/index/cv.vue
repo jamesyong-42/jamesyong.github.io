@@ -62,7 +62,7 @@
                  id="bottom-contact__facebook"
             ><use xlink:href="#icon-facebook"></use></svg>
           </a>
-          <a id="bottom-contact__download" href="/Web Front-End Wenli Zhang.pdf" target="_blank" class="download">
+          <a id="bottom-contact__download" href="/Web Front-End JamesYong.pdf" target="_blank" class="download">
             <template v-if="lan == 'ZH'">下载简历</template>
             <template v-else-if="lan == 'EN'">Download Resume</template>
           </a>
@@ -364,8 +364,8 @@
 
           this.avatar.style.transform = `translate3d(${this.avatarCenterOffsetX.toFixed(1)}px, ${(this.avatarCenterOffsetY + y).toFixed(1)}px, 0) scale(${scale}, ${scale})`
 
-          this.topIntroLeft.style.transform = `scale(${scale}, ${scale})`
-          this.topIntroRight.style.transform = `scale(${scale}, ${scale})`
+          this.topIntroLeft.style.transform = `scale(${scale}, ${scale}) translate3d(0, ${(this.avatarCenterOffsetY + y).toFixed(1)}px, 0)`
+          this.topIntroRight.style.transform = `scale(${scale}, ${scale}) translate3d(0, ${(this.avatarCenterOffsetY + y).toFixed(1)}px, 0)`
           this.bottomContactEls.email.style.transform = `scale(${scale}, ${scale})`
           this.bottomContactEls.github.style.transform = `scale(${scale}, ${scale})`
           this.bottomContactEls.behance.style.transform = `scale(${scale}, ${scale})`
@@ -538,11 +538,11 @@
   #top-intro-left {
     will-change: filter, transform;
     position: absolute;
-    top:50vh;
+    top:0;
     left: 50vw;
     width: 220px;
     margin-left: calc(-300px - 5vw);
-    margin-top: -20px;
+    margin-top: 5vh;
     color: white;
     font-family: $fontAXIS;
     text-align: center;
@@ -554,7 +554,7 @@
     }
     @media (max-width: 768px) {
       margin-left: calc(-250px - 5vw);
-      margin-top: 0;
+      margin-top: 5vh;
       > h1 {
         font-size: 30px;
       }
@@ -570,10 +570,10 @@
   #top-intro-right {
     will-change: filter, transform;
     position: absolute;
-    top:50vh;
+    top: 0;
     left: 50vw;
     margin-left: calc(90px + 5vw);
-    margin-top: -10px;
+    margin-top: 5vh;
     width: 240px;
     font-family: $fontAXIS;
     display: flex;
@@ -597,7 +597,7 @@
     }
     @media (max-width: 768px) {
       width: 150px;
-      margin-top: 0;
+      margin-top: 5.5vh;
       margin-left: calc(60px + 5vw);
       > .l {
         font-size: $fs-l / 2;
