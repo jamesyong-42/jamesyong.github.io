@@ -2,7 +2,7 @@
     <div class="Nav">
       <div class="Nav__Left">
         <nuxt-link class="Nav__Left__Logo" to="/">
-          <div >
+          <div>
             <span class="logo">
               <svg>
                 <rect x="0" y="0" fill="none" width="100%" height="100%"/>
