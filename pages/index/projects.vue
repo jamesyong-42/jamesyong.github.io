@@ -59,16 +59,17 @@
 
     <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1706" :speedFactor="0.1" :sectionStyle="projectStyle1">
       <div id="project-intro-trinity-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
-        <img class="galary-bg" data-depth="1.3" src="/parallaxGallery1.png"/>
-        <img class="galary-bg" data-depth="0.8" src="/parallaxGallery2.png"/>
-        <img class="galary-bg" data-depth="0.5" src="/parallaxGallery3.png"/>
-        <img class="galary-bg" data-depth="0.3" src="/parallaxGallery4.png"/>
-        <img class="galary-bg" data-depth="0.2" src="/parallaxGallery5.png"/>
-        <img class="galary-bg" data-depth="0.1" src="/parallaxGallery6.png"/>
-        <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" src="https://c1.staticflickr.com/5/4788/40707159581_bdc2eb4dba_b.jpg">
-        <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" src="https://c1.staticflickr.com/5/4788/40707159581_bdc2eb4dba_b.jpg">
-        <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" src="https://c1.staticflickr.com/5/4788/40707159581_bdc2eb4dba_b.jpg">
-        <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" src="https://c1.staticflickr.com/5/4788/40707159581_bdc2eb4dba_b.jpg">
+        <img class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img class="galary-bg parallaxgallery3" data-depth="0.5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img class="galary-bg parallaxgallery4" data-depth="0.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img class="galary-bg parallaxgallery5" data-depth="0.2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img class="galary-bg parallaxgallery6" data-depth="0.1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+        <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-44" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnsAAAONAQMAAAB0n0fmAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAM9JREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjgbmOwABlDzM1wAAAABJRU5ErkJggg==">
+        <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-22" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABfAAAAK1AQMAAAC9xl1lAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJdJREFUeNrtwTEBAAAAwqD1T+1jDKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgBBSkAASe4JrkAAAAASUVORK5CYII=">
+        <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-11" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAK3AQMAAADNnJ0IAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJhJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODAAAanAAFcJN3KAAAAAElFTkSuQmCC">
+        <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-33" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAx4AAAGLAQMAAABzwNakAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAD5JREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODeAJvXAAFGD/NQAAAAAElFTkSuQmCC">
+
       </div>
     </parallax>
   </div>
@@ -295,13 +296,17 @@
 //      this.scrollBar.update()
 //      this.scrollBar.addListener(this.scrollBlur)
 //      this.scrollBar.addListener(this.progressChecker)
-      const gallary = document.getElementById('project-intro-trinity-gallary')
-      const parallaxGallary = new ParallaxJs(gallary, {
-        hoverOnly: true,
-        pointerEvents: true
-      })
+
+      if (!this.isIOSSafari) {
+        const gallary = document.getElementById('project-intro-trinity-gallary')
+        const parallaxGallary = new ParallaxJs(gallary, {
+          hoverOnly: true,
+          pointerEvents: true
+        })
+      }
+
       window.addEventListener('resize', this.reactiveHandler)
-      console.log(parallaxGallary)
+
 
 
       this.setTransition({
@@ -994,7 +999,6 @@
     pointer-events: none;
     &.a {
       transform-origin: right bottom;
-      background-position: right bottom;
       margin-top: -5vh;
       margin-left: -$gala-offset-left;
     }
@@ -1015,5 +1019,27 @@
     }
 
   }
+
+
+
+
+  .demo-sprite-44, .demo-sprite-22, .demo-sprite-11, .demo-sprite-33
+  { max-width: 100%; background-size: 100%; background-image: url('/demo-spritesheet.png'); }
+
+  .demo-sprite-44 { background-position: 0 0%; background-size: 100%; }
+  .demo-sprite-22 { background-position: 0 45.472736%; background-size: 109.144737%; }
+  .demo-sprite-11 { background-position: 0 80.22033%; background-size: 109.432718%; }
+  .demo-sprite-33 { background-position: 0 100%; background-size: 207.894737%; }
+
+  .parallaxgallery1, .parallaxgallery2, .parallaxgallery3, .parallaxgallery4, .parallaxgallery5,
+  .parallaxgallery6
+  { max-width: 100%; background-size: 100%; background-image: url('/gala-spritesheet.png'); }
+
+  .parallaxgallery1 { background-position: 0 0%; background-size: 100%; }
+  .parallaxgallery2 { background-position: 0 20%; background-size: 100%; }
+  .parallaxgallery3 { background-position: 0 40%; background-size: 100%; }
+  .parallaxgallery4 { background-position: 0 60%; background-size: 100%; }
+  .parallaxgallery5 { background-position: 0 80%; background-size: 100%; }
+  .parallaxgallery6 { background-position: 0 100%; background-size: 100%; }
 
 </style>

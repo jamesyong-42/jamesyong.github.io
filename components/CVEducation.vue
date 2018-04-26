@@ -83,7 +83,7 @@
       &__T {
         width: 100%;
         text-align: left;
-        color: black;
+        color: #3effc8;
         font-size:50%;
       }
       &__U {

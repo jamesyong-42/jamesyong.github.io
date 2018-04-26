@@ -38,22 +38,30 @@
           <span class="l">world</span>
         </div>
         <div id="bottom-contact">
-          <svg class="icon"
-               :class="{'shoutOut': bottomIcon1High}"
-               id="bottom-contact__email"
+          <a href="mailto:me@jamesyong42.com">
+            <svg class="icon"
+                  :class="{'shoutOut': bottomIcon1High}"
+                  id="bottom-contact__email"
           ><use xlink:href="#icon-envelope"></use></svg>
-          <svg class="icon"
-               :class="{'shoutOut': bottomIcon2High}"
-               id="bottom-contact__github"
-          ><use xlink:href="#icon-github"></use></svg>
-          <svg class="icon"
-               :class="{'shoutOut': bottomIcon3High}"
-               id="bottom-contact__behance"
-          ><use xlink:href="#icon-behance"></use></svg>
-          <svg class="icon"
-               :class="{'shoutOut': bottomIcon4High}"
-               id="bottom-contact__facebook"
-          ><use xlink:href="#icon-facebook"></use></svg>
+          </a>
+          <a href="https://github.com/Sakilove">
+            <svg class="icon"
+                 :class="{'shoutOut': bottomIcon2High}"
+                 id="bottom-contact__github"
+            ><use xlink:href="#icon-github"></use></svg>
+          </a>
+          <a href="https://behance.net/jamesyong">
+            <svg class="icon"
+                 :class="{'shoutOut': bottomIcon3High}"
+                 id="bottom-contact__behance"
+            ><use xlink:href="#icon-behance"></use></svg>
+          </a>
+          <a href="https://www.facebook.com/jamesyong42">
+            <svg class="icon"
+                 :class="{'shoutOut': bottomIcon4High}"
+                 id="bottom-contact__facebook"
+            ><use xlink:href="#icon-facebook"></use></svg>
+          </a>
           <a id="bottom-contact__download" href="/Web Front-End Wenli Zhang.pdf" target="_blank" class="download">
             <template v-if="lan == 'ZH'">下载简历</template>
             <template v-else-if="lan == 'EN'">Download Resume</template>
@@ -71,7 +79,7 @@
         <template v-if="lan == 'ZH'">技能</template>
         <template v-else-if="lan == 'EN'">Skills</template>
       </div>
-      <div id="CV-Projects-title" class="CV-headline" data-speed="1" data-speedcurve="ease">
+      <div id="CV-Projects-title" class="CV-headline" @click="routeToProjects" data-speed="1" data-speedcurve="ease">
         <svg>
           <use xlink:href="#icon-projects"></use>
         </svg>
@@ -425,6 +433,9 @@
         setTimeout(() => {
           this.bottomIcon4High = false
         }, 1200)
+      },
+      routeToProjects () {
+        this.$router.push('/projects')
       }
     }
   }
@@ -688,12 +699,15 @@
     text-align: right;
     margin-left: -5vw;
     left: -50%;
+    z-index: 999;
+    cursor: pointer;
     svg {
       width: $font-xl;
       height: $font-xl;
       fill: #1cfaff;
       stroke: #1cfaff;
     }
+
   }
   #CV-Education-title {
     position: absolute;
