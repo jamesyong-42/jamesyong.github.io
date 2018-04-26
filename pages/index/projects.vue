@@ -39,7 +39,7 @@
         </div>
       </div>
     </parallax>
-    <section class="hero is-medium is-dark is-bold" style="height: 0.5vh">
+    <section v-if="!isIOSSafari" class="hero is-medium is-dark is-bold" style="height: 0.5vh">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </section>
-    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1701.5" :speedFactor="0.1" :sectionStyle="projectStyle1">
+    <parallax v-if="!isIOSSafari" class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1701.5" :speedFactor="0.1" :sectionStyle="projectStyle1">
       <div id="project-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
         <img class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
         <img class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
