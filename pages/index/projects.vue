@@ -29,21 +29,16 @@
         </div>
       </div>
     </section>
-
     <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
       <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
-
         <div v-for="(v, index) in videoDemos"
              v-if="progress > v.cueIn"
              :key="index"
              class="Projects__Parallax__Content--demos__Video">
           <d-player :video="v"></d-player>
         </div>
-
-
       </div>
     </parallax>
-
     <section class="hero is-medium is-dark is-bold" style="height: 0.5vh">
       <div class="hero-body">
         <div class="container">
@@ -56,24 +51,28 @@
         </div>
       </div>
     </section>
-
     <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1701.5" :speedFactor="0.1" :sectionStyle="projectStyle1">
-      <div id="project-intro-trinity-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery3" data-depth="0.5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery4" data-depth="0.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery5" data-depth="0.2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img v-if="!isIOSSafari" class="galary-bg parallaxgallery6" data-depth="0.1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-44" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnsAAAONAQMAAAB0n0fmAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAM9JREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjgbmOwABlDzM1wAAAABJRU5ErkJggg==">
-        <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-22" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABfAAAAK1AQMAAAC9xl1lAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJdJREFUeNrtwTEBAAAAwqD1T+1jDKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgBBSkAASe4JrkAAAAASUVORK5CYII=">
-        <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-11" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAK3AQMAAADNnJ0IAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJhJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODAAAanAAFcJN3KAAAAAElFTkSuQmCC">
-        <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-33" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAx4AAAGLAQMAAABzwNakAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAD5JREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODeAJvXAAFGD/NQAAAAAElFTkSuQmCC">
-
-      </div>
+      <template v-if="isIOSSafari">
+        <div id="gallary-swiper" :class="['project-title', 'project-intro-title', 'animated']">
+          <swiper></swiper>
+        </div>
+      </template>
+      <template v-else>
+        <div id="project-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
+          <img class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery3" data-depth="0.5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery4" data-depth="0.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery5" data-depth="0.2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery6" data-depth="0.1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-44" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnsAAAONAQMAAAB0n0fmAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAM9JREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjgbmOwABlDzM1wAAAABJRU5ErkJggg==">
+          <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-22" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABfAAAAK1AQMAAAC9xl1lAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJdJREFUeNrtwTEBAAAAwqD1T+1jDKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgBBSkAASe4JrkAAAAASUVORK5CYII=">
+          <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-11" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAK3AQMAAADNnJ0IAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJhJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODAAAanAAFcJN3KAAAAAElFTkSuQmCC">
+          <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-33" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAx4AAAGLAQMAAABzwNakAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAD5JREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODeAJvXAAFGD/NQAAAAAElFTkSuQmCC">
+        </div>
+      </template>
     </parallax>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
@@ -81,106 +80,16 @@
   import Wormhole from '~/components/Wormhole.vue'
   import ParallaxJs from 'parallax-js'
   import DPlayer from '~/components/DPlayer.vue'
+  import Swiper from '~/components/Swiper.vue'
   import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
       Parallax,
       Wormhole,
-      DPlayer
+      DPlayer,
+      Swiper
     },
-//    async asyncData({ app, route, store, error, payload }) {
-//
-//      let data = {
-//        parallax: []
-//      }
-//
-//      function preRenderParallax(actualTop, scrollOffset) {
-//        const offset = actualTop - scrollOffset
-//        const parallaxOffset = offset * this.speedFactor
-//        const totalOffset = -offset + parallaxOffset
-//
-//
-//
-//
-//        if (this.parallaxChildren.length > 0) {
-//          // console.log('11111111', this.parallaxChildren)
-//          this.parallaxChildren.forEach((d) => {
-//            let parallaxoffset = 0
-//            let leftoffset = 0
-//            if (d.dataset.leftoffset) {
-//              let os = offset - d.dataset.leftoffsetorigin
-//              if (os <= 0) {
-//                if (os >= d.dataset.leftoffset) {
-//                  leftoffset = os
-//                } else {
-//                  leftoffset = d.dataset.leftoffset
-//                }
-//              }
-//            }
-//            console.log('###############', offset)
-//            if (d.dataset.startsign <= offset) {
-//              console.log('beginning')
-//            } else if (d.dataset.stopsign <= offset) {
-//              parallaxoffset = (offset - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (hasClass(d, d.dataset.stopclass)) {
-//                removeClass(d, d.dataset.stopclass)
-//              }
-//            } else if (d.dataset.restartsign <= offset) {
-//              parallaxoffset = (parseInt(d.dataset.stopsign) - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (!hasClass(d, d.dataset.stopclass)) {
-//                addClass(d, d.dataset.stopclass)
-//              }
-//            } else {
-//              parallaxoffset = (offset - parseInt(d.dataset.restartsign) + parseInt(d.dataset.stopsign) - parseInt(d.dataset.startsign)) * d.dataset.parallaxfactor
-//              if (hasClass(d, d.dataset.stopclass)) {
-//                removeClass(d, d.dataset.stopclass)
-//              }
-//            }
-//
-//            d.style.transform = `translate3d(${leftoffset}vh, ${parallaxoffset + parseInt(d.dataset.originoffset)}vh ,0)`
-//
-//          })
-//        }
-//        this.el.style.transform = `translate3d(0, ${-offset + this.accumulatedOffset + parallaxOffset}vh ,0)`
-//      }
-//      const parallax1ActualTop = 0
-//      const parallax2ActualTop = parallax1ActualTop + 200 + 0.5
-//      const parallax3ActualTop = parallax2ActualTop + 1000 + 0.5
-//      const parallax4ActualTop = parallax3ActualTop + 500 + 5
-//      const totalHeight = parallax4ActualTop + 100
-//
-//      data.parallax.push({
-//        actualTop: parallax1ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax2ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax3ActualTop,
-//        speedFactor: 0
-//      })
-//      data.parallax.push({
-//        actualTop: parallax4ActualTop,
-//        speedFactor: 0
-//      })
-//
-//
-//      const offset = this.actualTop - svrollOffset
-//
-//      for (let i = 0; i < totalHeight; i++) {
-//
-//
-//
-//
-//      }
-//
-//
-//
-//      return data
-//
-//    },
+
     data () {
       return {
         blurContent: null,
@@ -285,6 +194,7 @@
     beforeMount () {
       console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
       this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
+      // this.isIOSSafari = true
     },
     mounted () {
 //      const pageContent = document.getElementById('page-content')
@@ -298,7 +208,7 @@
 //      this.scrollBar.addListener(this.progressChecker)
 
       if (!this.isIOSSafari) {
-        const gallary = document.getElementById('project-intro-trinity-gallary')
+        const gallary = document.getElementById('project-gallary')
         const parallaxGallary = new ParallaxJs(gallary, {
           hoverOnly: true,
           pointerEvents: true
@@ -975,7 +885,7 @@
   }
   $gala-wid-xl: 62.549vh;
   $gala-wid-l: 50vh;
-  #project-intro-trinity-gallary {
+  #project-gallary {
     position: relative;
     top: 35vh;
     width: $gala-wid-xl;
@@ -1020,6 +930,14 @@
 
   }
 
+  #gallary-swiper {
+    position: relative;
+    top: 35vh;
+    width: 90%;
+    margin: auto;
+    margin-top: 0;
+
+  }
 
 
 

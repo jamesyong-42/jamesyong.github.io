@@ -37,7 +37,8 @@ module.exports = {
   css: [
     // '~assets/scss/main.scss',
     '@/assets/scss/main.scss',
-    'DPlayer/dist/DPlayer.min.css'
+    'DPlayer/dist/DPlayer.min.css',
+    'swiper/dist/css/swiper.css'
     // Load a Node.js module directly (here it's a Sass file)
     // 'bulma',
     // CSS file in the project
@@ -68,6 +69,7 @@ module.exports = {
   plugins: [
     {src: '~/plugins/ga.js', ssr: false},
     {src: '~/plugins/dplayer.js', ssr: false},
+    {src: '~/plugins/swiper.js', ssr: false},
     {src: '~/plugins/overscroll', ssr: false} //set ssr:false fix 'SyntaxError: Unexpected token import'
   ]
 }

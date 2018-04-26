@@ -68,8 +68,6 @@
           </a>
         </div>
       </div>
-      <!--<div id="CV-education" class="CV-headline" data-speed="1">!!!!!!!!!!!!!!!!!!!!</div>-->
-
       <div id="CV-Skills" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease">
         <div class="CV__Section__Skills">
           <cv-skills :progress="CVSkillsProgress"></cv-skills>
