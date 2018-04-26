@@ -552,9 +552,9 @@
     > h2 {
       font-size: 24px;
     }
-    @media (max-width: 768px) {
-      margin-left: calc(-250px - 5vw);
-      margin-top: 5vh;
+    @media (max-width: 760px) {
+      margin-left: calc(-200px - 5vw);
+      margin-top: 3.5vh;
       > h1 {
         font-size: 30px;
       }
@@ -572,8 +572,8 @@
     position: absolute;
     top: 0;
     left: 50vw;
-    margin-left: calc(90px + 5vw);
-    margin-top: 5vh;
+    margin-left: calc(85px + 5vw);
+    margin-top: 6vh;
     width: 240px;
     font-family: $fontAXIS;
     display: flex;
@@ -595,10 +595,10 @@
       color: white;
       margin: 10px;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 760px) {
       width: 150px;
-      margin-top: 5.5vh;
-      margin-left: calc(60px + 5vw);
+      margin-top: 4vh;
+      margin-left: calc(25px + 5vw);
       > .l {
         font-size: $fs-l / 2;
         color: #ff6666;
@@ -649,7 +649,18 @@
       top:100px;
       left: 0;
     }
-
+    @media (max-width: 768px) {
+      .icon {
+        margin: 0 20px;
+        height: 38px;
+        width: 38px;
+        cursor: pointer;
+      }
+      #bottom-contact__email {
+        height: 35px;
+        width: 35px;
+      }
+    }
   }
 
 
