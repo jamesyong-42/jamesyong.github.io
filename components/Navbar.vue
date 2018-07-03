@@ -5,7 +5,7 @@
           <div>
             <span class="logo">
               <svg>
-                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
               </svg>
               JamesYong42
             </span>
@@ -14,39 +14,39 @@
       </div>
       <div class="Nav__Right">
         <div class="Nav__Right__Items">
-            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
-              <nuxt-link class="main-btn" to="/projects">
-                <template v-if="lan == 'ZH'">项目</template>
-                <template v-else-if="lan == 'EN'">Projects</template>
-              </nuxt-link>
-            </span>
-            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
-              <nuxt-link class="main-btn" to="/cv">
-                <template v-if="lan == 'ZH'">简历</template>
-                <template v-else-if="lan == 'EN'">CV</template>
-              </nuxt-link>
-            </span>
-            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
-              <a class="main-btn" href="https://blog.jamesyong42.com">
-                <template v-if="lan == 'ZH'">博客</template>
-                <template v-else-if="lan == 'EN'">Blog</template>
-              </a>
-            </span>
-            <template v-if="lan == 'ZH'">
+          <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
+            <nuxt-link class="main-btn" to="/projects">
+              <template v-if="lan == 'ZH'">项目</template>
+              <template v-else-if="lan == 'EN'">Projects</template>
+            </nuxt-link>
+          </span>
+          <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
+            <nuxt-link class="main-btn" to="/cv">
+              <template v-if="lan == 'ZH'">简历</template>
+              <template v-else-if="lan == 'EN'">CV</template>
+            </nuxt-link>
+          </span>
+          <span class="Nav__Right__Items__Item Nav__Right__Items__Item--regular">
+            <a class="main-btn" href="https://blog.jamesyong42.com">
+              <template v-if="lan == 'ZH'">博客</template>
+              <template v-else-if="lan == 'EN'">Blog</template>
+            </a>
+          </span>
+          <template v-if="lan == 'ZH'">
               <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
                 <i @click="changeLan('EN')">EN</i>
               </span>
-            </template>
-            <template v-else-if="lan == 'EN'">
+          </template>
+          <template v-else-if="lan == 'EN'">
               <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
                 <i @click="changeLan('ZH')">中文</i>
               </span>
-            </template>
-            <span class="Nav__Right__Items__Item Nav__Right__Items__Item--mobile" @click="toggleMobileNav(true)">
-              <svg>
-                <use xlink:href="#icon-menu"></use>
-              </svg>
-            </span>
+          </template>
+          <span class="Nav__Right__Items__Item Nav__Right__Items__Item--mobile" @click="toggleMobileNav(true)">
+            <svg>
+              <use xlink:href="#icon-menu"></use>
+            </svg>
+          </span>
         </div>
       </div>
     </div>

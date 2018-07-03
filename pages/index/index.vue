@@ -32,8 +32,6 @@
         offsetTop: 0,
         offsetLeft: 0,
         rotCoe: 0.8,
-
-
         // switchOn: false,
         switching: false,
         switchOnColor: '#1b195b',
@@ -102,8 +100,6 @@
         const parallaxBG = new Parallax(BG)
 
       }
-
-
 
     },
 
