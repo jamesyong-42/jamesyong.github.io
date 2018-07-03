@@ -24,8 +24,19 @@
           ></avatar-firework>
         </div>
         <div id="top-intro-left" :class="{'shoutOut': introLeftHigh}">
-          <h1>雍世康</h1>
-          <h2>WEB前端工程师</h2>
+
+            <template v-if="lan == 'ZH'">
+              <h1>雍世康</h1>
+            </template>
+            <template v-else-if="lan == 'EN'">
+              <h1 style="font-size:42px; white-space: nowrap">James Yong</h1>
+
+            </template>
+
+          <h2>
+            <template v-if="lan == 'ZH'">网站前端工程师</template>
+            <template v-else-if="lan == 'EN'">Web Frontend Developer</template>
+          </h2>
         </div>
         <div id="top-intro-right" :class="{'shoutOut': introRightHigh}">
           <span class="l">Be</span>
@@ -170,7 +181,7 @@
         const contentHeight = this.$el.clientHeight
         const progress = scrollOffset / (contentHeight - window.innerHeight)
 
-        console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
+        //console.log('VBVBDFSDVSDSDF', val, window.innerHeight, contentHeight, progress, window.outerHeight, screen.availHeight, screen.height)
         // console.log('Scrolllllllllllll', val)
         this.progress = progress
         // console.log('progress', progress, this.movingDirection)
@@ -188,7 +199,7 @@
       })
     },
     beforeMount () {
-      console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
+      //console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
       this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
     },
 
@@ -542,7 +553,7 @@
     margin-left: calc(-300px - 5vw);
     margin-top: 5vh;
     color: white;
-    font-family: $fontAXIS;
+    font-family: $fontHelvetica;
     text-align: center;
     > h1 {
       font-size: 60px;
@@ -554,7 +565,7 @@
       margin-left: calc(-200px - 5vw);
       margin-top: 3.5vh;
       > h1 {
-        font-size: 30px;
+        font-size: 25px !important;
       }
       > h2 {
         font-size: 12px;
@@ -692,6 +703,7 @@
   #CV-Education {
     top: 350vh;
     left: 50%;
+    font-family: $fontHelvetica;
   }
 
   #CV-Skills-title {

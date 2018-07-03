@@ -172,7 +172,7 @@
         if (this.blurNav) {
           this.blurNav.scrollTop = scrollOffset
         }
-        console.log(this.progress)
+        //console.log(this.progress)
 
       }
     },
@@ -185,7 +185,7 @@
 //      })
 //    },
     beforeMount () {
-      console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
+      //console.log('FGFGFFGDFGDFGDFG', navigator.userAgent)
       this.isIOSSafari = navigator.userAgent.match(/(iPhone|iPod|iPad)/i) && navigator.userAgent.match(/(Safari)/i)
     },
     mounted () {

@@ -44,6 +44,7 @@
             time: '2016.2-2016.10',
             title: 'keypoint',
             content: '受App Beats Music 的设计启发制作的灵感记录App，使用Swift开发，开发侧重交互效果的设计与实现，如在UI编写中运用官方UIDynamic库中的场效应与碰撞效应实现主界面元素的交互等。',
+            contentEN: 'An idea capturing app inspired by the UI design of the Beats Music app. It was on IOS platform and using Swift as coding language. The whole development focused on interaction designs.',
             contentPos: null,
             width: 30,
             height: 15,
@@ -59,6 +60,7 @@
             time: '2016.7-2016.8',
             title: '书香',
             content: '加入了一位大学老师的项目组，对一个公益捐书网站项目进行了项目需求分析，原型设计，数据模型抽象及接口定义。期间用Axure设计了原型，并为开发小组搭建了开发环境，普及了git知识，并用Tower管理和书写项目文档。',
+            contentEN: 'Got trained in a professor’s development team, walked through needs analysis, prototype design, data modeling and API design of a charity project called ShuXiang. ',
             contentPos: null,
             width: 30,
             height: 20,
@@ -74,6 +76,7 @@
             time: '2016.8-2016.10',
             title: '君酒',
             content: '项目组的实际开发项目，一个后台管理网站，技术选用Java，边学边推进项目，由于其他成员忙于专业课，独自承担前后端所有开发任务，开发过程中用工厂模式对后台进行了一次重构，压缩了60%的代码。前端代码后期转型Vue。',
+            contentEN: 'A typical managment website project. Developed both backend and frontend. During the development, succesfully ruduced backend code by 60% using design patterns.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -89,6 +92,7 @@
             time: '2016.11-2016.12',
             title: 'mathlab',
             content: '作为课程《数值计算方法》的课程设计，对书中每章的重要算法共计32种用C++编程实现，包括数值微分、积分，曲线拟合，矩阵运算，微分方程求解等。并将运算结果用web进行展示，使用了Chart.js和Plotly.js。',
+            contentEN: 'A final project for Numerical Methods course. Implemented a total of 32 major algorithms using C++, and presented result charts and graphs using web technology.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -104,6 +108,7 @@
             time: '2017.1-2017.6',
             title: '艾瑞云',
             content: '项目组的实际开发项目，负责开发一个后台管理前端，与老师写的C++后台通信，为了更好地协调，采用前后端分离策略，搭建Node.js服务端做中间件与C++后台用Socket通信，同时给前端提供RESTful API，前端用Vue开发',
+            contentEN: 'A realworld business web system. Developed frontend and a Node.js server as a middleware which communicates with a C++ backend server using WebSocket and offers RESTful API to the frontend.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -119,6 +124,7 @@
             time: '2017.1-2018.3',
             title: 'vue trinity',
             content: '在之前项目开发过程中不断积累起来的前后端分离系统，可作为简单商城网站。由三部分组成，前端、后台管理前端以及负责API的后端。',
+            contentEN: 'A frontend backend seperated shopping website based on vue.js. It has three parts, client frontend, management frontend and a backend server.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -134,6 +140,7 @@
             time: '2018.1-2018.3',
             title: 'matrix',
             content: '苦于没有好看的本地影视管理软件，于是用Electron.js自行开发，开发侧重设计，在UI效果上实现了类似Netflix Logo动画的加载动效。',
+            contentEN: 'A local movie manager software based on electron.js.  Focusing on UI design and cool interactions.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -150,6 +157,8 @@
             title: '主页与博客',
             content: '受zhangwenli的启发，用jekyll开发了个人博客并用github托管，后来为了开发更复杂的页面放弃jekyll，转用Nuxt.js结合github GraphQL API搭建新博客，详情见github。  ' +
             '个人网站项目，侧重设计，实现了不同类型的视差滚动效果，并用贝塞尔函数重新映射速度曲线使视觉效果更加自然。实现了SVG路径填充、跟随、形变动效。用Three.js建模结合Canvas 2D绘制材质实现3D展示效果。',
+            contentEN: 'Build my blog using nuxt.js, it is served as github pages, github GraphQL APIs are used to fetch certain github issues which are rendered into  blog posts.' +
+            'Build my personal website using nuxt.js as well,  made a lot of cool visual effects, such as parallax scrolling, svg animations, webGL animations.',
             contentPos: null,
             width: 30,
             height: 20,
@@ -167,7 +176,8 @@
     },
     computed: {
       ...mapGetters({
-        wormholeCache: 'wormholeCache'
+        wormholeCache: 'wormholeCache',
+        lan: 'language'
       })
     },
     mounted () {
@@ -185,6 +195,25 @@
 
           this.scroll(progress)
           // this.stats.end()
+        }
+      },
+      lan (val) {
+        if (val === 'ZH') {
+          //console.log('ZZZZZ')
+          this.timeLine.map(t => {
+            t.mesh.material = t.mat
+            t.mesh.geometry.buffersNeedUpdate = true
+            t.mesh.geometry.uvsNeedUpdate = true
+          })
+          this.webGLRenderer.render(this.scene, this.camera)
+        } else {
+          //console.log('EEEEE')
+          this.timeLine.map(t => {
+            t.mesh.material = t.matEN
+            t.mesh.geometry.buffersNeedUpdate = true
+            t.mesh.geometry.uvsNeedUpdate = true
+          })
+          this.webGLRenderer.render(this.scene, this.camera)
         }
       }
     },
@@ -488,7 +517,6 @@
           ctx.rotate(Math.PI)
           this.wrapText(ctx, t.content, 0, 40, textCanvas.width, 45)
 
-
           const textTex = new THREE.CanvasTexture(textCanvas)
           textTex.minFilter = THREE.LinearFilter
           textTex.maxFilter = THREE.NearestMipMapLinearFilter
@@ -507,14 +535,48 @@
             alphaTest: 0.6  // !!! it shows background rather than the tunnel behind if this value is not set
           })
 
-          const textMesh = new THREE.Mesh( textGeometry, textMaterial)
+          const textCanvasEN = document.createElement('canvas')
+          textCanvasEN.width = t.width * 30
+          textCanvasEN.height = t.height * 30
+          const ctxEN = textCanvasEN.getContext('2d')
+
+          ctxEN.font = `40px Arial`
+
+          ctxEN.fillStyle = 'white'
+          ctxEN.translate(textCanvasEN.width, textCanvasEN.height)
+          ctxEN.rotate(Math.PI)
+          this.wrapText(ctxEN, t.contentEN, 0, 40, textCanvasEN.width, 45)
+          const textTexEN = new THREE.CanvasTexture(textCanvasEN)
+          textTexEN.minFilter = THREE.LinearFilter
+          textTexEN.maxFilter = THREE.NearestMipMapLinearFilter
+          textTexEN.wrapS = THREE.ClampToEdgeWrapping
+          textTexEN.wrapT = THREE.ClampToEdgeWrapping
+          textTexEN.repeat.set(1, 1)
+          textTexEN.flipY = false
+
+          const textMaterialEN = new THREE.MeshBasicMaterial({
+            map: textTexEN,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 1,
+            needsUpdate: true,
+            alphaTest: 0.6  // !!! it shows background rather than the tunnel behind if this value is not set
+          })
+          let textMesh = null
+          if (this.lan === 'ZH') {
+            textMesh = new THREE.Mesh( textGeometry, textMaterial)
+          } else {
+            textMesh = new THREE.Mesh( textGeometry, textMaterialEN)
+          }
 
           const pos = self.spline.getPointAt(t.contentPos / self.spline.getLength())
           textMesh.position.set(pos.x, pos.y, pos.z)
           textMesh.lookAt(pos.x - 1, pos.y, pos.z)
           textMesh.rotation.z = Math.PI
-          console.log(t.contentPos, pos)
+          //console.log(t.contentPos, pos)
           t.mesh = textMesh
+          t.mat = textMaterial
+          t.matEN = textMaterialEN
 
           self.scene.add(textMesh)
 //          textCanvas.style.position = 'absolute'
