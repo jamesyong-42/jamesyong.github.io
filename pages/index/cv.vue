@@ -35,7 +35,7 @@
 
           <h2>
             <template v-if="lan == 'ZH'">网站前端工程师</template>
-            <template v-else-if="lan == 'EN'">Web Frontend Developer</template>
+            <template v-else-if="lan == 'EN'">Creative Developer</template>
           </h2>
         </div>
         <div id="top-intro-right" :class="{'shoutOut': introRightHigh}">
@@ -67,11 +67,12 @@
                  id="bottom-contact__behance"
             ><use xlink:href="#icon-behance"></use></svg>
           </a>
-          <a href="https://www.facebook.com/jamesyong42">
+          <a href="https://www.linkedin.com/in/jamesyong42">
             <svg class="icon"
                  :class="{'shoutOut': bottomIcon4High}"
                  id="bottom-contact__facebook"
-            ><use xlink:href="#icon-facebook"></use></svg>
+
+            ><use style="transform-origin: center; transform: scale(0.85);" xlink:href="#icon-linkedin"></use></svg>
           </a>
           <a id="bottom-contact__download" href="/Web Front-End JamesYong.pdf" target="_blank" class="download">
             <template v-if="lan == 'ZH'">下载简历</template>
@@ -549,25 +550,29 @@
     position: absolute;
     top:0;
     left: 50vw;
-    width: 220px;
-    margin-left: calc(-300px - 5vw);
-    margin-top: 5vh;
+    width: 300px;
+    margin-left: calc(-300px - 9vw);
+    margin-top: 6vh;
     color: white;
-    font-family: $fontHelvetica;
+    //font-family: $fontHelvetica;
+    text-transform: uppercase;
+    font-family: $fontAXIS;
     text-align: center;
     > h1 {
-      font-size: 60px;
+      font-size: 30px;
     }
     > h2 {
-      font-size: 24px;
+      font-size: 20px;
+      white-space: nowrap;
     }
     @media (max-width: 760px) {
-      margin-left: calc(-200px - 5vw);
-      margin-top: 3.5vh;
+      margin-left: calc(-200px - 7vw);
+      margin-top: 3.9vh;
       > h1 {
-        font-size: 25px !important;
+        font-size: 18px !important;
       }
       > h2 {
+        margin-top: 20px;
         font-size: 12px;
       }
     }
@@ -657,6 +662,8 @@
       position: absolute;
       top:100px;
       left: 0;
+      text-transform: uppercase;
+      font-weight: bold;
     }
     @media (max-width: 768px) {
       .icon {

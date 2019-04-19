@@ -35,8 +35,8 @@
                                 :bgColor="d.bgColor"
                                 :progress="d.progress * progress"
           ></circle-progress-bar>
-          <template v-if="d.name === 'Axure'">
-            <h1>A<span>xure</span></h1>
+          <template v-if="d.name === 'Figma'">
+            <h1>F<span>igma</span></h1>
           </template>
           <template v-else>
             <h1>{{d.name}}</h1>
@@ -117,13 +117,13 @@
             progress: 0.75
           },
           {
-            name: 'Axure',
+            name: 'C4D',
             color: '#00e7eb',
             bgColor: '#000000',
             progress: 0.50
           },
           {
-            name: 'C4D',
+            name: 'Figma',
             color: '#00e7eb',
             bgColor: '#000000',
             progress: 0.30

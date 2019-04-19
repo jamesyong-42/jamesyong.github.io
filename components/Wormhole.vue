@@ -56,22 +56,22 @@
             inheritNodePos: {},
             mesh: null
           },
-          {
-            time: '2016.7-2016.8',
-            title: '书香',
-            content: '加入了一位大学老师的项目组，对一个公益捐书网站项目进行了项目需求分析，原型设计，数据模型抽象及接口定义。期间用Axure设计了原型，并为开发小组搭建了开发环境，普及了git知识，并用Tower管理和书写项目文档。',
-            contentEN: 'Got trained in a professor’s development team, walked through needs analysis, prototype design, data modeling and API design of a charity project called ShuXiang. ',
-            contentPos: null,
-            width: 30,
-            height: 20,
-            tags: ['Axure'],
-            inheritTag: [],
-            inheritTagPos: [],
-            inheritTagLineA1Offset: 0,
-            inheritTagLineLength: [],
-            inheritNodePos: {},
-            mesh: null
-          },
+          // {
+          //   time: '2016.7-2016.8',
+          //   title: '书香',
+          //   content: '加入了一位大学老师的项目组，对一个公益捐书网站项目进行了项目需求分析，原型设计，数据模型抽象及接口定义。期间用Axure设计了原型，并为开发小组搭建了开发环境，普及了git知识，并用Tower管理和书写项目文档。',
+          //   contentEN: 'Got trained in a professor’s development team, walked through needs analysis, prototype design, data modeling and API design of a charity project called ShuXiang. ',
+          //   contentPos: null,
+          //   width: 30,
+          //   height: 20,
+          //   tags: ['Axure'],
+          //   inheritTag: [],
+          //   inheritTagPos: [],
+          //   inheritTagLineA1Offset: 0,
+          //   inheritTagLineLength: [],
+          //   inheritNodePos: {},
+          //   mesh: null
+          // },
           {
             time: '2016.8-2016.10',
             title: '君酒',

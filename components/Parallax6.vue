@@ -1,7 +1,7 @@
 <template>
-  <section :class="['parallax-outer', scaleClass, isIOSSafari ? 'i-safari' : '']" ref="block" :style="sectionStyle">
+  <section class="parallax-outer" ref="block" :style="sectionStyle">
     <div
-      :class="['parallax-inner', scaleClass, isIOSSafari ? 'i-safari' : '']"
+      class="parallax-inner"
       ref="parallax"
       >
       <slot></slot>
@@ -37,6 +37,10 @@
       scaleClass: {
         type: String,
         default: 'scale-1x'
+      },
+      scale: {
+        default: 1,
+        type: Number
       }
     },
 
@@ -74,6 +78,11 @@
       this.init()
       this.block = this.$refs.block
 
+      let vh = window.innerHeight
+
+      this.el.style.height = this.scale*vh+'px'
+      this.block.style.height = this.scale*vh+'px'
+
     },
     beforeDestroy () {
       this.scrollBar.removeListener(this.scrollHandler)
@@ -88,6 +97,8 @@
       },
       scrollHandler (status) {
         let vh = window.innerHeight / 100
+
+
 
         //console.log('VBVBDFSDVSDSDF', status.offset.y, window.innerHeight, offset, this.scrollBar.size)
         const offset = this.actualTop * vh - status.offset.y
@@ -105,6 +116,8 @@
 
   overflow: hidden;
   transform-style: preserve-3d;
+  max-width: none;
+  width: 100%;
 
 }
 
@@ -114,65 +127,12 @@
   will-change: transform;
   right: 0;
   top: 0;
+  max-width: none;
+  width: 100%;
   // -webkit-transition-property: all;
   // transition-property: all;
   // -webkit-transition-timing-function: ease;
   // transition-timing-function: ease;
 }
-.scale-1x {
-  height: 100vh;
-  max-width: none;
-  width: 100%;
-  &.i-safari {
-    height: 100vh*$ios-ratio;
-  }
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.scale-2x {
-  height: 200vh;
-  max-width: none;
-  width: 100%;
-  &.i-safari {
-    height: 200vh*$ios-ratio;
-  }
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.scale-5x {
-  height: 500vh;
-  max-width: none;
-  width: 100%;
-  &.i-safari {
-    height: 500vh*$ios-ratio;
-  }
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
-.scale-10x {
-  height: 1000vh;
-  max-width: none;
-  width: 100%;
-  &.i-safari {
-    height: 1000vh*$ios-ratio;
-  }
-  /*-webkit-box-align: center;*/
-  /*-ms-flex-align: center;*/
-  /*align-items: center;*/
-  /*display: -webkit-box;*/
-  /*display: -ms-flexbox;*/
-  /*display: flex;*/
-}
+
 </style>

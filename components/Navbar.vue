@@ -34,12 +34,12 @@
           </span>
           <template v-if="lan == 'ZH'">
               <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
-                <i @click="changeLan('EN')">EN</i>
+                <i style="font-style: normal" @click="changeLan('EN')">EN</i>
               </span>
           </template>
           <template v-else-if="lan == 'EN'">
               <span class="icon Nav__Right__Items__Item Nav__Right__Items__Item--regular">
-                <i @click="changeLan('ZH')">中文</i>
+                <i style="font-style: normal" @click="changeLan('ZH')">中文</i>
               </span>
           </template>
           <span class="Nav__Right__Items__Item Nav__Right__Items__Item--mobile" @click="toggleMobileNav(true)">
@@ -160,6 +160,8 @@ export default {
 
       overflow-x: hidden;
       white-space: nowrap;
+      text-transform: uppercase;
+
 
       &__Item {
         margin: 0 25px;

@@ -1,71 +1,72 @@
 <template>
-  <div class="Projects">
-    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="0" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-2x'">
-      <div class="Projects__Parallax__Content">
-        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
-          <div class="logo-3d" :class="'frame-' + frame1"></div>
+
+    <div class="Projects">
+      <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="0" :speedFactor="0" :sectionStyle="projectStyle1" :scale="2">
+        <div class="Projects__Parallax__Content">
+          <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+            <div class="logo-3d" :class="'frame-' + frame1"></div>
+          </div>
         </div>
-      </div>
-    </parallax>
-    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 0.5vh">
-      <div class="hero-body">
-        <div class="container">
+      </parallax>
+      <section class="Projects__NonParallax hero is-medium is-dark is-bold" :style="`height: ${0.5*vh}px`">
+        <div class="hero-body">
+          <div class="container"></div>
         </div>
-      </div>
-    </section>
-    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="200.5" :speedFactor="0" :sectionStyle="projectStyle1" :scaleClass="'scale-10x'">
-      <div class="Projects__Parallax__Content">
-        <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
-          <div class="logo-3d frame-7"></div>
+      </section>
+      <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="200.5" :speedFactor="0" :sectionStyle="projectStyle1" :scale="10">
+        <div class="Projects__Parallax__Content">
+          <div class="Projects__Parallax__Content__Item Projects__Parallax__Content__Item--logo">
+            <div class="logo-3d frame-7"></div>
+          </div>
+          <div class="WormholeContainer">
+            <wormhole :progress="progress" :cueIn="0.118" :cueOut="0.631"></wormhole>
+          </div>
         </div>
-        <div class="WormholeContainer">
-          <wormhole :progress="progress" :cueIn="0.118" :cueOut="0.631"></wormhole>
+      </parallax>
+      <section class="Projects__NonParallax hero is-medium is-dark is-bold" :style="`height: ${0.5*vh}px`">
+        <div class="hero-body">
+          <div class="container">
+          </div>
         </div>
-      </div>
-    </parallax>
-    <section class="Projects__NonParallax hero is-medium is-dark is-bold" style="height: 0.5vh">
-      <div class="hero-body">
-        <div class="container">
+      </section>
+      <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scale="5">
+        <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
+          <div v-for="(v, index) in videoDemos"
+               v-if="progress > v.cueIn"
+               :key="index"
+               class="Projects__Parallax__Content--demos__Video">
+            <d-player :video="v"></d-player>
+          </div>
         </div>
-      </div>
-    </section>
-    <parallax class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1201" :speedFactor="0.2" :sectionStyle="projectStyle1" :scaleClass="'scale-5x'">
-      <div class="Projects__Parallax__Content Projects__Parallax__Content--demos">
-        <div v-for="(v, index) in videoDemos"
-             v-if="progress > v.cueIn"
-             :key="index"
-             class="Projects__Parallax__Content--demos__Video">
-          <d-player :video="v"></d-player>
+      </parallax>
+      <section v-if="!isIOSSafari" class="hero is-medium is-dark is-bold" :style="`height: ${0.5*vh}px`">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Primary bold title
+            </h1>
+            <h2 class="subtitle">
+              Primary bold subtitle
+            </h2>
+          </div>
         </div>
-      </div>
-    </parallax>
-    <section v-if="!isIOSSafari" class="hero is-medium is-dark is-bold" style="height: 0.5vh">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Primary bold title
-          </h1>
-          <h2 class="subtitle">
-            Primary bold subtitle
-          </h2>
+      </section>
+      <parallax v-if="!isIOSSafari" class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1701.5" :speedFactor="0.1" :sectionStyle="projectStyle1">
+        <div id="project-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
+          <img class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery3" data-depth="0.5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery4" data-depth="0.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery5" data-depth="0.2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img class="galary-bg parallaxgallery6" data-depth="0.1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
+          <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-44" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnsAAAONAQMAAAB0n0fmAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAM9JREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjgbmOwABlDzM1wAAAABJRU5ErkJggg==">
+          <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-22" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABfAAAAK1AQMAAAC9xl1lAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJdJREFUeNrtwTEBAAAAwqD1T+1jDKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgBBSkAASe4JrkAAAAASUVORK5CYII=">
+          <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-11" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAK3AQMAAADNnJ0IAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJhJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODAAAanAAFcJN3KAAAAAElFTkSuQmCC">
+          <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-33" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAx4AAAGLAQMAAABzwNakAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAD5JREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODeAJvXAAFGD/NQAAAAAElFTkSuQmCC">
         </div>
-      </div>
-    </section>
-    <parallax v-if="!isIOSSafari" class="Projects__Parallax" :isIOSSafari="isIOSSafari" :scrollBar="scrollBar" :actualTop="1701.5" :speedFactor="0.1" :sectionStyle="projectStyle1">
-      <div id="project-gallary" @mousemove="gallaryMouseHover($event)" :class="['project-title', 'project-intro-title', 'animated']">
-        <img class="galary-bg parallaxgallery1" data-depth="1.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img class="galary-bg parallaxgallery2" data-depth="0.8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img class="galary-bg parallaxgallery3" data-depth="0.5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img class="galary-bg parallaxgallery4" data-depth="0.3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img class="galary-bg parallaxgallery5" data-depth="0.2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img class="galary-bg parallaxgallery6" data-depth="0.1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABFkAAAKZAQMAAABZa2bzAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAHJJREFUeNrtwTEBAAAAwqD1T20LL6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAqwFuVAABwy5vJgAAAABJRU5ErkJggg==">
-        <img :class="['project-intro-trinity-gallary-pic', 'a', 'animated', galaA ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-44" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABnsAAAONAQMAAAB0n0fmAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAM9JREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjgbmOwABlDzM1wAAAABJRU5ErkJggg==">
-        <img :class="['project-intro-trinity-gallary-pic', 'b', 'animated', galaB ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-22" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABfAAAAK1AQMAAAC9xl1lAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJdJREFUeNrtwTEBAAAAwqD1T+1jDKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgBBSkAASe4JrkAAAAASUVORK5CYII=">
-        <img :class="['project-intro-trinity-gallary-pic', 'c', 'animated', galaC ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-11" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAK3AQMAAADNnJ0IAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAJhJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODAAAanAAFcJN3KAAAAAElFTkSuQmCC">
-        <img :class="['project-intro-trinity-gallary-pic', 'd', 'animated', galaD ? 'zoomIn' : 'zoomOut']" data-depth="2.1" class="demo-sprite-33" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAx4AAAGLAQMAAABzwNakAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAD5JREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODeAJvXAAFGD/NQAAAAAElFTkSuQmCC">
-      </div>
-    </parallax>
-  </div>
+      </parallax>
+    </div>
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -108,7 +109,8 @@
             thumbnails: '/matrix-demo-thumbnails.jpg'
           }
         ],
-        isIOSSafari: false
+        isIOSSafari: false,
+        vh: 0
       }
     },
     computed: {
@@ -117,6 +119,13 @@
         scrollOffset: 'scrollOffset',
         blurNav: 'blurNav'
       }),
+      // vh() {
+      //   if (window)
+      //     return window.innerHeight/100+'px'
+      //   else
+      //     return '0.5vh'
+      // },
+
       projectStyle1 () {
         if (this.scrollOffset && document.getElementById('project-intro')) {
           const offsetY = this.scrollOffset
@@ -198,6 +207,8 @@
 //      this.scrollBar.update()
 //      this.scrollBar.addListener(this.scrollBlur)
 //      this.scrollBar.addListener(this.progressChecker)
+
+      this.vh = window.innerHeight/100
 
       if (!this.isIOSSafari) {
         const gallary = document.getElementById('project-gallary')

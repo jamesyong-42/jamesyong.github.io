@@ -31,7 +31,7 @@
         </template>
         <template v-else-if="lan == 'EN'">
           <span class="MobileNav__Items__Item">
-            <i @click="lanClick('ZH')">中文</i>
+            <i style="font-style: normal" @click="lanClick('ZH')">中文</i>
           </span>
         </template>
       </div>
@@ -86,7 +86,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(100, 17, 65, 0.5);
+  //background-color: rgba(100, 17, 65, 0.5);
+  background-color: rgba(1, 13, 43, 0.42);
   z-index: 999;
   &__Items {
     width: 80%;
@@ -97,6 +98,8 @@ export default {
       margin: 30px auto;
       font-size: 3rem;
       text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
       color: #1cfaff;
       > a {
         color: #1cfaff;
