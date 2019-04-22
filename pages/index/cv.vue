@@ -63,7 +63,7 @@
 
             )
               use(style="transform-origin: center; transform: scale(0.85);" xlink:href="#icon-linkedin")
-          a(id="bottom-contact__download" href="/Web Front-End JamesYong.pdf" target="_blank" class="download")
+          a(id="bottom-contact__download" href="/CreativeDeveloper-JamesYong.pdf" target="_blank" class="download")
             svg(class="icon" style="margin-top: 2px")
               use(style="transform-origin: center;" transform="scale(0.85)" xlink:href="#icon-down")
             template(v-if="lan == 'ZH'") 下载简历
