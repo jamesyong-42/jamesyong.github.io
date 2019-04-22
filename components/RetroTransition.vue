@@ -34,7 +34,7 @@
         height: 0,
         rectWidth: 25,
         rectHeight: 25,
-        speed: 25,
+        speed: 50,
         canvas: null,
         ctx: null,
         cords: null,
@@ -83,11 +83,11 @@
         }
         const self = this
 
-        this.neonCircle(cords.x, cords.y, self.bgClrTest)
+        this.neonCircle(cords.x, cords.y, self.bgClrTest, callback)
 
-        setTimeout(function () {
-          self.clearCircle(cords.x, cords.y, self.bgClrTest, callback)
-        }, 100)
+        //setTimeout(function () {
+        //  self.clearCircle(cords.x, cords.y, self.bgClrTest, callback)
+        //}, 100)
       },
 
       init () {
@@ -125,9 +125,7 @@
           self.bgEl.style.opacity = 1
         }
         self.open(() => {
-
           self.callback()
-
         })
 
 //        this.container = document.getElementById('container')
@@ -184,42 +182,7 @@
           angle += step
         }
       },
-//      spawnCircle (x, y, fill, finishColor, callback) {
-//        let count = 0
-//        let colorCount = 0
-//        let tempColor
-//        const offset = 0.5
-//        const self = this
-//
-//        function draw (timestamp, finishColor, callback) {
-//          if (fill === 'random') {
-//            if (colorCount === 9) {
-//              colorCount = 0
-//            }
-//            // tempColor = randomColor({hue: 'purple'})
-//            tempColor = self.neonColor[colorCount]
-//            colorCount++
-//          } else {
-//            tempColor = fill
-//          }
-//
-//          self.distributeRects(x, y, self.rectWidth * count * offset, 4 * count, tempColor)
-//
-//          if (self.checkDone(finishColor)) {
-//            if (callback && typeof (callback) === 'function') callback()
-//          } else {
-//            count++
-//            requestAnimationFrame(function (timestamp) {
-//              draw(timestamp, finishColor, callback)
-//              console.log('FFFFFFFFFFFFFFFFFFFFFin')
-//            })
-//          }
-//        }
-//        requestAnimationFrame(function (timestamp) {
-//          draw(timestamp, finishColor, callback)
-//          console.log('FFFFFFFFFFFFFFFFFFFFFin')
-//        })
-//      },
+
       neonCircle (x, y, finishColor, callback) {
         let count = 0
         let colorCount = 0
@@ -244,12 +207,24 @@
           // console.log('OOOOOOOOOO', x, y, w, h, `translate3d(${x - w / 2}px, ${y - h / 2}px, 0) scale(${ratioW}, ${ratioH})`)
           // self.bgEl.style.transform = `scale(${ratioW}, ${ratioH})`
 
-          self.bgEl.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
+
 
 
           self.distributeRects(x, y, radius, 4 * count, tempColor)
 
-          if (self.circleDone) {
+          let countClear = 0
+          let radiusClear = 0
+          if (count >= 5){
+            countClear = count - 5
+            radiusClear = self.rectWidth * countClear * offset
+            self.distributeClearRects(x, y, radiusClear, 4 * countClear)
+
+            self.bgEl.style.clipPath = `circle(${(radius+radiusClear)/2}px at ${x}px ${y}px)`
+          }
+
+
+          if (self.checkDone(radiusClear)) {
+            self.circleDone = true
             if (callback && typeof (callback) === 'function') callback()
           } else {
             count++
@@ -302,17 +277,6 @@
         })
       },
 
-//      checkDone (finishColor) {
-//        const topLeftSensor = this.ctx.getImageData(0, 0, 1, 1).data
-//        const topRightSensor = this.ctx.getImageData(this.width - 1, 0, 1, 1).data
-//        const bottomRightSensor = this.ctx.getImageData(this.width - 1, this.height - 1, 1, 1).data
-//        const bottomLeftSensor = this.ctx.getImageData(0, this.height - 1, 1, 1).data
-//        let diff = topLeftSensor[0] + topRightSensor[0] + bottomRightSensor[0] + bottomLeftSensor[0] - finishColor[0] * 4 + topLeftSensor[1] + topRightSensor[1] + bottomRightSensor[1] + bottomLeftSensor[1] - finishColor[1] * 4 + topLeftSensor[2] + topRightSensor[2] + bottomRightSensor[2] + bottomLeftSensor[2] - finishColor[2] * 4 + topLeftSensor[3] + topRightSensor[3] + bottomRightSensor[3] + bottomLeftSensor[3] - finishColor[3] * 4
-//        diff = Math.abs(diff)
-//        if (diff < 10) {
-//          return true
-//        }
-//      },
       checkDone (radius) {
         const rMax = Math.max(this.width, this.height) / 2 * 1.5
         if (radius > rMax) {

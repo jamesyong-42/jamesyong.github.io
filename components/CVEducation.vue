@@ -33,7 +33,7 @@
       return {
         education: [
           {
-            time: '2014.9-2018.6',
+            time: 'Sep.2014-Jun.2018',
             university: {
               zh: '电子科技大学',
               en: 'UESTC'
@@ -91,6 +91,7 @@
         text-align: left;
         color: #ffffff;
         font-size:80%;
+        font-weight: bold;
       }
       &__M {
         width: 100%;

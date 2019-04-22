@@ -166,6 +166,7 @@
     width: 100%;
     height: 100%;
     &__Coding {
+
       width: 100%;
       display: flex;
       align-items: center;
@@ -178,6 +179,7 @@
       &__Charts {
         width: 60%;
         min-width: 300px;
+        font-family: $ft-fm-code;
         // font-family: $ft-fm-code;
         // font-weight: $ft-wt-bold;
         &__Chart {

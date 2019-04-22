@@ -1,116 +1,100 @@
-<template>
-  <div class="CV">
-    <parallax :scrollOffset="scrollOffset" :speedFactor="1">
-      <div class="space">
-        <svg id="space" class="space-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 5400">
-          <title>space</title>
-          <g id="bg" data-name="bg">
-            <g>
-              <path id="spacePath" stroke-dasharray="5579.802"
-                    :stroke-dashoffset="(1 - progress) * 5579.802" style="fill:none;stroke:aqua;stroke-miterlimit:10;stroke-width:10px;" d="M951.5,563.5S952,968,952,1102c0,211-472,266-472,550,0,410,959,664,959,1072,0,430-959,626-958,1097,.61,287,473,323.88,472,523-1,209-1.5,538.5-1.5,538.5"/>
-            </g>
-          </g>
-        </svg>
+<template lang="pug">
 
-        <rocket-flames :scrollOffset="scrollOffset" :progress="progress" id="rocket"></rocket-flames>
-        <div :class="['animated']" id="avatar">
-          <avatar-firework :progress="progress"
+  .CV
+    parallax(:scrollOffset="scrollOffset" :speedFactor="1")
+      .space
+        svg(id="space" class="space-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 5400")
+          g(id="bg" data-name="bg")
+            path(id="spacePath" stroke-dasharray="5579.802"
+                    :stroke-dashoffset="(1 - progress) * 5579.802" style="fill:none;stroke:aqua;stroke-miterlimit:10;stroke-width:10px;" d="M951.5,563.5S952,968,952,1102c0,211-472,266-472,550,0,410,959,664,959,1072,0,430-959,626-958,1097,.61,287,473,323.88,472,523-1,209-1.5,538.5-1.5,538.5")
+
+        rocket-flames(:scrollOffset="scrollOffset" :progress="progress" id="rocket")
+        div(:class="['animated']" id="avatar")
+          avatar-firework(:progress="progress"
                            v-on:introLeftDone="introLeftDone"
                            v-on:introRightDone="introRightDone"
                            v-on:bottomIcon1Done="bottomIcon1Done"
                            v-on:bottomIcon2Done="bottomIcon2Done"
                            v-on:bottomIcon3Done="bottomIcon3Done"
                            v-on:bottomIcon4Done="bottomIcon4Done"
-          ></avatar-firework>
-        </div>
-        <div id="top-intro-left" :class="{'shoutOut': introLeftHigh}">
+          )
 
-            <template v-if="lan == 'ZH'">
-              <h1>雍世康</h1>
-            </template>
-            <template v-else-if="lan == 'EN'">
-              <h1 style="font-size:42px; white-space: nowrap">James Yong</h1>
+        div(id="top-intro-left" :class="{'shoutOut': introLeftHigh}")
+          template(v-if="lan == 'ZH'")
+            h1 雍世康
+          template(v-else-if="lan == 'EN'")
+            h1 James Yong
+          h2
+            template(v-if="lan == 'ZH'") 网站前端工程师
+            template(v-else-if="lan == 'EN'") Creative Developer
 
-            </template>
-
-          <h2>
-            <template v-if="lan == 'ZH'">网站前端工程师</template>
-            <template v-else-if="lan == 'EN'">Creative Developer</template>
-          </h2>
-        </div>
-        <div id="top-intro-right" :class="{'shoutOut': introRightHigh}">
-          <span class="l">Be</span>
-          <span class="s">the</span>
-          <span class="l">change</span>
-          <br>
-          <span class="m">you want to see</span>
-          <br>
-          <span class="s">in the</span>
-          <span class="l">world</span>
-        </div>
-        <div id="bottom-contact">
-          <a href="mailto:me@jamesyong42.com">
-            <svg class="icon"
+        div(id="top-intro-right" :class="{'shoutOut': introRightHigh}")
+          span(class="l") Be
+          span(class="s") the
+          span(class="l") change
+          br
+          span(class="m") you want to see
+          br
+          span(class="s") in the
+          span(class="l") world
+        div(id="bottom-contact")
+          a(href="mailto:me@jamesyong42.com")
+            svg(class="icon"
                   :class="{'shoutOut': bottomIcon1High}"
                   id="bottom-contact__email"
-          ><use xlink:href="#icon-envelope"></use></svg>
-          </a>
-          <a href="https://github.com/Sakilove">
-            <svg class="icon"
+            )
+              use(xlink:href="#icon-envelope")
+          a(href="https://github.com/Sakilove")
+            svg(class="icon"
                  :class="{'shoutOut': bottomIcon2High}"
                  id="bottom-contact__github"
-            ><use xlink:href="#icon-github"></use></svg>
-          </a>
-          <a href="https://behance.net/jamesyong">
-            <svg class="icon"
+            )
+              use(xlink:href="#icon-github")
+          a(href="https://behance.net/jamesyong")
+            svg(class="icon"
                  :class="{'shoutOut': bottomIcon3High}"
                  id="bottom-contact__behance"
-            ><use xlink:href="#icon-behance"></use></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/jamesyong42">
-            <svg class="icon"
+            )
+              use(xlink:href="#icon-behance")
+          a(href="https://www.linkedin.com/in/jamesyong42")
+            svg(class="icon"
                  :class="{'shoutOut': bottomIcon4High}"
                  id="bottom-contact__facebook"
 
-            ><use style="transform-origin: center; transform: scale(0.85);" xlink:href="#icon-linkedin"></use></svg>
-          </a>
-          <a id="bottom-contact__download" href="/Web Front-End JamesYong.pdf" target="_blank" class="download">
-            <template v-if="lan == 'ZH'">下载简历</template>
-            <template v-else-if="lan == 'EN'">Download Resume</template>
-          </a>
-        </div>
-      </div>
-      <div id="CV-Skills" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease">
-        <div class="CV__Section__Skills">
-          <cv-skills :progress="CVSkillsProgress"></cv-skills>
-        </div>
-      </div>
-      <div id="CV-Skills-title" class="CV-headline" data-speed="1" data-speedcurve="ease" data-anchor="15">
-        <template v-if="lan == 'ZH'">技能</template>
-        <template v-else-if="lan == 'EN'">Skills</template>
-      </div>
-      <div id="CV-Projects-title" class="CV-headline" @click="routeToProjects" data-speed="1" data-speedcurve="ease">
-        <svg>
-          <use xlink:href="#icon-projects"></use>
-        </svg>
-        <template v-if="lan == 'ZH'">项目</template>
-        <template v-else-if="lan == 'EN'">Projects</template>
-      </div>
-      <div id="CV-Education-title" class="CV-headline" data-speed="1" data-speedcurve="ease" data-anchor="75">
-        <template v-if="lan == 'ZH'">教育</template>
-        <template v-else-if="lan == 'EN'">Education</template>
-      </div>
-      <div id="CV-Education" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease">
-        <div class="CV__Section__Education">
-          <cv-education></cv-education>
-        </div>
-      </div>
-      <div id="tiny-stars" class="stars" data-speed="0.24" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
-      <div id="mid-stars" class="stars" data-speed="0.64" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
-      <div id="big-stars" class="stars" data-speed="1.16" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset"></div>
+            )
+              use(style="transform-origin: center; transform: scale(0.85);" xlink:href="#icon-linkedin")
+          a(id="bottom-contact__download" href="/Web Front-End JamesYong.pdf" target="_blank" class="download")
+            svg(class="icon" style="margin-top: 2px")
+              use(style="transform-origin: center;" transform="scale(0.85)" xlink:href="#icon-down")
+            template(v-if="lan == 'ZH'") 下载简历
+            template(v-else-if="lan == 'EN'") Resume
 
-    </parallax>
-  </div>
+      div(id="CV-Skills" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease")
+        div(class="CV__Section__Skills")
+          cv-skills(:progress="CVSkillsProgress")
+
+
+      .CV-headline(id="CV-Skills-title" data-speed="1" data-speedcurve="ease" data-anchor="15" style="margin-left: 4vw")
+        template(v-if="lan == 'ZH'") 技能
+        template(v-else-if="lan == 'EN'") Skills
+      .CV-headline(id="CV-Projects-title" @click="routeToProjects" data-speed="1" data-speedcurve="ease")
+        svg
+          use(xlink:href="#icon-projects")
+        template(v-if="lan == 'ZH'") 项目
+        template(v-else-if="lan == 'EN'") Projects
+      .CV-headline(id="CV-Education-title" data-speed="1" data-speedcurve="ease" data-anchor="60" style="margin-top: -15vw; margin-left: 4vw")
+        template(v-if="lan == 'ZH'") 教育
+        template(v-else-if="lan == 'EN'") Education
+      div(id="CV-Education" class="CV__Section CV-headline"  data-progress="0" data-speed="1" data-speedcurve="ease")
+        div(class="CV__Section__Education")
+          cv-education
+
+
+      div(id="tiny-stars" class="stars" data-speed="0.24" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset")
+      div(id="mid-stars" class="stars" data-speed="0.64" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset")
+      div(id="big-stars" class="stars" data-speed="1.16" data-speedcurve="linear" :data-direction="movingDirection" :data-xoffset="midOffset")
+
+
 
 </template>
 
@@ -452,8 +436,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~assets/scss/variables";
-
+  //@import "~assets/scss/variables";
+  @import "~assets/scss/main.scss";
 
   .CV {
     width: 100%;
@@ -555,18 +539,21 @@
     margin-top: 6vh;
     color: white;
     //font-family: $fontHelvetica;
-    text-transform: uppercase;
+
     font-family: $fontAXIS;
     text-align: center;
     > h1 {
-      font-size: 30px;
+      text-transform: uppercase;
+      font-size: 38px;
     }
     > h2 {
-      font-size: 20px;
+      font-size: 24px;
       white-space: nowrap;
+      font-family: $ft-fm-code;
+      font-weight: bold;
     }
     @media (max-width: 760px) {
-      margin-left: calc(-200px - 7vw);
+      margin-left: calc(-200px - 16vw);
       margin-top: 3.9vh;
       > h1 {
         font-size: 18px !important;
@@ -574,6 +561,7 @@
       > h2 {
         margin-top: 20px;
         font-size: 12px;
+
       }
     }
   }
@@ -611,8 +599,8 @@
     }
     @media (max-width: 760px) {
       width: 150px;
-      margin-top: 4vh;
-      margin-left: calc(25px + 5vw);
+      margin-top: 3.8vh;
+      margin-left: calc(25px + 3vw);
       > .l {
         font-size: $fs-l / 2;
         color: #ff6666;
@@ -664,6 +652,17 @@
       left: 0;
       text-transform: uppercase;
       font-weight: bold;
+
+
+
+      .icon{
+        width: 40px;
+        height: 40px;
+
+        border: #fff 2px solid;
+        border-radius: 5px;
+        margin-left: -5px;
+      }
     }
     @media (max-width: 768px) {
       .icon {

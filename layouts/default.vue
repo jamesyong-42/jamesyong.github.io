@@ -1,13 +1,11 @@
-<template>
-  <div>
-    <svg-icons></svg-icons>
-    <navbar :class="{'blur': mobileNavShow}"></navbar>
-    <mobile-nav v-if="mobileNavShow"></mobile-nav>
-    <transition name="fade">
-      <retro-transition v-if="transition.on" :routeTo="transition.to" :callback="transition.callback"></retro-transition>
-    </transition>
-    <nuxt :class="{'blur': mobileNavShow}"></nuxt>
-  </div>
+<template lang="pug">
+  div
+    svg-icons
+    navbar(:class="{'blur': mobileNavShow}")
+    mobile-nav(v-if="mobileNavShow")
+    transition(name="fade")
+      retro-transition(v-if="transition.on" :routeTo="transition.to" :callback="transition.callback")
+    nuxt(:class="{'blur': mobileNavShow}")
 </template>
 
 <script type="text/ecmascript-6">

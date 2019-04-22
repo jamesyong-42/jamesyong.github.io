@@ -1,15 +1,15 @@
-<template>
-  <section class="app-main">
-    <div class="app-content" id="smooth-scrollbar">
-      <transition
+<template lang="pug">
+  section.app-main
+    .app-content(id="smooth-scrollbar")
+      transition(
         mode="out-in"
         enter-active-class="fadeIn"
         leave-active-class="fadeOut"
-        appear>
-        <nuxt-child/>
-      </transition>
-    </div>
-  </section>
+        appear
+      )
+        nuxt-child
+
+
 </template>
 
 <script type="text/ecmascript-6">
